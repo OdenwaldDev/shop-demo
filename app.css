@@ -1033,3 +1033,15 @@ body[data-w="street"] .lieferinfo svg{color:var(--paper)}
 .k-bild-reihe img{aspect-ratio:4/5;object-fit:cover;border-radius:6px}
 @media (max-width:700px){.k-bild-reihe{grid-template-columns:1fr 1fr}}
 .hinweisbox{border-left:3px solid var(--orange);background:#FFF6EC;padding:16px 18px;border-radius:0 8px 8px 0;font-size:14.5px;color:#5A4A3A;margin-top:16px;max-width:70ch}
+
+/* Druck / PDF der Konzeptseite */
+@media print{
+  .oben,.k-nav,.fuss,.demo-pill,.zeiger,.toast,.vorhang,.schleier,.lade,.suche,.menue{display:none!important}
+  body{background:#F4F1EA}
+  .k-layout{grid-template-columns:1fr;padding-block:20px}
+  .k-kopf{padding-top:30px}
+  .k-sek{break-inside:auto;padding-bottom:30px;margin-bottom:30px}
+  .k-sek h2,.k-sek h3{break-after:avoid}
+  .welt,.swatch,.texte div,.roadmap div,.sitemap .knoten,.typo-probe div,tr{break-inside:avoid}
+  .js [data-r]{opacity:1!important;transform:none!important}
+}
