@@ -49,10 +49,13 @@ const fTag = d => d.toLocaleDateString('de-DE', { weekday: 'long' });
 
 /* ================= Linien ================= */
 const LINIEN = {
-  mannschaft: { w: 'team', name: 'Mannschaft', nr: '01', zeile: 'Teamwear für Platz, Training und Spieltag.', bild: 'team-anzug-tasche' },
-  '1896': { w: 'street', name: '1896', nr: '02', zeile: 'Streetwear in limitierten Drops. Bestickt, vorbestellt, nie wieder aufgelegt.', bild: '1896-crew-kirche' },
-  merch: { w: 'fan', name: 'Merch', nr: '03', zeile: 'Schals, Mützen und Kleinkram für alle, die dazugehören.', bild: 'merch-schal-bank-hoch' },
+  mannschaft: { w: 'team', name: 'Mannschaft', nr: '01', zeile: 'Teamwear für Platz, Training und Spieltag.', bild: 'team-anzug-tasche', fp: '46% 4%' },
+  '1896': { w: 'street', name: '1896', nr: '02', zeile: 'Streetwear in limitierten Drops. Bestickt, vorbestellt, nie wieder aufgelegt.', bild: '1896-crew-kirche', fp: '55% 8%' },
+  merch: { w: 'fan', name: 'Merch', nr: '03', zeile: 'Schals, Mützen und Kleinkram für alle, die dazugehören.', bild: 'merch-schal-bank-hoch', fp: '30% 55%' },
 };
+
+/* Bildschwerpunkte (object-position), damit Gesichter und Produkte im Ausschnitt bleiben */
+const FOKUS = { 'team-anzug-tasche': '46% 4%', '1896-crew-kirche': '55% 8%', 'merch-schal-bank-hoch': '30% 55%', 'team-anzug-treppe': '38% 14%', '1896-hoodie-treppe': '58% 60%', '1896-hoodie-bank-weit': '72% 55%', 'team-tribuene': '50% 25%', 'kids-papa': '50% 20%', 'team-hoodie-ruecken': '50% 30%' };
 
 /* ================= Produkte (Dummy) ================= */
 const GR_ERW = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
@@ -400,11 +403,11 @@ route(/^\/$/, () => {
   return {
     ueber: true, html: `
   <section class="held" aria-label="Drei Linien">
-    <div class="titelzeile"><h1>${woerter('Drei Welten.')}<br>${woerter('Ein <em>Verein.</em>')}</h1>
+    <div class="titelzeile"><h1>${woerter('Drei Welten.')} <br class="nur-mobil">${woerter('Ein <em>Verein.</em>')}</h1>
       <div class="seit">SV Mörlenbach 1896 e.V.<br>Offizieller Store<br>Odenwald, Hessen</div></div>
     <div class="tafeln" id="tafeln">${tafeln.map(([k, w, z], i) => { const L = LINIEN[k]; return `
       <a class="tafel" data-l="${w}" href="${U(k)}" data-link data-flip="#tafel-${k} img" id="tafel-${k}" aria-label="${L.name} entdecken">
-        <img src="img/${L.bild}.webp" alt="" ${i ? 'loading="lazy"' : 'fetchpriority="high"'}><span class="streifen"></span>
+        <img src="img/${L.bild}.webp" alt="" style="--fp:${L.fp}" ${i ? '' : 'fetchpriority="high"'}><span class="streifen"></span>
         <div class="unten"><div class="nr"><span>${L.nr} / 03</span><span>${z}</span></div><div class="titel">${L.name}</div><p class="zeile">${L.zeile}</p>
           <span class="mehr">${L.name} entdecken ${ICO.pfeil}</span></div></a>`; }).join('')}</div>
     <div class="punkte" id="tafelPunkte"><i class="on"></i><i></i><i></i></div>
@@ -440,7 +443,7 @@ route(/^\/$/, () => {
   </section>
 
   <section class="dropmodul" aria-label="1896 Drop">
-    <div class="grid2"><div class="bild"><img src="img/1896-hoodie-bank-weit.webp" alt="Hoodie Heritage Navy auf einer Bank in Mörlenbach" loading="lazy" style="object-position:72% 50%">
+    <div class="grid2"><div class="bild"><img src="img/1896-hoodie-treppe.webp" alt="Hoodie 1896 Glocken auf einer Treppe in Mörlenbach" loading="lazy" style="--fp:58% 60%">
       <svg class="stempel" viewBox="0 0 120 120" aria-hidden="true"><defs><path id="kreis" d="M60 60m-46 0a46 46 0 1 1 92 0a46 46 0 1 1-92 0"/></defs><text fill="#F4F1EA" font-family="IBM Plex Mono,monospace" font-size="10.5" letter-spacing="3.2"><textPath href="#kreis">LIMITED · DROP 01 · KEIN NACHSCHUB · </textPath></text><text x="60" y="68" text-anchor="middle" fill="#F4F1EA" font-family="Bodoni Moda,serif" font-style="italic" font-size="24">1896</text></svg></div>
       <div class="text"><span class="chip hell" style="width:max-content"><span class="dot"></span>Drop 01 · Heritage · live</span>
         <h2 class="h-xl">Einmal.<br>Dann nie wieder.</h2>
@@ -495,7 +498,7 @@ function stapelKarte(k, cls, kick, text, tags, prods, bild) {
     <div class="tags" style="margin-top:22px">${tags.map(t => `<span>${t}</span>`).join('')}</div></div>
     <div><div class="mini">${prods.map(s => { const p = PS[s]; return `<a href="${U('p/' + s)}" data-link><img ${srcset(p.img[0])} sizes="140px" alt="" loading="lazy" style="${p.ill ? 'object-fit:contain;padding:10%;background:rgba(255,255,255,.5)' : ''}">${esc(p.n)}<span>${eur(p.p)}</span></a>`; }).join('')}</div>
     <p style="margin-top:24px"><a class="btn ${cls === 'k-fan' ? 'akz' : 'hell'}" style="${cls === 'k-fan' ? 'border-radius:99px' : ''}" href="${U(k)}" data-link>${L.name} entdecken ${ICO.pfeil}</a></p></div></div>
-    <div class="bild"><img src="img/${bild}.webp" alt="" loading="lazy"></div></article>`;
+    <div class="bild"><img src="img/${bild}.webp" alt="" loading="lazy" style="--fp:${FOKUS[bild] || '50% 30%'}"></div></article>`;
 }
 function homeNach(root) {
   const weg = [];
@@ -564,7 +567,7 @@ route(/^\/mannschaft$/, () => {
       <p class="lead">Trikots, Trainingsanzüge und Coachwear für alle, die samstags auf dem Platz stehen. Und für alle, die daneben mitfiebern.</p>
       <div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn akz" href="#kit">Matchday Kit ${ICO.pfeil}</a><a class="btn rand" href="#team">Ganze Mannschaft ausrüsten</a></div>
       <div class="spec"><span>${ICO.luft}Atmungsaktiv</span><span>${ICO.nadel}Wappen gestickt</span><span>${ICO.blitz}Name & Nummer</span></div></div>
-      <div class="bild"><img src="img/team-anzug-tasche.webp" alt="Spieler im Präsentationsanzug mit Sporttasche" fetchpriority="high"><div class="riesen num">26/27</div></div></div>
+      <div class="bild"><img src="img/team-anzug-tasche.webp" alt="Spieler im Präsentationsanzug mit Sporttasche" fetchpriority="high" style="object-position:46% 8%"><div class="riesen num">26/27</div></div></div>
     <span class="balken" aria-hidden="true"></span>
     <a class="karte" href="${U('p/heimtrikot-26-27')}" data-link><img src="img/team-trikot-royal-kids-s.webp" alt=""><div><b>Heimtrikot 26/27</b><span>ab ${eur(49.95)} · jetzt mit Flock</span></div></a>
   </section>
@@ -631,7 +634,7 @@ route(/^\/1896$/, () => {
   const phase = JETZT < DROP1_ENDE ? 0 : 1;
   return {
     ueber: true, titel: '1896', html: `
-  <section class="s-held grain"><img src="img/1896-crew-kirche.webp" alt="Royal Crew vor der Kirche in Mörlenbach" fetchpriority="high">
+  <section class="s-held grain"><picture><source media="(min-width:861px)" srcset="img/1896-hoodie-bank-weit.webp"><img src="img/1896-crew-kirche.webp" alt="1896 in Mörlenbach" fetchpriority="high"></picture>
     <div class="oben-z"><p>Streetwear aus Mörlenbach.<br>Kleine Auflagen. Gestickt in der Region.<br>Kein Nachschub.</p><span class="chip hell"><span class="dot"></span>Drop 01 · live</span></div>
     <div class="jahr" aria-hidden="true">${'1896'.split('').map((c, i) => `<span class="wz"><span style="transition-delay:${200 + i * 90}ms">${c}</span></span>`).join('')}</div>
     <div class="unten-z"><h1>Die Linie, die <em>nicht</em> auf den Platz will.</h1>
