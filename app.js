@@ -31,6 +31,9 @@ const ICO = {
   plus: I('<path d="M12 5v14M5 12h14"/>'),
   minus: I('<path d="M5 12h14"/>'),
   blitz: I('<path d="M13 3 5 13h6l-1 8 8-10h-6z"/>'),
+  play: I('<path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/>'),
+  teilen: I('<circle cx="18" cy="5.5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="18.5" r="2.5"/><path d="m8.2 10.8 7.6-4.1M8.2 13.2l7.6 4.1"/>'),
+  wa: I('<path d="M4 20l1.2-3.6A8 8 0 1 1 8 19z"/><path d="M9 8.5c0 3.5 3 6.5 6.5 6.5l1-1.6-2-1-1 1c-1.2-.5-2.4-1.7-2.9-2.9l1-1-1-2z"/>'),
   tropfen: I('<path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/>'),
 };
 const WAPPEN = `<svg viewBox="0 0 40 46" fill="none" aria-hidden="true"><path d="M3 3h34v19.5c0 11.6-7.7 18.6-17 21.5C10.7 41.1 3 34.1 3 22.5z" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><g fill="currentColor"><path d="M7.8 17.1c.3-4.4 1.6-7.4 5.2-7.4s4.9 3 5.2 7.4l2 2.6h-14.4z"/><circle cx="13" cy="8.6" r="1.1"/><circle cx="13" cy="21.1" r="1.5"/><path d="M21.8 17.1c.3-4.4 1.6-7.4 5.2-7.4s4.9 3 5.2 7.4l2 2.6h-14.4z"/><circle cx="27" cy="8.6" r="1.1"/><circle cx="27" cy="21.1" r="1.5"/><path d="M14.8 31.1c.3-4.4 1.6-7.4 5.2-7.4s4.9 3 5.2 7.4l2 2.6h-14.4z"/><circle cx="20" cy="22.6" r="1.1"/><circle cx="20" cy="35.1" r="1.5"/></g></svg>`;
@@ -116,6 +119,8 @@ const P = [
     t: 'Hält 24 Stunden kalt und 12 Stunden warm. Für Training, Büro und Auswärtsfahrt.', mat: ['Edelstahl, doppelwandig', 'Pulverbeschichtung', 'BPA-frei'], fit: '750 ml, 27 cm hoch.', model: '' },
   { s: 'stoffbeutel', l: 'merch', k: 'unterwegs', n: 'Stoffbeutel Mörlenbach', u: 'Bio-Baumwolle', p: 14.95, img: ['ill-beutel.svg'], gr: ['One Size'], aus: [], wenig: [], b: [], acc: true, ill: true, f: [['Natur', '#EDE6D6', 'stoffbeutel']],
     t: 'Für den Wochenmarkt, die Bücherei und alles dazwischen. Mehr als ein Verein, auch beim Einkaufen.', mat: ['100 % Bio-Baumwolle, 280 g/m²', 'Lange Henkel', 'Siebdruck'], fit: '38 × 42 cm.', model: '' },
+  { s: 'gutschein', l: 'merch', k: 'kleinkram', n: 'Geschenkgutschein', u: 'Per E-Mail · 25 bis 100 €', p: 25, img: ['ill-gutschein.svg'], gr: ['25 €', '50 €', '75 €', '100 €'], aus: [], wenig: [], b: ['Neu'], acc: true, ill: true, gut: true, f: [['Navy', '#1E355E', 'gutschein']],
+    t: 'Wenn du nicht weißt, welche Größe oder welche Linie: Der Gutschein passt immer. Einlösbar für Mannschaft, Merch und jeden Drop.', mat: ['Kommt sofort per E-Mail als PDF', 'Drei Jahre gültig', 'Auch für Vorbestellungen einlösbar'], fit: 'Einlösbar im ganzen Store.', model: '' },
   { s: 'pin-set', l: 'merch', k: 'kleinkram', n: 'Pin-Set Drei Glocken', u: 'Emaille · 3 Stück', p: 9.95, img: ['ill-pins.svg'], gr: ['Set'], aus: [], wenig: [], b: [], acc: true, ill: true, f: [['Gold', '#C9A659', 'pin-set']],
     t: 'Drei Emaille-Pins für Jacke, Rucksack oder Cap. Kommen auf einer Karte, perfekt zum Verschenken.', mat: ['Hartemaille mit Goldrand', 'Butterfly-Verschluss'], fit: '25 bis 32 mm.', model: '' },
 ];
@@ -157,9 +162,9 @@ const FREI_AB = 75;
 function korbRein(slug, gr, pers) {
   const pr = PS[slug]; const key = slug + '|' + gr + '|' + (pers ? pers.name + pers.nr : '');
   const vorh = S.korb.find(x => x.key === key);
-  const preis = pr.p + (pers ? 12 : 0);
+  const preis = (pr.gut ? parseFloat(gr) : pr.p) + (pers ? 12 : 0);
   if (vorh) vorh.m++; else S.korb.push({ key, s: slug, gr, m: 1, p: preis, pers });
-  ls.set('svd_korb', S.korb); korbMalen(); zaehler(true);
+  ls.set('svd_korb', S.korb); korbMalen(); zaehler(true); konfetti();
   toast(`<img src="${bildUrl(pr.img[0], true)}" alt=""><span><b>${esc(pr.n)}</b><br>Größe ${esc(gr)} liegt im Warenkorb</span>`);
 }
 function merken(slug) {
@@ -173,7 +178,7 @@ function zaehler(bump) {
   if (bump) { const b = $('#korbBtn'); b.classList.remove('bump'); void b.offsetWidth; b.classList.add('bump'); }
   const m = $('#merkBtn em'); m.textContent = S.merk.length; m.classList.toggle('da', S.merk.length > 0);
 }
-let toastT; function toast(html) { const t = $('#toast'); t.innerHTML = html; t.classList.add('auf'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('auf'), 2600); }
+let toastT; function toast(html, ms = 2600) { const t = $('#toast'); t.innerHTML = html; t.classList.add('auf'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('auf'), ms); }
 
 /* ================= Produktkachel ================= */
 function kachel(p, o = {}) {
@@ -221,7 +226,7 @@ function rahmen() {
     </header></div>
   <div class="menue" id="menue" aria-hidden="true"><button class="zu" id="menueZu" aria-label="Menü schließen">${ICO.zu}</button>
     <div class="links"><nav>${navItems.map(([k, t], i) => `<a href="${U(k)}" data-link data-bild="${{ mannschaft: 'team-anzug-treppe', '1896': '1896-hoodie-treppe', merch: 'merch-schal-bank-hoch', kids: 'kids-trikot-royal', accessoires: '1896-crew-cap-cafe', drops: '1896-mauer', verein: 'team-tribuene', faq: 'merch-gruppe' }[k]}" style="transition-delay:${120 + i * 45}ms"><small>0${i + 1}</small>${t}</a>`).join('')}</nav>
-      <div class="klein-links"><a href="${U('konzept')}" data-link>Konzept</a><a href="${U('faq#versand')}" data-link>Versand</a><a href="${U('faq#vorbestellung')}" data-link>Vorbestellung</a><a href="${U('merkzettel')}" data-link>Merkzettel</a><span>Ei gude!</span></div></div>
+      <div class="klein-links"><a href="#" data-tour>▶ Tour starten</a><a href="${U('konzept')}" data-link>Konzept</a><a href="${U('faq#versand')}" data-link>Versand</a><a href="${U('faq#vorbestellung')}" data-link>Vorbestellung</a><a href="${U('merkzettel')}" data-link>Merkzettel</a><span>Ei gude!</span></div></div>
     <div class="bild">${['team-anzug-treppe', '1896-hoodie-treppe', 'merch-schal-bank-hoch', 'kids-trikot-royal', '1896-crew-cap-cafe', '1896-mauer', 'team-tribuene', 'merch-gruppe'].map((b, i) => `<img src="img/${b}${b.includes('bank-hoch') ? '' : '-s'}.webp" data-b="${b}" class="${i ? '' : 'on'}" alt="">`).join('')}</div></div>
   <main id="haupt" tabindex="-1"></main>
   <footer class="fuss" id="fuss"></footer>
@@ -232,7 +237,7 @@ function rahmen() {
     <div class="vorschlag">${['Hoodie', 'Trikot', 'Schal', 'Drop 01', 'Kids', 'Cap', 'Geschenk'].map(v => `<button data-v="${v}">${v}</button>`).join('')}</div><div class="treffer" id="treffer"></div></div>
   <div class="vorhang" id="vorhang"><div class="wort"></div><div class="unter"><span></span><span>SV Mörlenbach · Est. 1896</span></div></div>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <a class="demo-pill" href="${U('konzept')}" data-link aria-label="Konzept-Demo"><i>i</i><span>Konzept-Demo</span></a>
+  <div class="demo-pill"><a href="${U('konzept')}" data-link aria-label="Konzept-Demo"><i>i</i><span>Konzept</span></a><button id="tourBtn" aria-label="Tour starten">${ICO.play}<span>Tour</span></button></div>
   <div class="zeiger" id="zeiger">ANSEHEN</div>`);
   $('#fuss').innerHTML = fussHtml();
   // Menü
@@ -356,7 +361,7 @@ async function zeigen() {
   $('#zeiger').classList.remove('an');
   scrollTo(0, 0);
   if (erg.nach) { const f = erg.nach(h); if (typeof f === 'function') aufraeumen.push(f); }
-  reveal(h); uhrenTick();
+  reveal(h); uhrenTick(); wow(h, p);
 }
 function nix() { return { titel: 'Nicht gefunden', html: `<section class="seite wrap sec" style="min-height:70svh"><p class="kicker">Fehler 404</p><h1 class="h-xl" style="margin-block:20px">Abseits.</h1><p class="lead">Diese Seite gibt es nicht. Vielleicht hat der Schiri was übersehen.</p><p style="margin-top:28px"><a class="btn" href="${U('')}" data-link>Zur Startseite ${ICO.pfeil}</a></p></section>` }; }
 
@@ -729,10 +734,10 @@ route(/^\/merch$/, () => {
         s.addEventListener('pointerup', () => { s.style.transition = ''; s.animate([{ scale: 1.15 }, { scale: 1 }], { duration: 500, easing: 'cubic-bezier(.34,1.56,.64,1)' }); }); });
       // Geschenkfinder
       const sel = { wer: 'ich', geld: '50' };
-      const finde = () => { const max = sel.geld === 'egal' ? 999 : +sel.geld; const pool = { ich: ['hoodie-1896-glocken', 'fanschal-heimat', 'cap-1896-cream', 'supporter-hoodie', 'trinkflasche', 'beanie-wappen'], kind: ['heimtrikot-kids', 'beanie-wappen', 'pin-set', 'cap-royal', 'kids-trainingsanzug', 'fanschal-glocken'], oma: ['fanschal-heimat', 'stoffbeutel', 'balkenschal', 'pin-set', 'supporter-hoodie', 'trinkflasche'], kumpel: ['trinkflasche', 'cap-royal', 'balkenschal', 'crew-stone-grey', 'beanie-wappen', 'pin-set'] }[sel.wer].map(s => PS[s]).filter(p => p.p <= max).slice(0, 3);
+      const finde = () => { const max = sel.geld === 'egal' ? 999 : +sel.geld; const pool = { ich: ['hoodie-1896-glocken', 'fanschal-heimat', 'cap-1896-cream', 'supporter-hoodie', 'trinkflasche', 'beanie-wappen'], kind: ['heimtrikot-kids', 'beanie-wappen', 'pin-set', 'cap-royal', 'kids-trainingsanzug', 'fanschal-glocken'], oma: ['fanschal-heimat', 'gutschein', 'stoffbeutel', 'balkenschal', 'pin-set', 'supporter-hoodie', 'trinkflasche'], kumpel: ['gutschein', 'trinkflasche', 'cap-royal', 'balkenschal', 'crew-stone-grey', 'beanie-wappen', 'pin-set'] }[sel.wer].map(s => PS[s]).filter(p => p.p <= max).slice(0, 3);
         $('#ergebnis').innerHTML = pool.map(p => `<a href="${U('p/' + p.s)}" data-link><img ${srcset(p.img[0])} sizes="180px" alt="" class="${p.ill ? 'ill' : ''}">${esc(p.n)}<span>${eur(p.p)}</span></a>`).join('') || '<p>Für das Budget haben wir gerade nichts. Wie wär’s mit dem Pin-Set?</p>'; };
       $$('.finder .opts', root).forEach(o => $$('button', o).forEach(b => b.onclick = () => { sel[o.dataset.f] = b.dataset.v; $$('button', o).forEach(x => x.classList.toggle('on', x === b)); finde(); })); finde();
-      $('#paketBtn').onclick = () => { ['fanschal-heimat', 'beanie-wappen', 'trinkflasche'].forEach(s => { const pr = PS[s]; S.korb.push({ key: s + '|paket|' + Date.now(), s, gr: pr.gr[0], m: 1, p: +(pr.p * 49 / 56.85).toFixed(2) }); }); ls.set('svd_korb', S.korb); korbMalen(); zaehler(true); lade(true); };
+      $('#paketBtn').onclick = () => { let rest = 49; ['fanschal-heimat', 'beanie-wappen', 'trinkflasche'].forEach((s, k) => { const pr = PS[s]; const p = k < 2 ? +(pr.p * 49 / 56.85).toFixed(2) : +rest.toFixed(2); rest -= p; S.korb.push({ key: s + '|paket|' + Date.now(), s, gr: pr.gr[0], m: 1, p }); }); ls.set('svd_korb', S.korb); korbMalen(); zaehler(true); konfetti(); lade(true); };
       const filt = k => { $$('#mFilter button').forEach(x => x.classList.toggle('on', x.dataset.k === k)); $('#mGrid').innerHTML = P.filter(p => p.l === 'merch' && (!k || p.k === k)).map(p => kachel(p).replace('<article class="kachel', '<article class="kachel raus')).join(''); };
       $$('#mFilter button').forEach(b => b.onclick = () => filt(b.dataset.k));
       $$('.f-kats a', root).forEach(a => a.addEventListener('click', () => filt(a.dataset.kat)));
@@ -760,8 +765,8 @@ route(/^\/p\/([a-z0-9-]+)$/, m => {
     <div><div class="badges">${p.b.map(x => `<span class="chip ${x === 'Limited' ? 'akz' : 'rand'}">${x}</span>`).join('')}</div>
       <h1 style="margin-top:14px">${esc(p.n)}</h1><p class="unter">${esc(p.u)}</p></div>
     <div class="preiszeile"><b class="num" id="preis">${eur(p.p + (persVor ? 12 : 0))}</b><small>inkl. MwSt.${p.vor ? ' · Vorbestellung' : ' · auf Lager'}</small></div>
-    ${p.f.length > 1 || p.f[0] ? `<div><div class="wahl-kopf"><span>Farbe: <b>${p.f.find(f => f[2] === p.s)?.[0] || p.f[0][0]}</b></span></div><div class="farben-w">${p.f.map(f => `<a href="${U('p/' + f[2])}" data-link class="${f[2] === p.s ? 'on' : ''}" style="background:${f[1]}" aria-label="${f[0]}" title="${f[0]}"></a>`).join('')}</div></div>` : ''}
-    <div><div class="wahl-kopf"><span>Größe: <b id="grWahl">${p.gr.length === 1 ? p.gr[0] : 'bitte wählen'}</b></span>${p.gr.length > 1 ? `<button id="grHilfe">${ICO.lineal.replace('<svg', '<svg style="width:15px;display:inline;vertical-align:-3px;margin-right:4px"')}Größe finden</button>` : ''}</div>
+    ${!p.gut && (p.f.length > 1 || p.f[0]) ? `<div><div class="wahl-kopf"><span>Farbe: <b>${p.f.find(f => f[2] === p.s)?.[0] || p.f[0][0]}</b></span></div><div class="farben-w">${p.f.map(f => `<a href="${U('p/' + f[2])}" data-link class="${f[2] === p.s ? 'on' : ''}" style="background:${f[1]}" aria-label="${f[0]}" title="${f[0]}"></a>`).join('')}</div></div>` : ''}
+    <div><div class="wahl-kopf"><span>${p.gut ? 'Betrag' : 'Größe'}: <b id="grWahl">${p.gr.length === 1 ? p.gr[0] : 'bitte wählen'}</b></span>${p.gr.length > 1 && !p.gut ? `<button id="grHilfe">${ICO.lineal.replace('<svg', '<svg style="width:15px;display:inline;vertical-align:-3px;margin-right:4px"')}Größe finden</button>` : ''}</div>
       <div class="groessen">${p.gr.map(g => `<button data-g="${g}" class="${p.aus.includes(g) ? 'aus' : ''}${p.wenig.includes(g) ? ' wenig' : ''}${p.gr.length === 1 ? ' on' : ''}" ${p.aus.includes(g) ? 'aria-disabled="true"' : ''}>${g}</button>`).join('')}</div>
       ${p.wenig.length && p.gr.length > 1 ? `<p class="passt" style="margin-top:10px"><i style="width:7px;height:7px;border-radius:50%;background:var(--orange);display:inline-block"></i>Nur noch wenige in ${p.wenig.join(', ')}</p>` : ''}
       ${p.fit ? `<p class="passt" style="margin-top:8px">${ICO.info}<span>${esc(p.fit)}${p.model ? ' ' + esc(p.model) : ''}</span></p>` : ''}</div>
@@ -771,7 +776,7 @@ route(/^\/p\/([a-z0-9-]+)$/, m => {
       <div class="zeitstrahl hell" style="--line:var(--line)"><span class="lauf" style="width:12%"></span><div class="jetzt"><b style="font-size:12.5px">Jetzt</b><span>vorbestellen</span></div><div><b style="font-size:12.5px">${fDatum(DROP1_ENDE)}</b><span>Schluss</span></div><div><b style="font-size:12.5px">Stick</b><span>ca. 14 Tage</span></div><div><b style="font-size:12.5px">KW ${VERSAND_KW}</b><span>Versand</span></div></div>
       <p>Limitiert auf den Zeitraum, nicht auf eine Stückzahl. Nach Bestellschluss wird nicht nachproduziert.</p></div>` : ''}
     <div class="kaufzeile"><button class="btn akz" id="kaufen">${p.vor ? 'Jetzt vorbestellen' : 'In den Warenkorb'} ${ICO.korb}</button><button class="merk${S.merk.includes(p.s) ? ' on' : ''}" data-herz="${p.s}" aria-label="Merken">${ICO.herz}</button></div>
-    <div class="lieferinfo"><div>${ICO.lkw}<span><b>${p.vor ? `Versand ab KW ${VERSAND_KW}` : 'Lieferung in 3 bis 5 Werktagen'}</b><br>Kostenlos ab 75 €, sonst 5,90 €</span></div><div>${ICO.ort}<span><b>Abholung am Sportplatz</b><br>Kostenlos, wir melden uns, sobald es da ist</span></div><div>${ICO.zurueck}<span><b>14 Tage Umtausch</b>${p.pers || p.vor ? '<br>Personalisierte und vorbestellte Teile sind vom Umtausch ausgenommen' : '<br>Einfach am Sportplatz oder per Post'}</span></div></div>
+    <div class="lieferinfo"><div>${ICO.lkw}<span><b>${p.gut ? 'Sofort per E-Mail' : p.vor ? `Versand ab KW ${VERSAND_KW}` : 'Lieferung in 3 bis 5 Werktagen'}</b><br>${p.gut ? 'Als PDF zum Ausdrucken oder Weiterleiten' : 'Kostenlos ab 75 €, sonst 5,90 €'}</span></div><div>${ICO.ort}<span><b>Abholung am Sportplatz</b><br>Kostenlos, wir melden uns, sobald es da ist</span></div><div>${ICO.zurueck}<span><b>14 Tage Umtausch</b>${p.pers || p.vor ? '<br>Personalisierte und vorbestellte Teile sind vom Umtausch ausgenommen' : '<br>Einfach am Sportplatz oder per Post'}</span></div></div>
     <div class="geld">${ICO.hand}<span>${geld}</span></div>
     <div class="akk">
       <details open><summary>Beschreibung<i></i></summary><div class="inhalt"><p>${esc(p.t)}</p></div></details>
@@ -794,7 +799,7 @@ route(/^\/p\/([a-z0-9-]+)$/, m => {
     nach: root => {
       let gr = p.gr.length === 1 ? p.gr[0] : null; let pers = !!persVor;
       const preis = () => { const v = eur(p.p + (pers ? 12 : 0)); $('#preis').textContent = v; $('#ulPreis').textContent = v; };
-      $$('.groessen button', root).forEach(b => b.onclick = () => { if (b.classList.contains('aus')) { toast(`${ICO.info}<span>Größe ${b.dataset.g} ist vergriffen. Wir sagen Bescheid, falls sie wiederkommt.</span>`); return; } gr = b.dataset.g; $$('.groessen button', root).forEach(x => x.classList.toggle('on', x === b)); $('#grWahl').textContent = gr; });
+      $$('.groessen button', root).forEach(b => b.onclick = () => { if (b.classList.contains('aus')) { toast(`${ICO.info}<span>Größe ${b.dataset.g} ist vergriffen. Wir sagen Bescheid, falls sie wiederkommt.</span>`); return; } gr = b.dataset.g; $$('.groessen button', root).forEach(x => x.classList.toggle('on', x === b)); $('#grWahl').textContent = gr; if (p.gut) { const v = eur(parseFloat(gr)); $('#preis').textContent = v; $('#ulPreis').textContent = v; } });
       const kauf = () => {
         if (!gr) { const g = $('.groessen'); g.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-8px)' }, { transform: 'translateX(8px)' }, { transform: 'translateX(-5px)' }, { transform: 'none' }], { duration: 420 }); $('#grWahl').textContent = 'bitte zuerst wählen'; $('#grWahl').style.color = 'var(--orange)'; g.scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
         const pv = pers ? { name: ($('#pName').value || '').toUpperCase(), nr: $('#pNr').value } : null;
@@ -941,12 +946,12 @@ route(/^\/info\/([a-z]+)$/, m => ({ titel: { impressum: 'Impressum', datenschutz
 
 /* ================= Konzept & Styleguide ================= */
 route(/^\/konzept$/, () => {
-  const K = [['idee', 'Leitidee'], ['stil', 'Stilrichtung'], ['welten', 'Drei Welten'], ['farbe', 'Farben'], ['typo', 'Typografie'], ['struktur', 'Seitenstruktur'], ['hero', 'Startseite & Hero'], ['pdp', 'Produktseite'], ['drop', 'Drop-Logik'], ['texte', 'Texte & Ton'], ['ui', 'UI-Elemente'], ['bild', 'Bildsprache'], ['benchmark', 'Benchmark'], ['partner', 'Rolle des Partners'], ['technik', 'Technik & Roadmap']];
+  const K = [['idee', 'Leitidee'], ['stil', 'Stilrichtung'], ['welten', 'Drei Welten'], ['farbe', 'Farben'], ['typo', 'Typografie'], ['struktur', 'Seitenstruktur'], ['hero', 'Startseite & Hero'], ['pdp', 'Produktseite'], ['drop', 'Drop-Logik'], ['texte', 'Texte & Ton'], ['ui', 'UI-Elemente'], ['bild', 'Bildsprache'], ['benchmark', 'Benchmark'], ['partner', 'Rolle des Partners'], ['business', 'Business Case'], ['technik', 'Technik & Roadmap']];
   const sw = (n, h, r) => `<div class="swatch"><i style="background:${h}"></i><div><b>${n}</b><span>${h}</span><br><span style="font-family:var(--f-sans)">${r}</span></div></div>`;
   return {
     titel: 'Konzept', html: `<div class="konzept">
   <header class="k-kopf wrap"><p class="kicker" style="margin-bottom:22px">Konzept & Styleguide · Store SV Mörlenbach</p><h1>Drei Welten.<br>Ein <em>Verein.</em></h1>
-    <p class="lead" style="margin-top:26px;max-width:62ch">Wie der Store des SV Mörlenbach aussieht, klingt und funktioniert. Grundlage für das Gespräch mit dem Teamsport-Partner. Alles, was hier beschrieben ist, ist in dieser Demo klickbar umgesetzt.</p>
+    <p style="margin-top:22px"><button class="btn akz" data-tour>${ICO.play} Geführte Tour starten</button></p><p class="lead" style="margin-top:26px;max-width:62ch">Wie der Store des SV Mörlenbach aussieht, klingt und funktioniert. Grundlage für das Gespräch mit dem Teamsport-Partner. Alles, was hier beschrieben ist, ist in dieser Demo klickbar umgesetzt.</p>
     <div class="k-meta"><span>Stand ${fDatum(JETZT, { day: '2-digit', month: 'long', year: 'numeric' })}</span><span>Version 1.0 · Demo</span><span>Verkäufer: SV Mörlenbach 1896 e.V.</span></div></header>
   <div class="wrap k-layout"><nav class="k-nav" id="kNav">${K.map(([k, t], i) => `<a href="#${k}"><b>${String(i + 1).padStart(2, '0')}</b>${t}</a>`).join('')}</nav><div>
 
@@ -1030,7 +1035,7 @@ route(/^\/konzept$/, () => {
     <div class="ui-demo"><a class="btn" href="#ui">Primär ${ICO.pfeil}</a><a class="btn akz" href="#ui">Akzent</a><a class="btn rand" href="#ui">Kontur</a><a class="link" href="#ui">Textlink ${ICO.pfeil}</a><span class="chip akz">Limited</span><span class="chip rand">Personalisierbar</span><span class="chip"><span class="dot"></span>Live</span></div>
     <div class="ui-demo" style="background:#141517;color:#F4F1EA">${uhrHtml(DROP1_ENDE)}</div>
     <div class="ui-demo"><div class="groessen" style="flex:1;min-width:260px"><button>S</button><button class="on">M</button><button class="wenig">L</button><button class="aus">XL</button></div><span class="schalter-k on"></span></div>
-    <ul class="k-liste" style="margin-top:20px"><li>Buttons füllen sich beim Überfahren von unten mit Orange, der Pfeil rückt nach rechts.</li><li>Produktkachel: zweites Bild beim Überfahren, Merken-Herz, Schnellkauf mit Größen, bis zu zwei Badges.</li><li>Größen: ausgewählt (gefüllt), wenig verfügbar (oranger Punkt), vergriffen (schraffiert).</li><li>Warenkorb-Schublade mit Fortschrittsbalken bis zum Gratisversand und Vorschlägen unter 30 €.</li><li>Toasts unten mittig, Dialoge mit weichem Einflug, Seitenwechsel mit Vorhang in Linienfarbe.</li></ul></section>
+    <ul class="k-liste" style="margin-top:20px"><li>Buttons füllen sich beim Überfahren von unten mit Orange, der Pfeil rückt nach rechts.</li><li>Produktkachel: zweites Bild beim Überfahren, Merken-Herz, Schnellkauf mit Größen, bis zu zwei Badges.</li><li>Größen: ausgewählt (gefüllt), wenig verfügbar (oranger Punkt), vergriffen (schraffiert).</li><li>Warenkorb-Schublade mit Fortschrittsbalken bis zum Gratisversand und Vorschlägen unter 30 €.</li><li>Toasts unten mittig, Dialoge mit weichem Einflug, Seitenwechsel mit Vorhang in Linienfarbe.</li><li>Startseite am Handy als Stories: automatisch weiterblättern, Tippen links und rechts, Wischen, Halten pausiert.</li><li>Am Rechner bewegen sich die Hero-Bilder leicht mit der Maus, ein warmes Gegenlicht wandert mit. Buttons ziehen sich magnetisch zum Mauszeiger.</li><li>Produktbilder zoomen beim Überfahren dorthin, wo die Maus steht. Teilen per WhatsApp direkt an der Kaufbox.</li><li>Jede Seite hat ein eigenes Vorschaubild für WhatsApp und Co. Geteilte Produktlinks zeigen Foto, Name und Preis.</li><li>Geführte Tour mit zwölf Stationen für Präsentationen, steuerbar mit den Pfeiltasten. Direktlink: shop.kaderwerk.pro/?tour</li></ul></section>
 
   <section class="k-sek" id="bild"><span class="nr">12 · Bildsprache & Content</span><h2>Echte Orte, echtes Licht, echte Leute.</h2>
     <p>Fotografiert wird in Mörlenbach: auf Treppen, Mauern, Bänken, am Brunnen und am Sportplatz. Goldene Stunde, leicht unperfekt, oft aus der Hocke. Das Produkt steht im Mittelpunkt, Logos sitzen nur auf der Kleidung.</p>
@@ -1054,7 +1059,12 @@ route(/^\/konzept$/, () => {
       <tr><td>Marketing</td><td>Instagram, Spieltag, Mitglieder</td><td>Co-Branding, Bildmaterial, Aktionen zum Saisonstart</td></tr></tbody></table></div>
     <h3>Fragen für den Termin</h3><ul class="k-liste"><li>Ab welcher Menge lohnt sich eine Drop-Produktion, und wie lange dauert sie?</li><li>Gibt es einen Produktdaten-Feed (Bilder, Größen, Preise, Bestand)?</li><li>Kann der Partner direkt an Endkunden versenden, oder sammeln wir am Verein?</li><li>Wie sehen Staffelpreise für Teambestellungen und Flock aus?</li><li>Welche Marken und Logos dürfen in Fotos und Werbung gezeigt werden?</li></ul></section>
 
-  <section class="k-sek" id="technik"><span class="nr">15 · Technik & Roadmap</span><h2>Eigenständig, aber verbunden.</h2>
+  <section class="k-sek" id="business"><span class="nr">15 · Business Case</span><h2>Was steckt drin? Spiel es durch.</h2>
+    <p>Ein Rechner zum Durchspielen im Termin. Alle Werte sind Annahmen und lassen sich mit den Reglern verändern. Er zeigt, wie sich Umsatz, Volumen für den Partner und Überschuss für den Verein zusammensetzen.</p>
+    <div class="rechner-bc" id="bc"></div>
+    <p class="klein-hinweis">Annahmen zum Durchspielen, keine Prognose. Umsatz brutto. Wareneinsatz und Veredelung pauschal 55 % vom Umsatz, Versand, Verpackung und Zahlung 12 %. Überschuss nach Abzug dieser Posten und 19 % Mehrwertsteuer.</p></section>
+
+  <section class="k-sek" id="technik"><span class="nr">16 · Technik & Roadmap</span><h2>Eigenständig, aber verbunden.</h2>
     <p>Der Store läuft eigenständig auf eigener Adresse, ohne Verknüpfung zur Vereins-App. Im Hintergrund nutzt er dieselbe Datenbank wie die Sportzentrale des Vereins. So landen Umsätze und Kennzahlen später direkt in der Finanzübersicht, ohne doppelte Pflege.</p>
     <ul class="k-liste"><li><b>Backoffice</b> mit Vereinslogin: Bestellungen, Produkte, Drops, Rabattcodes, Kunden, Auswertung.</li><li><b>Auswertung</b> ohne Cookies: Seitenaufrufe, Verweildauer, Klick-Heatmaps, Funnel bis zur Bestellung. Pixel für Instagram und andere Kanäle nur mit Zustimmung.</li><li><b>Zahlung</b> zum Start per Vorkasse und bar bei Abholung. Online-Zahlung als nächster Schritt.</li><li><b>Datenschutz:</b> Schriften und Bilder selbst gehostet, Merkzettel und Warenkorb nur auf dem Gerät.</li></ul>
     <div class="roadmap"><div><b>Phase 1 · Start</b><ul><li>Teamline und Merch</li><li>Drop 01 als Vorbestellung</li><li>Abholung und Versand</li><li>Backoffice und Auswertung</li></ul></div><div><b>Phase 2 · Ausbau</b><ul><li>Online-Zahlung</li><li>Mitglieder-Early-Access</li><li>Produkt-Feed für Instagram Shopping</li><li>Spieltag-Modus im Hero</li></ul></div><div><b>Phase 3 · Jubiläum</b><ul><li>Drop 03 zu 130 Jahren</li><li>Teamshop-Seiten pro Mannschaft</li><li>Gutscheine und Geschenkkarten</li><li>Anbindung an das Warenwirtschaftssystem des Partners</li></ul></div></div></section>
@@ -1066,11 +1076,153 @@ route(/^\/konzept$/, () => {
   };
 });
 
+/* ================= Wow-Schicht: Hero-Stories, Parallax, Zoom, Teilen, Tour, Business Case ================= */
+const desktop = () => matchMedia('(hover:hover) and (min-width:861px)').matches;
+function wow(root) {
+  if ($('#tafeln', root)) heroWow(root);
+  if ($('#galerie', root)) pdpWow(root);
+  if (document.body.dataset.w === 'street') kratzen(root);
+  if ($('#bc', root)) businessCase($('#bc', root));
+}
+
+/* ---------- Hero: Desktop Parallax + Licht, Handy Stories ---------- */
+function heroWow(root) {
+  const held = $('.held', root), t = $('#tafeln', root);
+  if (matchMedia('(max-width:860px)').matches) return stories(t);
+  if (ruhig) return;
+  t.insertAdjacentHTML('beforeend', '<span class="lichtfleck" aria-hidden="true"></span>');
+  held.addEventListener('pointermove', e => { const r = held.getBoundingClientRect(); held.style.setProperty('--mx', ((e.clientX - r.left) / r.width - .5).toFixed(3)); held.style.setProperty('--my', ((e.clientY - r.top) / r.height - .5).toFixed(3)); });
+  held.addEventListener('pointerleave', () => { held.style.setProperty('--mx', 0); held.style.setProperty('--my', 0); });
+}
+function stories(t) {
+  const tafeln = $$('.tafel', t); let i = 0, x0 = null, gewischt = false;
+  t.classList.add('story');
+  t.insertAdjacentHTML('afterbegin', `<div class="story-balken" aria-hidden="true">${tafeln.map(() => '<i><b></b></i>').join('')}</div><span class="story-tipp" aria-hidden="true">Tippen zum Blättern</span>`);
+  const balken = $$('.story-balken i', t);
+  const zeig = n => { i = (n + tafeln.length) % tafeln.length; tafeln.forEach((x, k) => x.classList.toggle('on', k === i)); balken.forEach((b, k) => { b.classList.remove('lauf'); b.classList.toggle('voll', k < i); }); void t.offsetWidth; balken[i].classList.add('lauf'); };
+  balken.forEach(b => b.querySelector('b').addEventListener('animationend', () => zeig(i + 1)));
+  t.addEventListener('click', e => { if (e.target.closest('.mehr')) return; e.preventDefault(); e.stopPropagation(); if (gewischt) { gewischt = false; return; } const r = t.getBoundingClientRect(); zeig(e.clientX - r.left < r.width / 3 ? i - 1 : i + 1); }, true);
+  t.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; t.classList.add('pause'); }, { passive: true });
+  t.addEventListener('touchend', e => { t.classList.remove('pause'); if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0; x0 = null; if (Math.abs(dx) > 40) { gewischt = true; zeig(dx < 0 ? i + 1 : i - 1); setTimeout(() => gewischt = false, 400); } });
+  zeig(0);
+}
+
+/* ---------- Produktseite: Lupe beim Überfahren, Teilen ---------- */
+function pdpWow(root) {
+  if (desktop()) $$('#galerie figure', root).forEach(f => {
+    if (f.classList.contains('ill')) return; const img = $('img', f);
+    f.addEventListener('pointermove', e => { const r = f.getBoundingClientRect(); img.style.transformOrigin = `${(e.clientX - r.left) / r.width * 100}% ${(e.clientY - r.top) / r.height * 100}%`; img.style.transform = 'scale(1.9)'; });
+    f.addEventListener('pointerleave', () => { img.style.transform = ''; img.style.transformOrigin = ''; });
+  });
+  const kz = $('.kaufzeile', root); if (!kz) return;
+  const url = location.origin + location.pathname, name = document.title.split(' · ')[0];
+  kz.insertAdjacentHTML('afterend', `<div class="teilen"><button id="teilenBtn">${ICO.teilen}Teilen</button><a href="https://wa.me/?text=${encodeURIComponent(name + ' ' + url)}" target="_blank" rel="noopener">${ICO.wa}Per WhatsApp schicken</a></div>`);
+  $('#teilenBtn').onclick = async () => { try { if (navigator.share) { await navigator.share({ title: name, url }); return; } await navigator.clipboard.writeText(url); toast(`${ICO.check}<span>Link kopiert</span>`); } catch (e) { } };
+}
+
+/* ---------- 1896: Mono-Texte „entschlüsseln“ sich ---------- */
+function kratzen(root) {
+  if (ruhig) return; const Z = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/·';
+  $$('.s-held .oben-z p, .s-drop-kopf .kicker, .lookbook figcaption, .naechster p.mono', root).forEach(el => {
+    const io = new IntersectionObserver(es => { if (!es[0].isIntersecting) return; io.disconnect();
+      const kn = []; const w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT); while (w.nextNode()) kn.push([w.currentNode, w.currentNode.textContent]);
+      let f = 0; const max = 24; const tick = () => { f++; kn.forEach(([n, t]) => { const fertig = Math.floor(t.length * f / max); n.textContent = t.slice(0, fertig) + t.slice(fertig).replace(/\S/g, () => Z[Math.random() * Z.length | 0]); }); if (f < max) setTimeout(tick, 34); }; tick(); }, { threshold: .6 });
+    io.observe(el);
+  });
+}
+
+/* ---------- Merch: Konfetti beim Einpacken ---------- */
+function konfetti() {
+  if (ruhig || document.body.dataset.w !== 'fan') return; const z = $('#korbBtn').getBoundingClientRect(); const F = ['#2F66C8', '#F28C28', '#ECE3D3', '#22252A', '#ffffff'];
+  for (let k = 0; k < 36; k++) { const s = document.createElement('i'); s.className = 'konfetti'; s.style.background = F[k % 5]; s.style.left = z.left + z.width / 2 + 'px'; s.style.top = z.top + z.height / 2 + 'px'; document.body.appendChild(s);
+    const a = Math.random() * Math.PI, v = 140 + Math.random() * 240;
+    s.animate([{ transform: 'translate(0,0) rotate(0)', opacity: 1 }, { transform: `translate(${-Math.cos(a) * v - 40}px, ${Math.sin(a) * v * .6 + 220}px) rotate(${Math.random() * 900}deg)`, opacity: 0 }], { duration: 1200 + Math.random() * 700, easing: 'cubic-bezier(.15,.6,.3,1)' }).finished.then(() => s.remove()); }
+}
+
+/* ---------- Magnetische Buttons (Desktop) ---------- */
+let magnet = null;
+document.addEventListener('pointermove', e => {
+  if (!desktop() || ruhig) return; const b = e.target.closest('.btn, .tafel .mehr, .pfeile button');
+  if (magnet && magnet !== b) { magnet.style.translate = ''; magnet = null; } if (!b) return;
+  const r = b.getBoundingClientRect(); b.style.translate = `${((e.clientX - r.left - r.width / 2) * .2).toFixed(1)}px ${((e.clientY - r.top - r.height / 2) * .32).toFixed(1)}px`; magnet = b;
+}, { passive: true });
+
+/* ---------- Business Case ---------- */
+function businessCase(el) {
+  const de = n => Math.round(n).toLocaleString('de-DE');
+  const R = [['reich', 'Reichweite: Mitglieder, Eltern, Fans', 300, 5000, 50, 1200, v => de(v) + ' Menschen'], ['quote', 'Davon kaufen pro Jahr', 5, 60, 1, 30, v => v + ' %'], ['bon', 'Ø Warenkorb Mannschaft & Merch', 20, 150, 1, 58, v => v + ' €'],
+    ['drops', 'Drops pro Jahr', 0, 6, 1, 3, v => v + (v === 1 ? ' Drop' : ' Drops')], ['teile', 'Verkaufte Teile pro Drop', 20, 400, 5, 90, v => v + ' Teile'], ['dpreis', 'Ø Preis Drop-Teil', 35, 120, 1, 82, v => v + ' €'],
+    ['teams', 'Teambestellungen pro Jahr', 0, 30, 1, 8, v => v + ' Mannschaften'], ['tvol', 'Ø Volumen je Teambestellung', 300, 4000, 50, 1400, v => de(v) + ' €']];
+  el.innerHTML = `<div class="bc-regler">${R.map(([k, l, mi, ma, st, d]) => `<label><span>${l}<b id="bv-${k}"></b></span><input type="range" min="${mi}" max="${ma}" step="${st}" value="${d}" data-k="${k}" aria-label="${l}"></label>`).join('')}</div>
+    <div class="bc-ergebnis"><p class="mono">Umsatz pro Jahr (brutto)</p><b class="bc-summe num" id="bcSumme"></b><div class="bc-balken" id="bcBalken"></div><div class="bc-legende" id="bcLeg"></div>
+      <div class="bc-drei"><div><span>Einkaufsvolumen beim Partner</span><b class="num" id="bcPartner"></b></div><div><span>Überschuss für den Verein</span><b class="num" id="bcVerein"></b></div><div><span>Anteil der Drops</span><b class="num" id="bcDrop"></b></div></div></div>`;
+  const rech = () => { const v = {}; $$('input', el).forEach(i => { v[i.dataset.k] = +i.value; $('#bv-' + i.dataset.k, el).textContent = R.find(x => x[0] === i.dataset.k)[6](+i.value); });
+    const shop = v.reich * v.quote / 100 * v.bon, drop = v.drops * v.teile * v.dpreis, team = v.teams * v.tvol, sum = shop + drop + team;
+    $('#bcSumme', el).textContent = de(sum) + ' €'; $('#bcPartner', el).textContent = de(sum * .55) + ' €'; $('#bcVerein', el).textContent = de(Math.max(0, sum / 1.19 - sum * .55 - sum * .12)) + ' €'; $('#bcDrop', el).textContent = (sum ? Math.round(drop / sum * 100) : 0) + ' %';
+    const T = [['Mannschaft & Merch', shop, '#2F66C8'], ['1896 Drops', drop, '#22252A'], ['Teambestellungen', team, '#F28C28']];
+    $('#bcBalken', el).innerHTML = T.map(([n, w, c]) => `<i style="width:${sum ? w / sum * 100 : 0}%;background:${c}" title="${n}"></i>`).join('');
+    $('#bcLeg', el).innerHTML = T.map(([n, w, c]) => `<span><i style="background:${c}"></i>${n}<b class="num">${de(w)} €</b></span>`).join(''); };
+  $$('input', el).forEach(i => i.addEventListener('input', rech)); rech();
+}
+
+/* ---------- Geführte Tour für den Termin ---------- */
+const TOUR = [
+  ['', '.held', 'Drei Welten, ein Verein', 'Jede Linie hat ihre eigene Bildwelt und Schrift. Ein Klick auf ein Bild zoomt direkt in die Linie hinein.'],
+  ['', '#statement', 'Die Haltung', 'Beim Scrollen füllt sich der Text Wort für Wort. Der Verein erzählt, warum es den Store gibt.'],
+  ['', '.stapel', 'Drei Linien im Stapel', 'Die Karten schieben sich beim Scrollen übereinander. Jede zeigt ihre Sprache und erste Produkte.'],
+  ['', '.dropmodul', 'Drops statt Lager', 'Vorbestellung mit Countdown und Zeitleiste bis zum Versand. Nichts liegt auf Halde.'],
+  ['mannschaft', '#kit', 'Matchday Kit', 'Heim und Auswärts mit einem Schalter, ganz in Blau und Orange.', 'kit'],
+  ['mannschaft', '.flock', 'Trikot live beflocken', 'Name und Nummer eintippen, die Vorschau ändert sich sofort.', 'flock'],
+  ['mannschaft', '#team', 'Ganze Mannschaft ausrüsten', 'Der Teambesteller rechnet Staffelrabatte live. Gebaut für Trainer und Elternvertreter.', 'team'],
+  ['1896', '.lookbook', 'Lookbook', 'Beim Scrollen läuft das Lookbook seitwärts. Fotografiert in Mörlenbach.'],
+  ['1896', '.ablauf', 'So läuft ein Drop', 'Vom Klick bis zum Stick mit festen Terminen. Begrenzt wird die Zeit, nicht die Menge.'],
+  ['merch', '#finder', 'Geschenkfinder', 'Zwei Klicks, drei Ideen. Für Oma, Kumpel oder Kind.', 'finder'],
+  ['p/hoodie-1896-glocken', '#kaufbox', 'Produktseite', 'Bildzoom beim Überfahren, Countdown, Größenrechner und Teilen per WhatsApp.'],
+  ['konzept', '#business', 'Business Case', 'Mit den Reglern das Potenzial durchspielen: Volumen für den Partner, Überschuss für den Verein.', 'bc'],
+];
+let tourI = -1;
+async function tourZeig(n) {
+  if (n < 0) n = 0; if (n >= TOUR.length) return tourEnde(true);
+  tourI = n; const [url, sel, titel, text, aktion] = TOUR[n];
+  let box = $('#tour'); if (!box) { document.body.insertAdjacentHTML('beforeend', '<div class="tour" id="tour" role="dialog" aria-label="Demo-Tour"></div>'); box = $('#tour'); }
+  box.innerHTML = `<div class="tour-kopf"><span class="mono">Tour · ${n + 1} / ${TOUR.length}</span><button class="tour-zu" aria-label="Tour beenden">${ICO.zu}</button></div><div class="tour-balken"><i style="width:${(n + 1) / TOUR.length * 100}%"></i></div>
+    <b>${titel}</b><p>${text}</p><div class="tour-knoepfe"><small>Pfeiltasten ← → zum Blättern</small><button class="tour-zur" aria-label="Zurück" ${n ? '' : 'disabled'}>${ICO.pfeilL}</button><button class="btn klein tour-weiter">${n === TOUR.length - 1 ? 'Fertig' : 'Weiter'} ${ICO.pfeil}</button></div>`;
+  requestAnimationFrame(() => box.classList.add('auf')); document.body.classList.add('tour-an');
+  $('.tour-zu', box).onclick = () => tourEnde(); $('.tour-zur', box).onclick = () => tourZeig(tourI - 1); $('.tour-weiter', box).onclick = () => tourZeig(tourI + 1);
+  while (laeuft) await sleep(80);
+  if (pfad() !== '/' + url) { await geh(U(url)); while (laeuft) await sleep(80); }
+  if (tourI !== n) return; await sleep(200);
+  $$('.tour-fokus').forEach(x => x.classList.remove('tour-fokus'));
+  const el = $(sel); if (!el) return;
+  const r = el.getBoundingClientRect(); const handy = innerWidth < 700;
+  const ziel = sel === '.held' ? 0 : scrollY + r.top - (handy ? 84 : Math.max(96, (innerHeight - Math.min(r.height, innerHeight * .78)) / 2));
+  scrollTo({ top: Math.max(0, ziel), behavior: ruhig ? 'auto' : 'smooth' }); el.classList.add('tour-fokus');
+  if (aktion) setTimeout(() => tourAktion(aktion, n), 1000);
+}
+async function tourAktion(a, n) {
+  const noch = () => tourI === n; const tipp = async (el, txt) => { el.value = ''; for (const c of txt) { if (!noch()) return; el.value += c; el.dispatchEvent(new Event('input')); await sleep(110); } };
+  if (a === 'kit') { $('#kitSchalter button[data-k="b"]')?.click(); await sleep(2400); if (noch()) $('#kitSchalter button[data-k="a"]')?.click(); }
+  if (a === 'flock' && $('#fName')) { await tipp($('#fName'), 'KAPITÄN'); await tipp($('#fNr'), '7'); }
+  if (a === 'team') { const i = $('.matrix [data-g="M"]'); if (i) { for (const v of [6, 8, 10]) { if (!noch()) return; i.value = v; i.dispatchEvent(new Event('input')); await sleep(450); } } }
+  if (a === 'finder') { $('.finder .opts[data-f="wer"] button[data-v="oma"]')?.click(); }
+  if (a === 'bc') { const i = $('#bc input[data-k="drops"]'); if (i) for (const v of [4, 5, 6, 3]) { if (!noch()) return; i.value = v; i.dispatchEvent(new Event('input')); await sleep(520); } }
+}
+function tourEnde(fertig) { tourI = -1; $('#tour')?.classList.remove('auf'); document.body.classList.remove('tour-an'); $$('.tour-fokus').forEach(x => x.classList.remove('tour-fokus')); if (fertig) toast(`${ICO.check}<span>Tour beendet. Viel Spaß beim Stöbern!</span>`); }
+document.addEventListener('click', e => { const t = e.target.closest('[data-tour], #tourBtn'); if (!t) return; e.preventDefault(); e.stopImmediatePropagation(); window.menueZu && window.menueZu(); $('#toast')?.classList.remove('auf'); tourZeig(0); }, true);
+addEventListener('keydown', e => {
+  if (tourI < 0 || /INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) return;
+  if (e.key === 'ArrowRight' || e.key === 'PageDown') { e.preventDefault(); tourZeig(tourI + 1); }
+  if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); tourZeig(tourI - 1); }
+  if (e.key === 'Escape') tourEnde();
+});
+
 /* ================= Start ================= */
 rahmen();
 (function () { const r = new URLSearchParams(location.search).get('r'); if (r) history.replaceState({}, '', U(r)); })();
 intro();
-zeigen().then(() => { if (location.hash) setTimeout(() => $(location.hash)?.scrollIntoView(), 120); });
+const mitTour = new URLSearchParams(location.search).has('tour');
+zeigen().then(() => { if (location.hash) setTimeout(() => $(location.hash)?.scrollIntoView(), 120); if (mitTour) setTimeout(() => tourZeig(0), pfad() === '/' ? 2600 : 600); });
+setTimeout(() => { let s = null; try { s = sessionStorage.getItem('svd_tipp'); sessionStorage.setItem('svd_tipp', 1); } catch (e) { } if (!s && !mitTour && tourI < 0) toast(`${ICO.play}<span>Zum ersten Mal hier?<button data-tour class="toast-link">Tour starten</button></span>`, 8000); }, pfad() === '/' ? 4800 : 1800);
 window.__demo = { geh: u => geh(U(u)), S, P };
 
 })();
