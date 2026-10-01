@@ -151,7 +151,7 @@ const U = p => BASE + String(p).replace(/^\//, '');
 const ls = { get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } }, set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { } } };
 const ruhig = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const sleep = ms => new Promise(r => setTimeout(r, ms));
-const woerter = (txt, cls = '') => txt.split(' ').map(w => `<span class="wz ${cls}"><span>${w}</span></span>`).join(' ');
+const woerter = (txt, cls = '') => txt.split(/ (?![^<]*>)/).map(w => `<span class="wz ${cls}"><span>${w}</span></span>`).join(' ');
 function srcset(n) { if (n.endsWith('.svg')) return `src="img/${n}"`; const hatS = !n.startsWith('d-') && !/bank-(wappen|hoch)/.test(n); return hatS ? `src="img/${n}-s.webp" srcset="img/${n}-s.webp 560w, img/${n}.webp 1122w"` : `src="img/${n}.webp"`; }
 
 /* ================= Zustand ================= */
@@ -493,7 +493,7 @@ route(/^\/$/, () => {
     <div>${ICO.team}<p><b>Teambestellung</b><span>Ganze Mannschaft ausrüsten mit Staffelpreisen.</span></p></div>
   </div>
   <section class="dropliste sec"><div class="wrap"><div><p class="mono" style="opacity:.85;margin-bottom:16px">Drop 02 · ${fDatum(DROP2_START)} · 18 Uhr</p><h2 class="h-l">Nicht verpassen. Nie wieder.</h2></div>
-    <div><form data-demo="Danke! Du stehst auf der Drop-Liste (Demo)."><input type="email" placeholder="Deine E-Mail-Adresse" aria-label="E-Mail" required><button class="btn">Auf die Liste ${ICO.pfeil}</button></form><small>Erinnerung 24 Stunden vor jedem Drop. Abmelden geht jederzeit.</small></div></div></section>`,
+    <div><form data-demo="Danke! Du stehst auf der Drop-Liste (Demo)."><input type="email" placeholder="Deine E-Mail" aria-label="E-Mail" required><button class="btn">Auf die Liste ${ICO.pfeil}</button></form><small>Erinnerung 24 Stunden vor jedem Drop. Abmelden geht jederzeit.</small></div></div></section>`,
     nach: root => homeNach(root)
   };
 });
@@ -877,7 +877,7 @@ route(/^\/drops$/, () => ({
     <p class="lead" style="margin-top:22px">Jeder Drop hat einen Anfang und ein Ende. Dazwischen kannst du vorbestellen. Danach wird gestickt, genäht und verschickt. Und dann ist er Geschichte.</p></section>
   <section class="sec wrap" style="padding-top:clamp(40px,5vw,70px)"><div class="dropmodul" style="border-radius:0"><div class="grid2" style="min-height:0"><div class="bild" style="min-height:420px"><img src="img/1896-hoodie-treppe.webp" alt="" loading="lazy"></div>
     <div class="text"><span class="chip hell" style="width:max-content"><span class="dot"></span>Live</span><h2 class="h-l" style="font-family:var(--f-serif);font-weight:500;font-style:italic">Drop 01 · Heritage</h2>
-      <p class="lead">${P.filter(p => p.d === '01').length} Teile. Heavy Fleece, Stick in der Region, Bestellschluss am ${fTag(DROP1_ENDE)}.</p>${uhrHtml(DROP1_ENDE)}<a class="btn hell" href="${U('1896')}#drop01" data-link style="width:max-content">Zum Drop ${ICO.pfeil}</a></div></div></div></section>
+      <p class="lead">${P.filter(p => p.d === '01').length} Produkte. Heavy Fleece, Stick in der Region, Bestellschluss am ${fTag(DROP1_ENDE)}.</p>${uhrHtml(DROP1_ENDE)}<a class="btn hell" href="${U('1896')}#drop01" data-link style="width:max-content">Zum Drop ${ICO.pfeil}</a></div></div></div></section>
   <section class="naechster" style="min-height:60svh"><img src="img/1896-mauer.webp" alt="" loading="lazy"><div class="in"><p class="mono" style="opacity:.7">Drop 02 · ${fDatum(DROP2_START, { day: '2-digit', month: 'long' })} · 18 Uhr</p><h2>Mehr als <em>ein</em> Verein.</h2>${uhrHtml(DROP2_START)}
     <form data-demo="Du wirst 24 Stunden vorher erinnert (Demo)."><input type="email" placeholder="E-Mail für die Erinnerung" aria-label="E-Mail" required><button class="btn hell">Erinnern</button></form></div></section>
   <section class="sec wrap"><p class="kicker" style="margin-bottom:22px">Archiv</p><div class="archiv"><a href="${U('1896')}" data-link><span>01</span><span class="t">Heritage</span><span>${fDatum(DROP1_START)} bis ${fDatum(DROP1_ENDE)}</span><span>Live</span></a><div class="z" style="opacity:.55"><span>02</span><span class="t">Mehr als ein Verein</span><span>ab ${fDatum(DROP2_START)}</span><span>Bald</span></div><div class="z" style="opacity:.35"><span>03</span><span class="t">130 Jahre</span><span>2026</span><span>Geplant</span></div></div></section>`
