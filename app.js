@@ -16,7 +16,8 @@ const ICO = {
   blitz: ic('lightning'), play: ic('play:f'), teilen: ic('share-network'), wa: ic('whatsapp-logo'), tropfen: ic('drop'),
   haus: ic('house'), raster: ic('squares-four'), ios: ic('export'), iosPlus: ic('plus-square'), handy: ic('device-mobile'), glocke: ic('bell-ringing'), mail: ic('envelope-simple'),
 };
-const WAPPEN = `<svg viewBox="0 0 40 46" fill="none" aria-hidden="true"><path d="M3 3h34v19.5c0 11.6-7.7 18.6-17 21.5C10.7 41.1 3 34.1 3 22.5z" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><g fill="currentColor"><path d="M7.8 17.1c.3-4.4 1.6-7.4 5.2-7.4s4.9 3 5.2 7.4l2 2.6h-14.4z"/><circle cx="13" cy="8.6" r="1.1"/><circle cx="13" cy="21.1" r="1.5"/><path d="M21.8 17.1c.3-4.4 1.6-7.4 5.2-7.4s4.9 3 5.2 7.4l2 2.6h-14.4z"/><circle cx="27" cy="8.6" r="1.1"/><circle cx="27" cy="21.1" r="1.5"/><path d="M14.8 31.1c.3-4.4 1.6-7.4 5.2-7.4s4.9 3 5.2 7.4l2 2.6h-14.4z"/><circle cx="20" cy="22.6" r="1.1"/><circle cx="20" cy="35.1" r="1.5"/></g></svg>`;
+// Wappen und Glocken als Bild (freigestellt, Farben der Seite: #22252A und #F4F1EA)
+const WAPPEN = '<img class="wappen" src="img/wappen.webp" alt="" aria-hidden="true" width="40" height="43" decoding="async">';
 
 /* ================= Termine (immer relativ zu heute, damit die Demo frisch bleibt) ================= */
 const JETZT = new Date();
@@ -324,7 +325,7 @@ setInterval(uhrenTick, 1000);
 /* ================= Rahmen ================= */
 function rahmen() {
   const navItems = [['mannschaft', 'Mannschaft'], ['1896', '1896'], ['merch', 'Merch'], ['kids', 'Kids'], ['accessoires', 'Accessoires'], ['drops', 'Drops'], ['verein', 'Verein'], ['faq', 'FAQ']].filter(([k]) => k !== 'drops' || DROPS_AN());
-  const msg = LIVE.an ? ['Kostenloser Versand nach Hause', 'Name und Nummer aufs Trikot inklusive', 'Jeder Kauf unterstützt den Verein', LIVE.cfg.zahlarten?.online?.aktiv ? 'Bezahlen mit PayPal, Karte, Apple Pay oder Überweisung' : 'Bezahlen per Überweisung', `Lieferzeit ${lieferzeit()}`, 'Mehr als ein Verein'] : ['Kostenloser Versand ab 75 €', 'Abholung am Sportplatz kostenlos', `Drop 01 läuft bis ${fTag(DROP1_ENDE)}, ${fDatum(DROP1_ENDE)}`, 'Name und Nummer auf jedes Trikot', 'Jeder Kauf unterstützt die Jugend', `Drop 02 am ${fDatum(DROP2_START)} um 18 Uhr`];
+  const msg = LIVE.an ? ['Kostenloser Versand nach Hause', 'Name und Nummer aufs Trikot inklusive', 'Jeder Kauf unterstützt den Verein', LIVE.cfg.zahlarten?.online?.aktiv ? 'Bezahlen mit PayPal, Karte, Apple Pay oder Überweisung' : 'Bezahlen per Überweisung', `Lieferzeit ${lieferzeit()}`, 'Mehr als ein Verein'] : ['Kostenloser Versand ab 75 €', 'Abholung am Sportplatz kostenlos', `Drop 01 läuft bis ${fTag(DROP1_ENDE)}, ${fDatum(DROP1_ENDE)}`, 'Name und Nummer auf jedes Trikot', 'Jeder Kauf unterstützt die Jugend', `Drop 02 am ${fDatum(DROP2_START)} um 18 Uhr`].filter(m => DROPS_AN() || !/Drop 0/.test(m));
   const spur = [...msg, ...msg].map(m => `<span><i></i>${m}</span>`).join('');
   document.body.insertAdjacentHTML('afterbegin', `
   <a class="vh" href="#haupt">Zum Inhalt springen</a>
@@ -528,7 +529,7 @@ async function intro() {
   let gesehen = false; try { gesehen = sessionStorage.getItem('svd_intro'); sessionStorage.setItem('svd_intro', 1); } catch (e) { }
   if (gesehen || ruhig || pfad() !== '/') return;
   const d = document.createElement('div'); d.className = 'intro';
-  d.innerHTML = `<div class="in">${WAPPEN.replace('stroke-width="2.4"', 'stroke-width="1.6"')}<div class="zahl num">${[1, 8, 9, 6].map(z => `<span><i>${Array.from({ length: z + 1 }, (_, i) => `<b style="display:block;height:.8em;line-height:.8em;font-weight:inherit">${i}</b>`).join('')}</i></span>`).join('')}</div><div class="zeile">SV Mörlenbach · Store</div></div>`;
+  d.innerHTML = `<div class="in"><img class="intro-glocken" src="img/glocken.webp" alt="" aria-hidden="true"><div class="zahl num">${[1, 8, 9, 6].map(z => `<span><i>${Array.from({ length: z + 1 }, (_, i) => `<b style="display:block;height:.8em;line-height:.8em;font-weight:inherit">${i}</b>`).join('')}</i></span>`).join('')}</div><div class="zeile">SV Mörlenbach · Store</div></div>`;
   document.body.appendChild(d);
   await sleep(250);
   $$('.zahl span i', d).forEach((i, k) => { const z = [1, 8, 9, 6][k]; i.style.transitionDelay = k * 90 + 'ms'; i.style.transform = `translateY(-${z * .8}em)`; });
@@ -865,7 +866,7 @@ route(/^\/1896$/, () => {
     <div class="unten-z"><h1>Die Linie, die <em>nicht</em> auf den Platz will.</h1>
       ${DROPS_AN() ? `<div style="display:grid;gap:12px;justify-items:end"><p class="mono" style="opacity:.7">${DROP_BALD() ? 'Start' : 'Bestellschluss in'}</p>${uhrHtml(DROP1_ENDE)}</div>` : ''}</div></section>
 
-  <section class="s-manifest wrap"><div class="grid"><p class="kicker" data-r>Manifest</p>
+  <section class="s-manifest wrap"><div class="grid"><div class="s-mkopf"><p class="kicker" data-r>Manifest</p><img class="s-glocken" src="img/glocken-1896-hell.webp" alt="Drei Glocken aus dem Mörlenbacher Wappen, 1896" loading="lazy" data-r></div>
     <div><p class="gross" data-r>Wir machen keine Massenware. ${DROPS_AN() ? 'Wir machen <em>Drops</em>. Jeder ist an einen Moment im Verein gebunden, wird vorbestellt und erst dann <em>gestickt</em>. Wenn er vorbei ist, bleibt er vorbei.' : 'Wir machen <em>Lieblingsstücke</em>. Schweres Material, Stick statt Druck, Farben aus dem Wappen. Für alles, was nicht auf dem Platz passiert.'}</p>
       <div class="regeln">${DROPS_AN() ? '<div data-r><b>01 · LIMITIERT</b><p>Wir legen keine Stückzahl fest. Wir legen ein Ende fest. Was bis dahin bestellt ist, wird produziert.</p></div>' : '<div data-r><b>01 · BESTICKT</b><p>Wappen, Jahreszahl und Glocken werden gestickt, nicht gedruckt. Das hält und sieht man.</p></div>'}
         <div data-r style="transition-delay:100ms"><b>02 · VERANTWORTUNG</b><p>${DROPS_AN() ? 'Keine Lagerware, kein Überschuss, kein Ausverkauf. Nur was wirklich jemand tragen will.' : 'Kleine Mengen statt Restposten. Jeder Euro Überschuss bleibt im Verein.'}</p></div>
