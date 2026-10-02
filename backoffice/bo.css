@@ -206,3 +206,6 @@ details.eigen>form,details.eigen>.scroll{margin-top:12px}
 .stufen span::before{content:'';position:absolute;top:-16px;left:50%;width:2px;height:14px;background:#fff}
 .stufen span b{color:var(--ink);font-size:12px}
 .stufen span:last-child{transform:translateX(-100%)}
+
+/* Retro-Linien: lange Quellen und Texte umbrechen statt die Seite zu verbreitern */
+.rt .raster>*{min-width:0;overflow-wrap:anywhere}.rt .scroll .tabelle{min-width:780px}.rt .tabelle td{overflow-wrap:break-word}
