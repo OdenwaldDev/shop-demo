@@ -1,0 +1,27 @@
+# Agent „Seiten“: hält die Produktseiten und die Sitemap für Google aktuell (jede Nacht, kostenlos auf GitHub)
+name: Seiten aktualisieren
+on:
+  schedule:
+    - cron: '23 1 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+  pages: write
+jobs:
+  seiten:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Produktseiten und Sitemap aus dem Live-Katalog
+        run: python3 seiten/seiten.py
+      - name: Speichern und veröffentlichen
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "Shop-Agent"
+          git config user.email "shop-agent@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then echo "Alles aktuell"; exit 0; fi
+          git commit -m "Seiten: Produkte und Sitemap aktualisiert"
+          git push
+          curl -s -X POST -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" "https://api.github.com/repos/${{ github.repository }}/pages/builds" || true
