@@ -1,0 +1,165 @@
+{
+ "stand": "2026-10-03T05:18:59.374Z",
+ "seiten": 42,
+ "geraete": [
+  "Handy",
+  "Tablet",
+  "Laptop",
+  "Großer Bildschirm"
+ ],
+ "aufrufe": 168,
+ "bilder": 2216,
+ "fehler": 0,
+ "hinweise": 13,
+ "probleme": [
+  {
+   "geraet": "Handy",
+   "bild": "1896-crew-kirche",
+   "rahmen": "390×844",
+   "art": "motiv",
+   "schwere": "hinweis",
+   "wert": 65,
+   "text": "Vom Motiv sind nur 65 % zu sehen. Ein anderes Seitenverhältnis wäre besser.",
+   "seiten": [
+    "/1896"
+   ]
+  },
+  {
+   "geraet": "Tablet",
+   "bild": "d-backprint",
+   "rahmen": "649×811",
+   "art": "unscharf",
+   "schwere": "hinweis",
+   "text": "Braucht rund 1298 Pixel Breite, die Datei hat nur 800. Größere Datei hinterlegen.",
+   "seiten": [
+    "/p/team-hoodie"
+   ]
+  },
+  {
+   "geraet": "Tablet",
+   "bild": "d-cap",
+   "rahmen": "649×811",
+   "art": "unscharf",
+   "schwere": "hinweis",
+   "text": "Braucht rund 1298 Pixel Breite, die Datei hat nur 764. Größere Datei hinterlegen.",
+   "seiten": [
+    "/p/cap-1896-cream"
+   ]
+  },
+  {
+   "geraet": "Tablet",
+   "bild": "d-crest-chest",
+   "rahmen": "649×811",
+   "art": "unscharf",
+   "schwere": "hinweis",
+   "text": "Braucht rund 1298 Pixel Breite, die Datei hat nur 500. Größere Datei hinterlegen.",
+   "seiten": [
+    "/p/crew-royal-heritage",
+    "/p/hoodie-heritage-navy"
+   ]
+  },
+  {
+   "geraet": "Tablet",
+   "bild": "d-crest-grey",
+   "rahmen": "372×220",
+   "art": "unscharf",
+   "schwere": "hinweis",
+   "text": "Braucht rund 744 Pixel Breite, die Datei hat nur 460. Größere Datei hinterlegen.",
+   "seiten": [
+    "/",
+    "/p/crew-stone-grey"
+   ]
+  },
+  {
+   "geraet": "Tablet",
+   "bild": "d-graffiti",
+   "rahmen": "649×811",
+   "art": "unscharf",
+   "schwere": "hinweis",
+   "text": "Braucht rund 1298 Pixel Breite, die Datei hat nur 440. Größere Datei hinterlegen.",
+   "seiten": [
+    "/p/hoodie-mehr-als-ein-verein"
+   ]
+  },
+  {
+   "geraet": "Tablet",
+   "bild": "d-hoodie-back",
+   "rahmen": "649×811",
+   "art": "unscharf",
+   "schwere": "hinweis",
+   "text": "Braucht rund 1298 Pixel Breite, die Datei hat nur 500. Größere Datei hinterlegen.",
+   "seiten": [
+    "/p/hoodie-mehr-als-ein-verein"
+   ]
+  },
+  {
+   "geraet": "Tablet",
+   "bild": "d-knit",
+   "rahmen": "649×811",
+   "art": "unscharf",
+   "schwere": "hinweis",
+   "text": "Braucht rund 1298 Pixel Breite, die Datei hat nur 540. Größere Datei hinterlegen.",
+   "seiten": [
+    "/p/fanschal-glocken"
+   ]
+  },
+  {
+   "geraet": "Handy",
+   "bild": "d-number",
+   "rahmen": "308×385",
+   "art": "unscharf",
+   "schwere": "hinweis",
+   "text": "Braucht rund 616 Pixel Breite, die Datei hat nur 380. Größere Datei hinterlegen.",
+   "seiten": [
+    "/p/auswaertstrikot-26-27"
+   ]
+  },
+  {
+   "geraet": "Tablet",
+   "bild": "d-number",
+   "rahmen": "372×220",
+   "art": "unscharf",
+   "schwere": "hinweis",
+   "text": "Braucht rund 744 Pixel Breite, die Datei hat nur 380. Größere Datei hinterlegen.",
+   "seiten": [
+    "/",
+    "/p/auswaertstrikot-26-27"
+   ]
+  },
+  {
+   "geraet": "Tablet",
+   "bild": "d-scarf-crest",
+   "rahmen": "754×440",
+   "art": "unscharf",
+   "schwere": "hinweis",
+   "text": "Braucht rund 1509 Pixel Breite, die Datei hat nur 562. Größere Datei hinterlegen.",
+   "seiten": [
+    "/",
+    "/p/fanschal-heimat"
+   ]
+  },
+  {
+   "geraet": "Tablet",
+   "bild": "merch-schal-bank-hoch",
+   "rahmen": "734×551",
+   "art": "unscharf",
+   "schwere": "hinweis",
+   "text": "Braucht rund 1469 Pixel Breite, die Datei hat nur 702. Größere Datei hinterlegen.",
+   "seiten": [
+    "/",
+    "/p/fanschal-heimat"
+   ]
+  },
+  {
+   "geraet": "Tablet",
+   "bild": "merch-schal-bank-wappen",
+   "rahmen": "649×811",
+   "art": "unscharf",
+   "schwere": "hinweis",
+   "text": "Braucht rund 1298 Pixel Breite, die Datei hat nur 722. Größere Datei hinterlegen.",
+   "seiten": [
+    "/p/fanschal-heimat"
+   ]
+  }
+ ]
+}
