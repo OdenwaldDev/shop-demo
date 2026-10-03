@@ -763,7 +763,7 @@ body[data-w="fan"] .kachel:hover{transform:rotate(-1.2deg) translateY(-4px)}
 .finder .ergebnis span{color:var(--muted);font-weight:500}
 @media (max-width:860px){.finder{grid-template-columns:minmax(0,1fr)}}
 .paket{display:grid;grid-template-columns:1.1fr 1fr;border-radius:32px;overflow:hidden;background:var(--blue);color:#fff}
-.paket .bild{position:relative;min-height:380px}
+.paket .bild{position:relative;min-height:380px;aspect-ratio:1/1}   /* Hochformat-Foto: quadratischer Rahmen, damit Schal und Pullover ganz zu sehen sind (Bild-Agent) */
 .paket .bild img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .paket .text{padding:clamp(26px,4vw,60px);display:flex;flex-direction:column;justify-content:center;gap:18px}
 .paket h2{font-family:var(--f-round);font-weight:800;font-size:clamp(36px,4.2vw,62px);line-height:.95;letter-spacing:-.05em}
@@ -1496,3 +1496,6 @@ body.tour-an .demo-pill{display:none}
 .code-feld div{display:flex;gap:8px}
 .code-feld input{flex:1;min-width:0;border:1.5px solid var(--line);background:#fff;border-radius:var(--radius);padding:10px 12px;font:inherit;font-size:16px;text-transform:uppercase;letter-spacing:.06em}
 .code-feld p{font-size:13px;color:var(--muted);min-height:1.2em}
+.gs-codes{display:block;margin-top:8px;padding:10px 12px;border:1.5px dashed var(--line);border-radius:var(--radius);line-height:1.7;overflow-wrap:anywhere}
+.gs-codes b.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:15px;letter-spacing:.06em;user-select:all}
+.gs-codes small{color:var(--muted);font-size:12.5px}

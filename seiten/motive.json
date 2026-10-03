@@ -1,0 +1,737 @@
+{
+ "1896-bank": {
+  "motiv": [
+   4.4,
+   11.0,
+   93.7,
+   87.1
+  ],
+  "kern": [
+   31.2,
+   17.0,
+   45.3,
+   27.5
+  ],
+  "was": "Drei Jugendliche tragen Fanartikel mit Vereinslogo und sitzen lachend auf einer Bank."
+ },
+ "1896-couch": {
+  "motiv": [
+   3.2,
+   4.1,
+   94.0,
+   85.9
+  ],
+  "kern": [
+   24.6,
+   11.0,
+   48.0,
+   23.0
+  ],
+  "was": "Drei junge Männer tragen Fanpullover und spielen Videospiele auf dem Sofa."
+ },
+ "1896-couch-2": {
+  "motiv": [
+   3.8,
+   11.0,
+   94.3,
+   85.9
+  ],
+  "kern": [
+   31.2,
+   15.3,
+   51.0,
+   25.7
+  ],
+  "was": "Drei Jugendliche tragen Fanpullover und spielen Videospiele, Vereinslogo sichtbar."
+ },
+ "1896-crew-blau": {
+  "motiv": [
+   17.0,
+   7.0,
+   59.5,
+   92.5
+  ],
+  "kern": [
+   39.0,
+   11.0,
+   15.0,
+   12.0
+  ],
+  "was": "Mann mit blauem Sweatshirt mit Vereinslogo läuft auf der Straße."
+ },
+ "1896-crew-cap-cafe": {
+  "motiv": [
+   2.2,
+   54.0,
+   95.2,
+   42.3
+  ],
+  "kern": [
+   47.0,
+   56.3,
+   22.7,
+   12.4
+  ],
+  "was": "Pullover und Cap mit Vereinslogo auf einem Stuhl und Tisch im Freien"
+ },
+ "1896-crew-grau-treppe": {
+  "motiv": [
+   0.0,
+   11.0,
+   99.9,
+   88.9
+  ],
+  "kern": [
+   24.6,
+   18.0,
+   42.4,
+   23.0
+  ],
+  "was": "Drei junge Männer tragen Fanpullover und T-Shirt mit Vereinslogo und sitzen lachend auf einer Treppe."
+ },
+ "1896-crew-kirche": {
+  "motiv": [
+   8.1,
+   12.0,
+   88.2,
+   85.2
+  ],
+  "kern": [
+   42.0,
+   17.0,
+   31.5,
+   24.0
+  ],
+  "was": "Fan im blauen Pullover mit Vereinslogo und Fanschal mit Wappen sitzt auf Bordstein."
+ },
+ "1896-hoodie-bank-weit": {
+  "motiv": [
+   57.3,
+   31.2,
+   36.7,
+   58.8
+  ],
+  "kern": [
+   73.5,
+   52.0,
+   11.5,
+   13.0
+  ],
+  "was": "Dunkler Hoodie mit Mörlenbach-Wappen auf einer Bank in einer Altstadt bei Sonnenuntergang."
+ },
+ "1896-hoodie-treppe": {
+  "motiv": [
+   7.4,
+   42.0,
+   84.3,
+   45.2
+  ],
+  "kern": [
+   42.0,
+   49.5,
+   20.7,
+   6.8
+  ],
+  "was": "Dunkelblauer Hoodie mit '1896 Mörlenbach' und Glocken-Logo auf einer Steintreppe."
+ },
+ "1896-mauer": {
+  "motiv": [
+   2.2,
+   8.2,
+   97.3,
+   81.8
+  ],
+  "kern": [
+   31.2,
+   11.0,
+   45.3,
+   23.0
+  ],
+  "was": "Drei junge Fans sitzen auf einer Mauer und tragen Fanpullover mit Vereinslogo."
+ },
+ "1896-mehr-als-ein-verein": {
+  "motiv": [
+   11.0,
+   22.0,
+   71.0,
+   60.0
+  ],
+  "kern": [
+   34.0,
+   34.0,
+   23.0,
+   18.0
+  ],
+  "was": "Person mit SV Mörlenbach Hoodie, Vereinslogo sichtbar, Sonnenuntergang im Stadion."
+ },
+ "1896-treppe": {
+  "motiv": [
+   1.8,
+   3.8,
+   96.5,
+   92.5
+  ],
+  "kern": [
+   31.2,
+   9.2,
+   31.5,
+   22.0
+  ],
+  "was": "Zwei Jugendliche sitzen auf Treppen, einer trägt ein blaues Sweatshirt mit Vereinslogo."
+ },
+ "cap-royal-foto": {
+  "motiv": [
+   14.3,
+   28.2,
+   69.8,
+   38.8
+  ],
+  "kern": [
+   43.7,
+   38.4,
+   12.4,
+   11.1
+  ],
+  "was": "Blaue Kappe mit gesticktem Wappen mit drei Glocken"
+ },
+ "d-backprint": {
+  "motiv": [
+   0.0,
+   0.0,
+   99.9,
+   99.9
+  ],
+  "kern": [
+   31.2,
+   26.0,
+   42.3,
+   26.0
+  ],
+  "was": "Drei Jugendliche tragen SV Mörlenbach Hoodies, Rückenansicht, Vereinslogo sichtbar."
+ },
+ "d-cap": {
+  "motiv": [
+   3.8,
+   12.0,
+   86.2,
+   49.0
+  ],
+  "kern": [
+   47.0,
+   21.0,
+   20.0,
+   16.0
+  ],
+  "was": "Beige Cap mit Vereinswappen und Jahreszahl auf einem Tisch"
+ },
+ "d-crest-chest": {
+  "motiv": [
+   0.0,
+   0.0,
+   99.9,
+   99.9
+  ],
+  "kern": [
+   35.5,
+   12.0,
+   11.5,
+   11.0
+  ],
+  "was": "Person im blauen Fanpullover mit Vereinswappen auf der Brust."
+ },
+ "d-crest-grey": {
+  "motiv": [
+   22.2,
+   22.2,
+   75.0,
+   75.0
+  ],
+  "kern": [
+   35.5,
+   35.5,
+   28.0,
+   28.0
+  ],
+  "was": "Nahaufnahme eines grauen Kleidungsstücks mit gesticktem Wappen mit drei Glocken."
+ },
+ "d-graffiti": {
+  "motiv": [
+   0.0,
+   0.0,
+   99.9,
+   99.9
+  ],
+  "kern": [
+   12.0,
+   12.0,
+   78.0,
+   58.0
+  ],
+  "was": "Graffiti mit dem Schriftzug 'Mehr als ein Verein.' und Herz auf einer Wand."
+ },
+ "d-hoodie-back": {
+  "motiv": [
+   6.2,
+   1.8,
+   92.1,
+   96.5
+  ],
+  "kern": [
+   27.7,
+   18.1,
+   44.9,
+   31.4
+  ],
+  "was": "Person von hinten mit SV Mörlenbach Hoodie, Vereinslogo und Schriftzug sichtbar."
+ },
+ "d-knit": {
+  "motiv": [
+   2.8,
+   0.0,
+   51.1,
+   99.9
+  ],
+  "kern": [
+   12.0,
+   12.0,
+   35.0,
+   45.0
+  ],
+  "was": "Nahaufnahme eines SV Mörlenbach Fanschals mit Vereinswappen."
+ },
+ "d-number": {
+  "motiv": [
+   8.2,
+   1.8,
+   87.6,
+   97.9
+  ],
+  "kern": [
+   37.0,
+   18.0,
+   30.0,
+   49.0
+  ],
+  "was": "Kind im SV Mörlenbach Trikot mit Fußball von hinten"
+ },
+ "d-scarf-crest": {
+  "motiv": [
+   0.0,
+   0.0,
+   99.9,
+   99.9
+  ],
+  "kern": [
+   21.0,
+   32.0,
+   46.0,
+   35.0
+  ],
+  "was": "Nahaufnahme eines blau-weißen Fanschals mit drei Glocken im Wappen, Hand hält den Schal."
+ },
+ "d-stick-1896": {
+  "motiv": [
+   0.0,
+   0.0,
+   27.9,
+   19.9
+  ],
+  "kern": [
+   7.0,
+   4.0,
+   14.0,
+   11.0
+  ],
+  "was": "Nahaufnahme eines dunkelblauen Hoodies mit gesticktem Schriftzug und drei Glocken."
+ },
+ "gutschein-foto": {
+  "motiv": [
+   18.1,
+   39.3,
+   64.1,
+   27.7
+  ],
+  "kern": [
+   46.4,
+   50.7,
+   8.1,
+   5.6
+  ],
+  "was": "Blaue Grußkarte mit goldenem Glocken-Logo und passendem Umschlag."
+ },
+ "kids-papa": {
+  "motiv": [
+   3.8,
+   3.8,
+   90.1,
+   94.5
+  ],
+  "kern": [
+   32.8,
+   12.0,
+   39.8,
+   44.3
+  ],
+  "was": "Zwei lachende Personen im Vereinsoutfit mit Vereinslogo, am Spielfeldrand."
+ },
+ "kids-trikot-royal": {
+  "motiv": [
+   6.1,
+   6.1,
+   87.7,
+   92.2
+  ],
+  "kern": [
+   24.6,
+   12.0,
+   53.6,
+   29.0
+  ],
+  "was": "Drei Jungen im blauen Fußballtrikot mit Vereinslogo, lachend auf dem Spielfeld."
+ },
+ "merch-balkenschal": {
+  "motiv": [
+   0.9,
+   11.0,
+   98.1,
+   88.9
+  ],
+  "kern": [
+   31.2,
+   18.0,
+   45.3,
+   23.0
+  ],
+  "was": "Zwei Jungen mit Fanschals und Pullovern mit Vereinslogo vor dem Stadion."
+ },
+ "merch-gruppe": {
+  "motiv": [
+   0.0,
+   0.0,
+   99.9,
+   99.9
+  ],
+  "kern": [
+   11.0,
+   12.0,
+   79.0,
+   55.0
+  ],
+  "was": "Vier Jugendliche in SV Mörlenbach Fanartikeln (Hoodie, Jacke, Mütze, Schal) lachen gemeinsam im Stadion."
+ },
+ "merch-hoodie-grau": {
+  "motiv": [
+   4.4,
+   22.2,
+   93.9,
+   77.3
+  ],
+  "kern": [
+   42.0,
+   26.0,
+   25.0,
+   21.0
+  ],
+  "was": "Mädchen mit grauem Hoodie mit Vereinslogo sitzt auf Stadiontreppe, im Hintergrund weitere Fans."
+ },
+ "merch-schal": {
+  "motiv": [
+   6.1,
+   6.1,
+   66.5,
+   88.9
+  ],
+  "kern": [
+   31.2,
+   26.3,
+   28.9,
+   25.9
+  ],
+  "was": "SV Mörlenbach Fanschal im Stadion, Sonnenuntergang im Hintergrund"
+ },
+ "merch-schal-bank": {
+  "motiv": [
+   18.6,
+   56.3,
+   47.5,
+   40.0
+  ],
+  "kern": [
+   41.0,
+   62.7,
+   20.3,
+   18.6
+  ],
+  "was": "Blauer SV Mörlenbach Fanschal auf einer Bank, Sonnenuntergang im Hintergrund."
+ },
+ "merch-schal-bank-hoch": {
+  "motiv": [
+   0.0,
+   62.9,
+   49.1,
+   37.0
+  ],
+  "kern": [
+   12.0,
+   67.0,
+   30.0,
+   20.0
+  ],
+  "was": "Blauer Fanschal mit Vereinswappen auf einer Bank, malerische Dorfkulisse im Hintergrund."
+ },
+ "merch-schal-bank-wappen": {
+  "motiv": [
+   0.0,
+   0.0,
+   50.7,
+   78.2
+  ],
+  "kern": [
+   12.0,
+   12.0,
+   29.0,
+   35.0
+  ],
+  "was": "Blauer Fanschal mit Vereinswappen und Schriftzug auf einer Bank"
+ },
+ "merch-schal-royal": {
+  "motiv": [
+   32.0,
+   8.0,
+   66.0,
+   87.0
+  ],
+  "kern": [
+   47.0,
+   57.0,
+   30.0,
+   25.0
+  ],
+  "was": "Fan hält Mörlenbach-Schal, daneben Pullover mit Vereinswappen."
+ },
+ "mystery-box": {
+  "motiv": [
+   21.0,
+   43.0,
+   55.5,
+   29.6
+  ],
+  "kern": [
+   44.5,
+   55.5,
+   22.5,
+   14.0
+  ],
+  "was": "Blaue Mystery Box mit Vereinslogo und orangem Streifen"
+ },
+ "pin-set-foto": {
+  "motiv": [
+   21.7,
+   43.0,
+   56.5,
+   24.0
+  ],
+  "kern": [
+   41.0,
+   47.0,
+   18.0,
+   14.0
+  ],
+  "was": "Drei goldene Glocken-Pins auf dunkelblauer Karte, mittlere Glocke mit '1896'."
+ },
+ "stoffbeutel-foto": {
+  "motiv": [
+   11.0,
+   6.0,
+   75.0,
+   84.0
+  ],
+  "kern": [
+   27.0,
+   41.0,
+   46.0,
+   24.0
+  ],
+  "was": "Baumwolltasche mit drei Glocken und Schriftzug 'Mörlenbach'"
+ },
+ "team-anzug": {
+  "motiv": [
+   8.1,
+   12.0,
+   81.9,
+   83.0
+  ],
+  "kern": [
+   34.0,
+   18.0,
+   33.0,
+   19.0
+  ],
+  "was": "Zwei junge Männer im Trainingsanzug mit Vereinslogo, einer sitzt, einer steht, beide lächeln."
+ },
+ "team-anzug-tasche": {
+  "motiv": [
+   18.1,
+   4.4,
+   54.7,
+   91.4
+  ],
+  "kern": [
+   42.0,
+   11.0,
+   7.5,
+   7.0
+  ],
+  "was": "Jugendlicher im Trainingsanzug mit Vereinslogo, Sporttasche, draußen unterwegs."
+ },
+ "team-anzug-treppe": {
+  "motiv": [
+   2.4,
+   6.1,
+   97.1,
+   92.2
+  ],
+  "kern": [
+   26.3,
+   12.0,
+   46.3,
+   19.2
+  ],
+  "was": "Zwei Jugendliche im Trainingsanzug mit Vereinslogo sitzen lachend auf einer Treppe."
+ },
+ "team-hoodie-ruecken": {
+  "motiv": [
+   6.1,
+   31.2,
+   86.6,
+   63.8
+  ],
+  "kern": [
+   24.6,
+   37.0,
+   56.7,
+   30.0
+  ],
+  "was": "Drei Jugendliche in SV Mörlenbach Trainingsanzügen mit Bällen auf dem Weg zum Fußballplatz."
+ },
+ "team-jacke-damen": {
+  "motiv": [
+   17.0,
+   6.0,
+   56.0,
+   93.5
+  ],
+  "kern": [
+   34.0,
+   11.0,
+   18.0,
+   21.0
+  ],
+  "was": "Frau im Trainingsanzug mit Vereinswappen auf der Jacke, draußen bei Sonnenuntergang."
+ },
+ "team-kids-anzug": {
+  "motiv": [
+   12.0,
+   3.8,
+   68.3,
+   86.2
+  ],
+  "kern": [
+   35.5,
+   7.0,
+   11.5,
+   14.0
+  ],
+  "was": "Junge im Trainingsanzug mit Vereinslogo, sitzt auf einer Bank und bindet seine Fußballschuhe."
+ },
+ "team-polo": {
+  "motiv": [
+   3.8,
+   11.0,
+   93.6,
+   87.1
+  ],
+  "kern": [
+   31.2,
+   12.0,
+   35.8,
+   42.5
+  ],
+  "was": "Fan mit Cap, Shirt und Schal des SV Mörlenbach auf der Tribüne, Vereinslogo sichtbar."
+ },
+ "team-tribuene": {
+  "motiv": [
+   2.4,
+   26.3,
+   96.7,
+   69.3
+  ],
+  "kern": [
+   24.6,
+   31.2,
+   62.6,
+   21.1
+  ],
+  "was": "Drei lachende Jungen in SV Mörlenbach Fanbekleidung auf einer Tribüne."
+ },
+ "team-trikot": {
+  "motiv": [
+   31.2,
+   32.0,
+   38.3,
+   65.2
+  ],
+  "kern": [
+   41.0,
+   34.0,
+   19.0,
+   18.0
+  ],
+  "was": "Junge im SV Mörlenbach Trikot mit Ball läuft auf den Fußballplatz, Vereinslogo sichtbar."
+ },
+ "team-trikot-royal-kids": {
+  "motiv": [
+   11.0,
+   7.0,
+   79.0,
+   88.0
+  ],
+  "kern": [
+   37.0,
+   12.0,
+   14.0,
+   11.0
+  ],
+  "was": "Junge im blauen Fußballtrikot mit Vereinswappen, sitzt auf dem Rasen und bindet seine Schuhe."
+ },
+ "trinkflasche-foto": {
+  "motiv": [
+   34.0,
+   7.0,
+   32.0,
+   80.0
+  ],
+  "kern": [
+   44.5,
+   34.0,
+   11.0,
+   8.0
+  ],
+  "was": "Blaue Thermoflasche mit Vereinslogo und Jahreszahl 1896"
+ },
+ "merch-schal-held": {
+  "motiv": [
+   21.0,
+   18.0,
+   46.0,
+   67.0
+  ],
+  "kern": [
+   34.0,
+   37.0,
+   26.0,
+   20.0
+  ],
+  "was": "Blauer Fanschal mit Vereinswappen SV Mörlenbach auf einer Steinmauer im Sonnenuntergang."
+ }
+}

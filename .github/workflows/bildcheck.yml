@@ -1,0 +1,34 @@
+# Bild-Agent: prüft wöchentlich und nach jedem Ausrollen, ob alle Bilder auf allen Geräten gut aussehen (nichts Wichtiges angeschnitten,
+# kein Text über dem Motiv, nichts unscharf). Bericht: bildcheck.json, zu sehen im Backoffice unter Agenten.
+name: Bilder prüfen
+on:
+  schedule:
+    - cron: '41 2 * * 1'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths-ignore: ['bildcheck.json', 'sitemap.xml', 'p/**']
+permissions:
+  contents: write
+jobs:
+  bilder:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Browser
+        run: npm i --no-save --no-package-lock playwright@1.48.2 && npx playwright install --with-deps chromium
+      - name: Alle Seiten auf allen Geräten prüfen
+        run: node seiten/bildcheck.cjs . bildcheck.json
+      - name: Bericht speichern
+        run: |
+          git config user.name "Bild-Agent"
+          git config user.email "bild-agent@users.noreply.github.com"
+          git add bildcheck.json
+          if git diff --cached --quiet; then echo "Bericht unverändert"; exit 0; fi
+          git commit -m "Bild-Agent: Bericht"
+          git pull --rebase -q || true
+          git push

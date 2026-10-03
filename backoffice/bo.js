@@ -671,7 +671,35 @@ async function agentenExtra(m){
     try{ await rpc('shop_bo_einstellungen_speichern',{p:{seo:Object.assign({},c.seo||{},{keywords:f.kw.value.split('\n').map(x=>x.trim().toLowerCase()).filter(Boolean).slice(0,20),gsc_site:f.site.value.trim()})}}); toast('Gespeichert'); }catch(x){ toast(x.message); } };
 }
 
-S.agenten=async m=>{ await agentenBasis(m); await agentenExtra(m); };
+S.agenten=async m=>{ await agentenBasis(m); await agentenExtra(m); await agentenBilder(m); await agentenBildpruefer(m); };
+// Bild-Agent: Bericht aus der GitHub-Aktion (bildcheck.json im Store), prüft alle Seiten auf Handy, Tablet, Laptop, großem Bildschirm
+const BC_ART={kern:'Wichtiges angeschnitten',text:'Text über dem Motiv',motiv:'Motiv stark beschnitten',unscharf:'unscharf',unbekannt:'neues Foto ohne Motiv-Daten'};
+async function agentenBilder(m){
+  let b=null; try{ const r=await fetch(BASE+'bildcheck.json?'+Date.now(),{cache:'no-store'}); if(r.ok)b=await r.json(); }catch(e){}
+  const P=b?b.probleme||[]:[]; const fehler=P.filter(x=>x.schwere==='fehler');
+  m.insertAdjacentHTML('beforeend',`<div class="karte" id="bildAgent" style="margin-top:14px"><h2>${I.idee} Bild-Agent <small>${b?`${b.bilder} Bilder auf ${b.seiten} Seiten · ${(b.geraete||[]).join(', ')} · ${datum(b.stand,true)}`:'noch kein Bericht'}</small></h2>
+    <p style="color:var(--ink3);font-size:14px;max-width:72ch">Prüft wöchentlich und nach jedem Ausrollen, ob jedes Foto auf jedem Gerät gut aussieht: Wappen, Gesichter und Produkt nie angeschnitten, kein Text über dem Motiv, nichts unscharf. Der Shop schneidet jedes Foto selbst passend zum Rahmen zu.</p>
+    ${!b?'<p class="leer">Der erste Bericht kommt nach dem nächsten Ausrollen.</p>':!P.length?'<p class="hinweis ok">Alles gut. Kein Bild ist angeschnitten oder unscharf.</p>':`<p class="${fehler.length?'hinweis':'hinweis ok'}">${fehler.length?`${fehler.length} Bild${fehler.length>1?'er':''} mit Fehlern`:'Keine Fehler'}${P.length-fehler.length?` · ${P.length-fehler.length} Hinweis${P.length-fehler.length>1?'e':''}`:''}</p>
+    <div class="scroll" style="margin-top:10px"><table class="tabelle"><thead><tr><th>Bild</th><th>Gerät</th><th>Was</th><th>Seiten</th></tr></thead><tbody>${P.slice(0,60).map(x=>`<tr><td><img src="${klein(x.bild)}" alt="" style="width:44px;height:54px;object-fit:cover;border-radius:4px;vertical-align:middle;margin-right:8px"><small>${esc(x.bild)}</small></td><td>${esc(x.geraet)}<br><small style="color:var(--ink3)">${esc(x.rahmen||'')}</small></td>
+      <td><span class="pill ${x.schwere==='fehler'?'warn':''}">${esc(BC_ART[x.art]||x.art)}</span><br><small>${esc(x.text||'')}</small></td><td><small>${(x.seiten||[]).slice(0,4).map(esc).join(', ')}</small></td></tr>`).join('')}</tbody></table></div>`}</div>`);
+}
+/* Bild-Prüfer: schaut jedes Foto an wie ein Mensch (Schrift, Wappen, Hände, Fremdmarken, Stil, passt zum Produkt). Läuft auf dem Mac, Werkstatt baut Ersatz. */
+const BP_U={ok:['in Ordnung','ok'],nachbessern:['nachbessern','neu'],neu:['neu machen','warn']};
+async function agentenBildpruefer(m){
+  let b=null; try{ const r=await fetch(BASE+'bildpruefung.json?'+Date.now(),{cache:'no-store'}); if(r.ok)b=await r.json(); }catch(e){}
+  const L=b?Object.entries(b.bilder||{}).map(([n,v])=>({n,...v})):[]; const zahl=u=>L.filter(x=>x.urteil===u).length;
+  const rang={neu:0,nachbessern:1,ok:2}; L.sort((a,c)=>(rang[a.urteil]??3)-(rang[c.urteil]??3)||(a.note||0)-(c.note||0));
+  const fragen=L.filter(x=>x.rueckfrage); const W=b&&b.werkstatt||{}; const wj=Object.values(W.jobs||{});
+  m.insertAdjacentHTML('beforeend',`<div class="karte" id="bildPruefer" style="margin-top:14px"><h2>${I.idee} Bild-Prüfer <small>${b?`${L.length} Fotos · ${datum(b.stand,true)}`:'noch kein Bericht'}</small></h2>
+    <p style="color:var(--ink3);font-size:14px;max-width:72ch">Schaut sich jedes Foto an wie ein kritischer Mensch: Schrift Buchstabe für Buchstabe, Wappen mit drei Glocken, Hände und Gesichter, Fremdmarken, ob es eine echte Street-Momentaufnahme ist und ob es zum Produkt passt. Die Bild-Werkstatt baut für Fehler und Lücken neue Fotos im Store-Stil, und nur was die Prüfung besteht, kommt in den Shop.</p>
+    ${!b?'<p class="leer">Noch kein Bericht.</p>':`<p class="hinweis${zahl('neu')?'':' ok'}">${zahl('ok')} in Ordnung · ${zahl('nachbessern')} nachbessern · ${zahl('neu')} neu machen${fragen.length?` · ${fragen.length} Rückfragen an den Verein`:''}</p>
+    ${W.guthaben==='leer'?'<p class="hinweis">Die Bild-Werkstatt wartet: Das OpenAI-Guthaben ist leer. Nach dem Aufladen baut sie alle offenen Fotos, prüft sie und übernimmt nur die guten.</p>':wj.length?`<p class="hinweis ok">Werkstatt: ${wj.filter(j=>j.status==='angenommen'||j.status==='uebernommen').length} neue Fotos fertig, ${wj.filter(j=>j.status==='abgelehnt').length} verworfen.</p>`:''}
+    <div class="scroll" style="margin-top:10px"><table class="tabelle"><thead><tr><th>Foto</th><th>Urteil</th><th>Was auffällt</th></tr></thead><tbody>${L.map(x=>{ const u=BP_U[x.urteil]||[x.urteil||'?',''];
+      const f=(x.fehler||[]).filter(y=>y.schwere!=='leicht').slice(0,4);
+      return `<tr><td><img src="${klein(x.n)}" alt="" style="width:44px;height:54px;object-fit:cover;border-radius:4px;vertical-align:middle;margin-right:8px"><small>${esc(x.n)}</small></td>
+      <td><span class="pill ${u[1]}">${esc(u[0])}</span><br><small style="color:var(--ink3)">Note ${x.note??'–'} · Stil ${x.stil??'–'}</small></td>
+      <td>${f.length?f.map(y=>`<small>${y.schwere==='kritisch'?'<b>':''}${esc(y.was)}${y.schwere==='kritisch'?'</b>':''}${y.wo?' <span style="color:var(--ink3)">('+esc(y.wo)+')</span>':''}</small>`).join('<br>'):`<small>${esc(x.begruendung||'')}</small>`}${x.rueckfrage?`<br><small style="color:var(--blau,#1E355E)">Frage: ${esc(x.rueckfrage)}</small>`:''}</td></tr>`; }).join('')}</tbody></table></div>`}</div>`);
+}
 /* ---------- Einstellungen ---------- */
 /* ---------- Aktionen mit Countdown, Vereinsausstattung, Mystery Boxen (075) ---------- */
 const AK_JETZT={laeuft:['läuft','ok'],geplant:['geplant','neu'],vorbei:['vorbei','aus'],entwurf:['Entwurf','']};
