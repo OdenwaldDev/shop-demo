@@ -986,9 +986,9 @@ route(/^\/merch$/, () => {
     <h1>Für alle, die <span class="blau">da&shy;zu&shy;ge&shy;hören</span> <span class="kringel">wollen.<svg viewBox="0 0 300 120" preserveAspectRatio="none" aria-hidden="true"><path d="M20 70C30 20 250 5 285 50c30 40-120 65-200 55C20 98 5 70 40 40" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg></span></h1>
     <p class="lead">Schals, Mützen, Flaschen und kleine Dinge mit Glocken drauf. Für den Spieltag, den Weihnachtsmarkt und die Oma, die eh jedes Spiel schaut.</p>
     <div class="btns"><a class="btn akz" href="#finder">Geschenk finden ${ICO.geschenk}</a><a class="btn rand" href="#mRaster">Alles ansehen</a></div>
-    <p class="tipp">${ICO.info} Psst: Die Sticker kann man verschieben.</p></div>
+    <p class="tipp nur-gross">${ICO.info} Psst: Die Sticker kann man verschieben.</p></div>
     <div class="f-collage">
-      <figure class="p1" data-r><img src="img/merch-schal-bank-hoch.webp" alt="Fanschal auf einer Bank in Mörlenbach"><figcaption>am Brunnen</figcaption></figure>
+      <figure class="p1" data-r><img src="img/merch-schal-held.webp" alt="Fanschal mit Wappen auf einer Mauer in Mörlenbach"><figcaption>in der Altstadt</figcaption></figure>
       <figure class="p2" data-r style="transition-delay:120ms"><img src="img/merch-gruppe-s.webp" alt="Fans mit Schal und Beanie"><figcaption>nach dem Abpfiff</figcaption></figure>
       <figure class="p3" data-r style="transition-delay:240ms"><img src="img/merch-hoodie-grau-s.webp" alt="Supporter Hoodie"><figcaption>auf der Tribüne</figcaption></figure>
       <div class="sticker s1">Ei<br>gude!</div><div class="sticker s2">Seit 1896 ♥</div><div class="sticker s3">SA<br>15:00</div></div></div></section>
