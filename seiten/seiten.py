@@ -43,21 +43,40 @@ def produkt_ld(domain, d):
         offer = {'@type': 'AggregateOffer', 'lowPrice': f'{preise[0] / 100:.2f}', 'highPrice': f'{preise[-1] / 100:.2f}', 'priceCurrency': 'EUR', 'offerCount': len(preise), 'offers': [offer]}
     return {'@type': 'Product', 'name': d['titel'], 'sku': d['slug'], 'description': (d.get('beschreibung') or d.get('untertitel') or d['titel'])[:500],
             'image': [bild_url(domain, b) for b in (d.get('bilder') or [])[:4]] or [bild_url(domain, '')],
-            'brand': {'@type': 'Brand', 'name': 'SV Mörlenbach'}, 'category': LINIEN.get(d.get('linie'), 'Merch'), 'offers': offer}
+            'brand': {'@type': 'Brand', 'name': 'SV Mörlenbach'}, 'category': LINIEN.get(d.get('linie'), 'Merch'), 'offers': offer,
+            **({'size': sorted({v['groesse'] for v in d.get('varianten') or [] if v.get('groesse')})} if any(v.get('groesse') for v in d.get('varianten') or []) else {}),
+            **({'color': d['farbe']} if d.get('farbe') else {})}
 
 def ld_html(teile):
     return '<script type="application/ld+json">' + json.dumps({'@context': 'https://schema.org', '@graph': teile}, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/') + '</script>'
 
-def seite(tpl, titel, text, pfad, og, ld, h1=None):
-    return (tpl.replace('__TITLE__', esc(titel)).replace('__DESC__', esc(text)).replace('__PFAD__', pfad).replace('__OG__', og)
-            .replace('__LD__', ld_html(ld)).replace('__H1__', esc(h1 or titel.split(' · ')[0])))
+def vorab_min(titel, text, h1=None):
+    """Knapper Inhalt für Suchmaschinen und ohne JavaScript (Baustelle oder Seiten ohne eigene Vorlage)."""
+    return f'<h1>{esc(h1 or titel.split(" · ")[0])}</h1><p>{esc(text)}</p><p><a href="/">SV Mörlenbach Store</a> · <a href="/mannschaft">Mannschaft</a> · <a href="/1896">1896</a> · <a href="/merch">Merch</a></p>'
 
-def produkt_seite(tpl, domain, d, og_da):
+def seite(tpl, titel, text, pfad, og, ld, h1=None, vorab=None):
+    return (tpl.replace('__TITLE__', esc(titel)).replace('__DESC__', esc(text)).replace('__PFAD__', pfad).replace('__OG__', og)
+            .replace('__LD__', ld_html(ld)).replace('__VORAB__', vorab or vorab_min(titel, text, h1)))
+
+def produkt_vorab(domain, d):
+    """Vorgerenderter Inhalt aus dem Katalog (für Artikel, die nur in der Datenbank stehen)."""
+    preise = sorted({int(v.get('preis') or d['preis']) for v in d.get('varianten') or []} or {int(d['preis'])})
+    gr = [v.get('groesse') for v in d.get('varianten') or [] if v.get('groesse')]
+    eur = lambda c: f'{c / 100:,.2f}'.replace(',', 'X').replace('.', ',').replace('X', '.') + ' €'
+    linie = LINIEN.get(d.get('linie'), 'Merch')
+    return (f'<nav aria-label="Brotkrumen"><a href="/">Start</a> › <a href="/{d.get("linie") or "merch"}">{esc(linie)}</a> › {esc(d["titel"])}</nav><h1>{esc(d["titel"])}</h1>'
+            f'<p>{esc(d.get("untertitel") or "")} · {"ab " if len(preise) > 1 else ""}{eur(preise[0])}</p>'
+            + ''.join(f'<img src="{bild_url(domain, b)}" alt="{esc(d["titel"])} vom SV Mörlenbach" loading="lazy" decoding="async">' for b in (d.get('bilder') or [])[:2])
+            + f'<p>{esc(d.get("beschreibung") or "")}</p>' + (f'<h2>Größen</h2><p>{esc(", ".join(dict.fromkeys(gr)))}</p>' if gr else '')
+            + '<h2>Lieferung</h2><p>Kostenloser Versand nach Hause. Lieferzeit meist 1 bis 2 Wochen. 14 Tage Widerruf, außer bei Teilen mit Name oder Nummer.</p>'
+            + '<p><a href="/">SV Mörlenbach Store</a> · <a href="/mannschaft">Mannschaft</a> · <a href="/1896">1896</a> · <a href="/merch">Merch</a></p>')
+
+def produkt_seite(tpl, domain, d, og_da, seo=False, vorab=None):
     titel = f"{d['titel']} · SV Mörlenbach Store"
     text = (d.get('beschreibung') or d.get('untertitel') or f"{d['titel']} vom SV Mörlenbach. Kostenloser Versand nach Hause.").replace('\n', ' ')
     if len(text) > 158: text = text[:155].rsplit(' ', 1)[0] + ' …'
     ld = [store_ld(domain), produkt_ld(domain, d), brot_ld(domain, [('Start', ''), (LINIEN.get(d.get('linie'), 'Merch'), d.get('linie') or 'merch'), (d['titel'], 'p/' + d['slug'])])]
-    return seite(tpl, titel, text, 'p/' + d['slug'], 'p-' + d['slug'] if og_da('p-' + d['slug']) else 'start', ld, d['titel'])
+    return seite(tpl, titel, text, 'p/' + d['slug'], 'p-' + d['slug'] if og_da('p-' + d['slug']) else 'start', ld, d['titel'], vorab if vorab is not None else (produkt_vorab(domain, d) if seo else None))
 
 def sitemap(domain, pfade, heute=None):
     heute = heute or datetime.date.today().isoformat()
@@ -79,7 +98,7 @@ if __name__ == '__main__':
     os.makedirs(os.path.join(W, 'p'), exist_ok=True); neu = 0
     produkte = [d for d in kat.get('produkte') or [] if d.get('slug')]
     for d in produkte:
-        ziel = os.path.join(W, 'p', d['slug'] + '.html'); h = produkt_seite(tpl, K['domain'], d, og_da)
+        ziel = os.path.join(W, 'p', d['slug'] + '.html'); h = produkt_seite(tpl, K['domain'], d, og_da, seo=bool(K.get('seo')))
         alt = open(ziel, encoding='utf-8').read() if os.path.exists(ziel) else None
         if alt != h: open(ziel, 'w', encoding='utf-8').write(h); neu += 1
     vorhanden = sorted('p/' + f[:-5] for f in os.listdir(os.path.join(W, 'p')) if f.endswith('.html'))

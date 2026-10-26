@@ -330,12 +330,18 @@ setInterval(uhrenTick, 1000);
 /* ================= Rahmen ================= */
 function rahmen() {
   const navItems = [['mannschaft', 'Mannschaft'], ['1896', '1896'], ['merch', 'Merch'], ['kids', 'Kids'], ['accessoires', 'Accessoires'], ['drops', 'Drops'], ['verein', 'Verein'], ['faq', 'FAQ']].filter(([k]) => k !== 'drops' || DROPS_AN());
-  const msg = LIVE.an ? ['Kostenloser Versand nach Hause', 'Name und Nummer aufs Trikot inklusive', 'Jeder Kauf unterstützt den Verein', LIVE.cfg.zahlarten?.online?.aktiv ? 'Bezahlen mit PayPal, Karte, Apple Pay oder Überweisung' : 'Bezahlen per Überweisung', `Lieferzeit ${lieferzeit()}`, 'Mehr als ein Verein'] : ['Kostenloser Versand ab 75 €', 'Abholung am Sportplatz kostenlos', `Drop 01 läuft bis ${fTag(DROP1_ENDE)}, ${fDatum(DROP1_ENDE)}`, 'Name und Nummer auf jedes Trikot', 'Jeder Kauf unterstützt die Jugend', `Drop 02 am ${fDatum(DROP2_START)} um 18 Uhr`].filter(m => DROPS_AN() || !/Drop 0/.test(m));
-  if (LIVE.an) aktionenLaufend().filter(a => a.zeigen).slice(0, 2).reverse().forEach(a => msg.unshift(`${esc(a.titel)}: −${a.rabatt} % bis ${aktionBisText(a.bis)}`));
-  const spur = [...msg, ...msg].map(m => `<span><i></i>${m}</span>`).join('');
+  // Service-Leiste: drei feste Punkte mit Icon, ruhig und ohne Laufschrift. Läuft eine Aktion, nimmt sie den ersten Platz ein.
+  const dienste = [
+    ['lkw', ICO.lkw, LIVE.an ? 'Kostenloser Versand nach Hause' : 'Kostenloser Versand ab 75 €'],
+    ['nadel', ICO.nadel, LIVE.an ? 'Name und Nummer aufs Trikot inklusive' : 'Name und Nummer auf jedes Trikot'],
+    ['hand', ICO.hand, LIVE.an ? 'Jeder Kauf unterstützt den Verein' : 'Jeder Kauf unterstützt die Jugend'],
+  ];
+  const aktLeiste = LIVE.an ? aktionenLaufend().filter(a => a.zeigen)[0] : null;
+  if (aktLeiste) dienste.unshift(['akt', ICO.blitz, `${esc(aktLeiste.titel)}: −${aktLeiste.rabatt} % bis ${aktionBisText(aktLeiste.bis)}`]);
+  const spur = dienste.slice(0, 3).map(([k, i, t], n) => `<span class="d${n + 1}${k === 'akt' ? ' akt' : ''}">${i}${t}</span>`).join('');
   document.body.insertAdjacentHTML('afterbegin', `
   <a class="vh" href="#haupt">Zum Inhalt springen</a>
-  <div class="oben" id="oben"><div class="topbar"><div class="spur">${spur}</div></div>
+  <div class="oben" id="oben"><div class="topbar"><div class="dienste">${spur}</div></div>
     <header class="hdr">
       <nav class="hnav" aria-label="Hauptmenü">${navItems.slice(0, 6).map(([k, t]) => `<a href="${U(k)}" data-link data-nav="${k}" class="${k === 'drops' ? 'drop' : ''}">${t}</a>`).join('')}</nav>
       <button class="ibtn menue-btn" id="menueBtn" aria-label="Menü öffnen"><span></span><span></span></button>
@@ -495,7 +501,7 @@ async function zeigen() {
 function passen(root = document) {
   const rand = document.documentElement.clientWidth - 6;
   $$('h1, h2, .h-xl, .h-l', root).forEach(el => {
-    if (el.closest('.band, .tafel, .lookbook')) return;
+    if (el.closest('.tafel, .lookbook')) return;
     el.style.fontSize = '';
     const box = el.getBoundingClientRect(); if (!box.width) return;
     const cs = getComputedStyle(el), fs = parseFloat(cs.fontSize), schraeg = cs.fontStyle === 'italic' ? fs * 0.12 : 0;   // kursive Buchstaben ragen rechts über
@@ -609,14 +615,19 @@ route(/^\/$/, () => {
       <div class="seit">SV Mörlenbach 1896 e.V.<br>Offizieller Store<br>Odenwald, Hessen</div></div>
     <div class="tafeln" id="tafeln">${tafeln.map(([k, w, z], i) => { const L = LINIEN[k]; return `
       <a class="tafel" data-l="${w}" href="${U(k)}" data-link data-flip="#tafel-${k} img" id="tafel-${k}" aria-label="${L.name} entdecken">
-        <img src="img/${L.bild}.webp" alt="" style="--fp:${L.fp}" ${i ? '' : 'fetchpriority="high"'}><span class="streifen"></span>
+        <img src="img/${L.bild}.webp" alt="${esc(L.name)}: ${esc(L.zeile)}" style="--fp:${L.fp}" ${i ? '' : 'fetchpriority="high"'}><span class="streifen"></span>
         <div class="unten"><div class="nr"><span>${L.nr} / 03</span><span>${z}</span></div><div class="titel">${L.name}</div><p class="zeile">${L.zeile}</p>
           <span class="mehr">${L.name} entdecken ${ICO.pfeil}</span></div></a>`; }).join('')}</div>
     <div class="punkte" id="tafelPunkte"><i class="on"></i><i></i><i></i></div>
     <div class="scroll" aria-hidden="true"></div>
   </section>
 
-  <div class="band" aria-hidden="true"><div class="spur" id="bandSpur">${Array(3).fill(`<span>Mannschaft</span>${WAPPEN}<span class="serif">1896</span>${WAPPEN}<span class="hohl">Merch</span>${WAPPEN}<span>Mehr als ein Verein</span>${WAPPEN}`).join('')}</div></div>
+  <section class="vorteile" aria-label="Was bei uns dazugehört"><div class="wrap v-reihe">${[
+    [ICO.lkw, 'Versand und Abholung', 'Nach Hause geliefert oder am Sportplatz abgeholt.'],
+    [ICO.nadel, 'Veredelung inklusive', 'Name und Nummer kommen ohne Aufpreis aufs Trikot.'],
+    [ICO.ort, 'Stickerei in der Region', 'Kurze Wege und feste Ansprechpartner vor Ort.'],
+    [ICO.hand, 'Für die Jugend', 'Jeder Kauf fließt zurück in den Verein.'],
+  ].map(([i, t, p], n) => `<div class="v-k" data-r style="transition-delay:${n * 90}ms"><span class="v-i">${i}</span><b>${t}</b><p>${p}</p></div>`).join('')}</div></section>
 
   ${aktionHtml()}
   ${heuteHtml()}
@@ -661,11 +672,11 @@ route(/^\/$/, () => {
   <section class="sec details wrap" aria-label="Details">
     <div class="sec-kopf"><div><p class="kicker" data-r>Material & Veredelung</p><h2 class="h-l" style="margin-top:14px" data-r>Schau genau hin.</h2></div><p class="lead" data-r>Wappen werden gestickt, Schals gestrickt, Rücken bedruckt. Wir zeigen die Details so nah, wie du sie später auf der Haut spürst.</p></div>
     <div class="gitter">
-      <figure class="detail d1" data-r="maske"><img src="img/d-scarf-crest.webp" alt="" loading="lazy"><span class="marker">01 · JACQUARD</span><figcaption><b>Gestrickt, nicht gedruckt.</b><span>Das Wappen ist ins Garn gestrickt. Es verblasst nicht und reißt nicht.</span></figcaption></figure>
-      <figure class="detail d2" data-r="maske" style="transition-delay:80ms"><img src="img/d-stick-1896.webp" alt="" loading="lazy"><span class="marker">02 · STICK</span><figcaption><b>Ton in Ton gestickt</b><span>1896, Mörlenbach und drei Glocken in Off-White und Silber.</span></figcaption></figure>
-      <figure class="detail d3" data-r="maske" style="transition-delay:160ms"><img src="img/d-number.webp" alt="" loading="lazy"><span class="marker">03 · FLOCK</span><figcaption><b>Dein Name, deine Nummer</b></figcaption></figure>
-      <figure class="detail d4" data-r="maske" style="transition-delay:120ms"><img src="img/d-crest-grey.webp" alt="" loading="lazy"><span class="marker">04 · 420 G/M²</span><figcaption><b>Heavy Fleece</b></figcaption></figure>
-      <figure class="detail d5" data-r="maske" style="transition-delay:200ms"><img src="img/d-hoodie-back.webp" alt="" loading="lazy"><span class="marker">05 · RÜCKEN</span><figcaption><b>Groß im Rücken</b><span>Damit man auch von hinten weiß, wer da kommt.</span></figcaption></figure>
+      <figure class="detail d1" data-r="maske"><img src="img/d-scarf-crest.webp" alt="Fanschal Heimat: das Wappen ist ins Garn gestrickt" loading="lazy"><span class="marker">01 · JACQUARD</span><figcaption><b>Gestrickt, nicht gedruckt.</b><span>Das Wappen ist ins Garn gestrickt. Es verblasst nicht und reißt nicht.</span></figcaption></figure>
+      <figure class="detail d2" data-r="maske" style="transition-delay:80ms"><img src="img/d-stick-1896.webp" alt="Hoodie 1896: Ton in Ton gestickt, 1896 und drei Glocken" loading="lazy"><span class="marker">02 · STICK</span><figcaption><b>Ton in Ton gestickt</b><span>1896, Mörlenbach und drei Glocken in Off-White und Silber.</span></figcaption></figure>
+      <figure class="detail d3" data-r="maske" style="transition-delay:160ms"><img src="img/d-number.webp" alt="Heimtrikot: Name und Nummer als Flock" loading="lazy"><span class="marker">03 · FLOCK</span><figcaption><b>Dein Name, deine Nummer</b></figcaption></figure>
+      <figure class="detail d4" data-r="maske" style="transition-delay:120ms"><img src="img/d-crest-grey.webp" alt="Crewneck Stone Grey: Heavy Fleece mit gesticktem Wappen" loading="lazy"><span class="marker">04 · 420 G/M²</span><figcaption><b>Heavy Fleece</b></figcaption></figure>
+      <figure class="detail d5" data-r="maske" style="transition-delay:200ms"><img src="img/d-hoodie-back.webp" alt="Hoodie: großer Rückenprint SV Mörlenbach" loading="lazy"><span class="marker">05 · RÜCKEN</span><figcaption><b>Groß im Rücken</b><span>Damit man auch von hinten weiß, wer da kommt.</span></figcaption></figure>
     </div>
   </section>
 
@@ -705,7 +716,7 @@ function stapelKarte(k, cls, kick, text, tags, prods, bild) {
     <div class="tags" style="margin-top:22px">${tags.map(t => `<span>${t}</span>`).join('')}</div></div>
     <div><div class="mini">${prods.map(s => { const p = PS[s]; return `<a href="${U('p/' + s)}" data-link><img ${srcset(p.img[0])} sizes="140px" alt="" loading="lazy" style="${p.ill ? 'object-fit:contain;padding:10%;background:rgba(255,255,255,.5)' : ''}">${esc(p.n)}<span>${preisHtml(p)}</span></a>`; }).join('')}</div>
     <p style="margin-top:24px"><a class="btn ${cls === 'k-fan' ? 'akz' : 'hell'}" style="${cls === 'k-fan' ? 'border-radius:99px' : ''}" href="${U(k)}" data-link>${L.name} entdecken ${ICO.pfeil}</a></p></div></div>
-    <div class="bild"><img src="img/${bild}.webp" alt="" loading="lazy" style="--fp:${FOKUS[bild] || '50% 30%'}"></div></article>`;
+    <div class="bild"><img src="img/${bild}.webp" alt="${esc(L.name)}: ${esc(kick)}" loading="lazy" style="--fp:${FOKUS[bild] || '50% 30%'}"></div></article>`;
 }
 function homeNach(root) {
   const weg = [];
@@ -713,10 +724,6 @@ function homeNach(root) {
   requestAnimationFrame(() => $$('.held h1 .wz', root).forEach((w, i) => { w.firstElementChild.style.transitionDelay = 250 + i * 110 + 'ms'; w.classList.add('in'); }));
   // Mobile: Punkte für Tafeln
   const tf = $('#tafeln'); tf.addEventListener('scroll', () => { const i = Math.round(tf.scrollLeft / (tf.scrollWidth / 3)); $$('#tafelPunkte i').forEach((p, k) => p.classList.toggle('on', k === i)); }, { passive: true });
-  // Band: Geschwindigkeit an Scroll gekoppelt
-  const spur = $('#bandSpur'); let x = 0, v = 1, ly = scrollY, raf;
-  const lauf = () => { const dy = scrollY - ly; ly = scrollY; v += (1 + Math.min(12, Math.abs(dy) * .25) - v) * .1; x -= v * (dy < 0 ? -1 : 1) * .6; const w = spur.scrollWidth / 3; if (x < -w) x += w; if (x > 0) x -= w; spur.style.transform = `translate3d(${x}px,0,0)`; raf = requestAnimationFrame(lauf); };
-  if (!ruhig) raf = requestAnimationFrame(lauf); weg.push(() => cancelAnimationFrame(raf));
   // Statement: Wörter füllen sich beim Scrollen
   const st = $('#statement'), ws = $$('.w', st);
   const fuell = () => { const r = st.getBoundingClientRect(); const pr = Math.min(1, Math.max(0, (innerHeight * .85 - r.top) / (r.height * .75))); const n = Math.round(pr * ws.length); ws.forEach((w, i) => w.classList.toggle('an', i < n)); };
@@ -945,7 +952,7 @@ route(/^\/1896$/, () => {
   ${DROPS_AN() ? `  <section class="sec wrap" style="padding-top:0"><p class="kicker" style="margin-bottom:16px" data-r>So läuft ein Drop</p><h2 class="h-l" style="font-family:var(--f-serif);font-weight:500;margin-bottom:clamp(30px,4vw,50px)" data-r>Vom Klick bis zum <em>Stick</em>.</h2>
     <div class="ablauf">${[['Vorbestellen', LIVE.an ? 'Du bestellst deine Größe und bezahlst online oder per Überweisung.' : 'Du bestellst deine Größe und zahlst per Vorkasse oder bar bei Abholung.', DROP_BALD() ? 'zum Start' : `bis ${fDatum(DROP1_ENDE)}`], ['Bestellschluss', 'Der Drop schließt. Ab jetzt zählt jedes Teil, das bestellt wurde. Nicht mehr, nicht weniger.', DROP_BALD() ? 'Termin folgt' : `${fTag(DROP1_ENDE)}, 20 Uhr`], ['Veredelung', 'Unser Partnerbetrieb in der Region stickt und näht. Das dauert rund zwei Wochen.', 'ca. 14 Tage'], LIVE.an ? ['Versand', 'Dein Paket kommt kostenlos zu dir nach Hause.', DROP_BALD() ? 'nach Fertigung' : `ab KW ${VERSAND_KW}`] : ['Versand & Abholung', 'Wir schicken dir das Paket oder du holst es am Sportplatz ab. Mit Nummer auf dem Etikett.', `ab KW ${VERSAND_KW}`]].map(([t, x, w], i) => `<div class="${i === phase ? 'jetzt' : ''}" data-r style="transition-delay:${i * 90}ms"><div class="n">0${i + 1}</div><b>${t}</b><p>${x}</p><span class="wann">${w}</span></div>`).join('')}</div></section>
 
-  <section class="naechster"><img src="img/1896-treppe.webp" alt="" loading="lazy"><div class="in">
+  <section class="naechster"><img src="img/1896-treppe.webp" alt="Zwei Freunde in 1896-Teilen auf der Treppe" loading="lazy"><div class="in">
     <p class="mono" style="opacity:.7">${DROP_BALD() ? 'Drop 02 · in Planung' : `Drop 02 · ${fTag(DROP2_START)}, ${fDatum(DROP2_START, { day: '2-digit', month: 'long' })} · 18 Uhr`}</p>
     <h2>Mehr als <em>ein</em> Verein.</h2>
     <p style="max-width:44ch;opacity:.75">Was kommt, verraten wir noch nicht. Nur so viel: Es wird schwer, gestickt und es gibt es nur einmal.</p>
@@ -1069,7 +1076,7 @@ route(/^\/p\/([a-z0-9-]+)$/, m => {
       <details><summary>Versand & Rückgabe<i></i></summary><div class="inhalt"><p>${LIVE.an ? `Wir lassen deine Bestellung von unserem Partner direkt und kostenlos zu dir nach Hause schicken. Lieferzeit ${esc(lieferzeit())}. 14 Tage Widerrufsrecht, ausgenommen sind mit Name oder Nummer bedruckte Teile.` : 'Versand per DHL oder kostenlose Abholung am Sportplatz. Zahlung per Vorkasse oder bar bei Abholung. Umtausch innerhalb von 14 Tagen, außer bei personalisierten und vorbestellten Teilen.'}</p></div></details>
     </div></aside></div></section>
 
-  ${detailBilder.length ? `<section class="sec wrap" style="padding-bottom:0"><p class="kicker" style="margin-bottom:20px">Im Detail</p><div class="im-detail">${[...detailBilder, ...p.img.filter(x => !x.startsWith('d-') && x !== p.img[0])].slice(0, 3).map(b => `<figure data-r="maske"><img src="${bildUrl(b)}" alt="" loading="lazy"><figcaption>${DETAIL_TEXT[b] || ''}</figcaption></figure>`).join('')}</div></section>` : ''}
+  ${detailBilder.length ? `<section class="sec wrap" style="padding-bottom:0"><p class="kicker" style="margin-bottom:20px">Im Detail</p><div class="im-detail">${[...detailBilder, ...p.img.filter(x => !x.startsWith('d-') && x !== p.img[0])].slice(0, 3).map(b => `<figure data-r="maske"><img src="${bildUrl(b)}" alt="${esc(p.n)}: ${esc(DETAIL_TEXT[b] || 'Detail')}" loading="lazy"><figcaption>${DETAIL_TEXT[b] || ''}</figcaption></figure>`).join('')}</div></section>` : ''}
 
   <section class="sec wrap"><p class="kicker" style="margin-bottom:14px">Complete the Look</p><h2 class="h-m" style="margin-bottom:28px">So tragen wir’s in Mörlenbach.</h2>
     <div class="look-set"><div class="grossbild" data-r><img src="img/${look[0]}.webp" alt="" loading="lazy">${look[2].map(([x, y], i) => `<span class="punkt" style="left:${x}%;top:${y}%">${i + 1}</span>`).join('')}</div>
@@ -1167,7 +1174,7 @@ route(/^\/drops$/, () => !DROPS_AN() ? { titel: '1896', ueber: false, html: `<se
   <section class="sec wrap" style="padding-top:clamp(40px,5vw,70px)"><div class="dropmodul" style="border-radius:0"><div class="grid2" style="min-height:0"><div class="bild" style="min-height:420px"><img src="img/1896-hoodie-treppe.webp" alt="" loading="lazy"></div>
     <div class="text"><span class="chip hell" style="width:max-content"><span class="dot"></span>Live</span><h2 class="h-l" style="font-family:var(--f-serif);font-weight:500;font-style:italic">Drop 01 · Heritage</h2>
       <p class="lead">${P.filter(p => p.d === '01').length} Produkte. Heavy Fleece, Stick in der Region, Bestellschluss am ${fTag(DROP1_ENDE)}.</p>${uhrHtml(DROP1_ENDE)}<a class="btn hell" href="${U('1896')}#drop01" data-link style="width:max-content">Zum Drop ${ICO.pfeil}</a></div></div></div></section>
-  <section class="naechster" style="min-height:60svh"><img src="img/1896-mauer.webp" alt="" loading="lazy"><div class="in"><p class="mono" style="opacity:.7">Drop 02 · ${fDatum(DROP2_START, { day: '2-digit', month: 'long' })} · 18 Uhr</p><h2>Mehr als <em>ein</em> Verein.</h2>${uhrHtml(DROP2_START)}
+  <section class="naechster" style="min-height:60svh"><img src="img/1896-mauer.webp" alt="Track Jacket und Pullover der Linie 1896 an der Mauer" loading="lazy"><div class="in"><p class="mono" style="opacity:.7">Drop 02 · ${fDatum(DROP2_START, { day: '2-digit', month: 'long' })} · 18 Uhr</p><h2>Mehr als <em>ein</em> Verein.</h2>${uhrHtml(DROP2_START)}
     <form data-demo="Du wirst 24 Stunden vorher erinnert (Demo)."><input type="email" placeholder="E-Mail für die Erinnerung" aria-label="E-Mail" required><button class="btn hell">Erinnern</button></form></div></section>
   <section class="sec wrap"><p class="kicker" style="margin-bottom:22px">Archiv</p><div class="archiv"><a href="${U('1896')}" data-link><span>01</span><span class="t">Heritage</span><span>${fDatum(DROP1_START)} bis ${fDatum(DROP1_ENDE)}</span><span>Live</span></a><div class="z" style="opacity:.55"><span>02</span><span class="t">Mehr als ein Verein</span><span>ab ${fDatum(DROP2_START)}</span><span>Bald</span></div><div class="z" style="opacity:.35"><span>03</span><span class="t">130 Jahre</span><span>2026</span><span>Geplant</span></div></div></section>`
 }));
@@ -1685,7 +1692,7 @@ route(/^\/konzept$/, () => {
 
   <section class="k-sek" id="stil"><span class="nr">02 · Visuelle Stilrichtung</span><h2>Reduziert, warm, mit Mut zu großen Momenten.</h2>
     <p>Vorbild sind moderne Mode- und Brand-Shops, nicht klassische Sportversender. Das heißt: viel Fläche, große Bilder, wenige Farben, starke Typografie. Bewegung wird gezielt eingesetzt, um Übergänge zu erzählen, nicht um zu dekorieren.</p>
-    <ul class="k-liste"><li>Keine Logo-Tapeten, keine Verläufe in Vereinsfarben, keine Sterne-Bewertungen aus dem Nichts.</li><li>Branding sitzt auf den Produkten. Das Wappen taucht im Interface sparsam auf: im Header, im Intro und als Trenner im Laufband.</li><li>Jede Linie wechselt beim Betreten die komplette Bühne: Hintergrund, Schrift, Rundungen und Rhythmus. Ein farbiger Vorhang mit dem Liniennamen macht den Wechsel spürbar.</li><li>Animationen: Wort-für-Wort-Reveals, Ken-Burns im Hero, Scroll-Füllung im Manifest-Text, horizontal gepinntes Lookbook, gestapelte Kollektionskarten, Ziehen im Karussell, fliegendes Produktbild in den Warenkorb.</li></ul></section>
+    <ul class="k-liste"><li>Keine Logo-Tapeten, keine Verläufe in Vereinsfarben, keine Sterne-Bewertungen aus dem Nichts.</li><li>Branding sitzt auf den Produkten. Das Wappen taucht im Interface sparsam auf: im Header und im Intro.</li><li>Jede Linie wechselt beim Betreten die komplette Bühne: Hintergrund, Schrift, Rundungen und Rhythmus. Ein farbiger Vorhang mit dem Liniennamen macht den Wechsel spürbar.</li><li>Animationen: Wort-für-Wort-Reveals, Ken-Burns im Hero, Scroll-Füllung im Manifest-Text, horizontal gepinntes Lookbook, gestapelte Kollektionskarten, Ziehen im Karussell, fliegendes Produktbild in den Warenkorb.</li></ul></section>
 
   <section class="k-sek" id="welten"><span class="nr">03 · Collection-Logik</span><h2>Drei Welten, drei Systeme.</h2>
     <p>Jede Linie ist ein eigenes Mini-Designsystem. Technisch ist das ein einziges Attribut auf der Seite, das Farben, Schrift und Radius umschaltet. So bleibt der Store wartbar und trotzdem überraschend.</p>
@@ -1713,11 +1720,11 @@ route(/^\/konzept$/, () => {
       <div><small>Archivo 400<br>Fließtext 16 bis 20 px</small><span style="max-width:55ch">Gestrickt, nicht gedruckt. Der Schal für Spieltag, Weihnachtsmarkt und die Bank am Brunnen.</span></div></div></section>
 
   <section class="k-sek" id="struktur"><span class="nr">06 · Seitenstruktur</span><h2>Flach, klar, schnell gefunden.</h2>
-    <div class="sitemap"><div class="knoten start"><b>Startseite</b>Hero-Triptychon · Laufband · Manifest · Linien-Stapel · Bestseller · Drop-Modul · Details · Gemeinschaft · Service · Drop-Liste</div>
+    <div class="sitemap"><div class="knoten start"><b>Startseite</b>Hero-Triptychon · Vorteile · Manifest · Linien-Stapel · Bestseller · Drop-Modul · Details · Gemeinschaft · Service · Drop-Liste</div>
       <div class="knoten"><b>Mannschaft</b>Kategorien · Matchday Kit · Live-Flock · Raster · Teambesteller</div><div class="knoten"><b>1896</b>Manifest · Lookbook · Drop 01 · Ablauf · Drop 02 · Archiv</div><div class="knoten"><b>Merch</b>Kategorien · Geschenkfinder · Bundle · Raster</div>
       <div class="knoten"><b>Kids · Accessoires · Alle</b>Filter, Sortierung, linienübergreifend</div><div class="knoten"><b>Drops</b>Live, Kommend, Archiv</div><div class="knoten"><b>Produktseite</b>Galerie, Kaufbox, Detail, Look, Passt dazu</div>
       <div class="knoten"><b>Verein</b>Geschichte, Wohin dein Geld geht</div><div class="knoten"><b>FAQ</b>7 Themen, Anker aus dem Footer</div><div class="knoten"><b>Service</b>Merkzettel, Suche, Warenkorb, Kasse</div></div>
-    <p style="margin-top:18px">Globale Elemente: Laufband mit Service-Botschaften, Header (blendet beim Runterscrollen aus), Vollbild-Menü mit Bildvorschau, Suche als Overlay (Taste /), Warenkorb als Schublade mit Gratis-Versand-Balken, Merkzettel ohne Konto.</p></section>
+    <p style="margin-top:18px">Globale Elemente: Service-Leiste mit Icons in Vereinsfarben, Header (blendet beim Runterscrollen aus), Vollbild-Menü mit Bildvorschau, Suche als Overlay (Taste /), Warenkorb als Schublade mit Gratis-Versand-Balken, Merkzettel ohne Konto.</p></section>
 
   <section class="k-sek" id="hero"><span class="nr">07 · Startseite & Hero</span><h2>Der erste Eindruck entscheidet die Linie.</h2>
     <h3>Umgesetzt: Das Triptychon</h3><p>Drei hohe Bildtafeln nebeneinander, jede eine Linie, jede in ihrer eigenen Schrift. Beim Überfahren wächst eine Tafel, die anderen werden entsättigt. Ein Klick zoomt das Bild auf Vollbild und landet nahtlos in der Linie. Auf dem Handy werden die Tafeln zu einem wischbaren Karussell.</p>
