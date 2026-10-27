@@ -1,6 +1,6 @@
 /* SV Mörlenbach Store · Service Worker: schnell starten, offline die letzte Ansicht, Push-Nachrichten */
-const V = 'd7bbdcb3';
-const KERN = ['./', 'app.css?v=d7bbdcb3', 'app.js?v=d7bbdcb3', 'img/icon-192.png', 'img/favicon.svg', 'fonts/archivo.woff2'];
+const V = 'ab1b736e';
+const KERN = ['./', 'app.css?v=ab1b736e', 'app.js?v=ab1b736e', 'img/icon-192.png', 'img/favicon.svg', 'fonts/archivo.woff2'];
 self.addEventListener('install', e => { e.waitUntil(caches.open('kern-' + V).then(c => c.addAll(KERN)).then(() => self.skipWaiting())); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(k => Promise.all(k.filter(n => !n.endsWith(V) && !n.startsWith('bilder')).map(n => caches.delete(n)))).then(() => self.clients.claim())); });
 self.addEventListener('fetch', e => {
