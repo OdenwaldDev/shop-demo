@@ -1,5 +1,5 @@
 {
- "stand": "2026-10-27T16:23:23.907Z",
+ "stand": "2026-11-02T10:04:09.329Z",
  "seiten": 46,
  "geraete": [
   "Handy",
@@ -106,11 +106,12 @@
   {
    "geraet": "Handy",
    "bild": "d-number",
-   "rahmen": "308×385",
+   "rahmen": "321×342",
    "art": "unscharf",
    "schwere": "hinweis",
-   "text": "Braucht rund 616 Pixel Breite, die Datei hat nur 380. Größere Datei hinterlegen.",
+   "text": "Braucht rund 642 Pixel Breite, die Datei hat nur 380. Größere Datei hinterlegen.",
    "seiten": [
+    "/",
     "/p/auswaertstrikot-26-27"
    ]
   },
@@ -163,11 +164,12 @@
   },
   {
    "geraet": "Tablet",
-   "bild": "merch-schal-held",
-   "rahmen": "772×655",
-   "art": "unscharf",
+   "bild": "team-anzug-tasche",
+   "rahmen": "803×681",
+   "art": "motiv",
    "schwere": "hinweis",
-   "text": "Braucht rund 1544 Pixel Breite, die Datei hat nur 1024. Größere Datei hinterlegen.",
+   "wert": 69,
+   "text": "Vom Motiv sind nur 69 % zu sehen. Ein anderes Seitenverhältnis wäre besser.",
    "seiten": [
     "/"
    ]
