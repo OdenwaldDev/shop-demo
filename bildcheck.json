@@ -1,5 +1,5 @@
 {
- "stand": "2026-11-02T10:04:09.329Z",
+ "stand": "2026-11-09T10:27:20.393Z",
  "seiten": 46,
  "geraete": [
   "Handy",
@@ -8,10 +8,22 @@
   "Großer Bildschirm"
  ],
  "aufrufe": 184,
- "bilder": 2332,
- "fehler": 0,
- "hinweise": 14,
+ "bilder": 2200,
+ "fehler": 1,
+ "hinweise": 13,
  "probleme": [
+  {
+   "geraet": "Tablet",
+   "bild": "merch-schal-bank-hoch",
+   "rahmen": "245×306",
+   "art": "kern",
+   "schwere": "fehler",
+   "wert": 34,
+   "text": "Blauer Fanschal mit Vereinswappen auf einer Bank, malerische Dorfkulisse im Hintergrund.: nur 34 % zu sehen. Ausschnitt oder Rahmen anpassen.",
+   "seiten": [
+    "/p/gutschein"
+   ]
+  },
   {
    "geraet": "Handy",
    "bild": "1896-crew-kirche",
@@ -160,18 +172,6 @@
    "text": "Braucht rund 1298 Pixel Breite, die Datei hat nur 722. Größere Datei hinterlegen.",
    "seiten": [
     "/p/fanschal-heimat"
-   ]
-  },
-  {
-   "geraet": "Tablet",
-   "bild": "team-anzug-tasche",
-   "rahmen": "803×681",
-   "art": "motiv",
-   "schwere": "hinweis",
-   "wert": 69,
-   "text": "Vom Motiv sind nur 69 % zu sehen. Ein anderes Seitenverhältnis wäre besser.",
-   "seiten": [
-    "/"
    ]
   }
  ]
