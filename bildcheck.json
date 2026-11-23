@@ -1,5 +1,5 @@
 {
- "stand": "2026-11-16T10:17:41.132Z",
+ "stand": "2026-11-23T11:22:51.836Z",
  "seiten": 46,
  "geraete": [
   "Handy",
@@ -22,18 +22,6 @@
    "text": "Vom Motiv sind nur 65 % zu sehen. Ein anderes Seitenverhältnis wäre besser.",
    "seiten": [
     "/1896"
-   ]
-  },
-  {
-   "geraet": "Tablet",
-   "bild": "1896-crew-kirche",
-   "rahmen": "772×655",
-   "art": "motiv",
-   "schwere": "hinweis",
-   "wert": 66,
-   "text": "Vom Motiv sind nur 66 % zu sehen. Ein anderes Seitenverhältnis wäre besser.",
-   "seiten": [
-    "/"
    ]
   },
   {
@@ -172,6 +160,17 @@
    "text": "Braucht rund 1298 Pixel Breite, die Datei hat nur 722. Größere Datei hinterlegen.",
    "seiten": [
     "/p/fanschal-heimat"
+   ]
+  },
+  {
+   "geraet": "Tablet",
+   "bild": "merch-schal-held",
+   "rahmen": "781×662",
+   "art": "unscharf",
+   "schwere": "hinweis",
+   "text": "Braucht rund 1562 Pixel Breite, die Datei hat nur 1024. Größere Datei hinterlegen.",
+   "seiten": [
+    "/"
    ]
   }
  ]
