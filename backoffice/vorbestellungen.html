@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Vorbestellungen · Drop 001</title>
+<link rel="icon" href="/img/favicon.png" type="image/png">
+<style>
+@font-face{font-family:'Archivo';src:url(/fonts/archivo.woff2) format('woff2');font-weight:100 900;font-stretch:62% 125%;font-display:swap}
+:root{color-scheme:dark;--bg:#08090B;--feld:#14171B;--text:#ECEBE7;--leise:#8D929B;--linie:rgba(236,235,231,.14);--warn:#F28C28}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:400 15px/1.45 'Archivo',system-ui,sans-serif;padding:calc(env(safe-area-inset-top,0px) + 20px) clamp(16px,4vw,40px) 60px}
+h1{margin:0 0 4px;font:800 clamp(34px,8vw,60px)/.9 'Archivo',sans-serif;font-stretch:62%;text-transform:uppercase}
+p{margin:0 0 14px;color:var(--leise)}
+a{color:inherit}
+.zahlen{display:grid;grid-template-columns:repeat(auto-fit,minmax(84px,1fr));gap:8px;margin:18px 0;max-width:640px}
+.zahlen div{border:1px solid var(--linie);background:var(--feld);padding:12px}
+.zahlen b{display:block;font:800 34px/1 'Archivo',sans-serif;font-stretch:62%;font-variant-numeric:tabular-nums}
+.zahlen span{font-size:12px;color:var(--leise);text-transform:uppercase;letter-spacing:.1em}
+.knoepfe{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+button{font:600 13px/1 'Archivo',sans-serif;letter-spacing:.06em;text-transform:uppercase;background:var(--text);color:#08090B;border:0;padding:12px 16px;cursor:pointer}
+button.still{background:var(--feld);color:var(--text);border:1px solid var(--linie)}
+.rahmen{overflow-x:auto;border:1px solid var(--linie)}
+table{border-collapse:collapse;width:100%;min-width:860px;font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--linie);vertical-align:top}
+th{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--leise);font-weight:500;background:var(--feld)}
+tr.storniert td{color:var(--leise);text-decoration:line-through}
+select{background:var(--feld);color:var(--text);border:1px solid var(--linie);padding:6px;font:inherit}
+.fehler{color:var(--warn)}
+</style>
+</head>
+<body>
+<h1>Vorbestellungen</h1>
+<p id="unter">Drop 001 · Sweater Grau</p>
+<p id="stand">Lade …</p>
+<div id="innen" hidden>
+  <div class="zahlen" id="zahlen"></div>
+  <div class="knoepfe"><button id="neu" class="still">Neu laden</button><button id="csv">Als Tabelle laden (CSV)</button></div>
+  <div class="rahmen"><table><thead><tr><th>Nr.</th><th>Wann</th><th>Größe</th><th>Name</th><th>Anschrift</th><th>Handy</th><th>E-Mail</th><th>Stand</th></tr></thead><tbody id="zeilen"></tbody></table></div>
+</div>
+<script src="/vendor/supabase.js"></script>
+<script>
+(function(){
+'use strict';
+var DROP='sweater-grau',$=function(i){return document.getElementById(i)},liste=[];
+var sb=supabase.createClient('https://lvaukuzgcwgqipxwzabo.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx2YXVrdXpnY3dncWlweHd6YWJvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNTYwMTcsImV4cCI6MjEwNTczMjAxN30.jYZF8q8-SyCaWykM0wwcK58EzfTbO2VASKz1NIv1xbo',{auth:{storageKey:'svm-store-bo',persistSession:true,autoRefreshToken:true}});
+function zelle(tr,t){var td=document.createElement('td');td.textContent=t==null?'':String(t);tr.appendChild(td);return td}
+function wann(s){return new Intl.DateTimeFormat('de-DE',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit',timeZone:'Europe/Berlin'}).format(new Date(s))}
+function melde(t,schlecht){var s=$('stand');s.textContent=t;s.className=schlecht?'fehler':''}
+function laden(){
+  melde('Lade …');
+  sb.auth.getSession().then(function(r){
+    if(!r.data||!r.data.session){$('innen').hidden=true;$('stand').innerHTML='Bitte zuerst im <a href="/backoffice/">Backoffice</a> anmelden und dann diese Seite neu laden.';return}
+    return sb.rpc('shop_bo_vorbestellungen',{p_slug:DROP}).then(function(a){
+      if(a.error){$('innen').hidden=true;melde(a.error.message||'Das hat nicht geklappt.',true);return}
+      zeigen(a.data)});
+  }).catch(function(){melde('Keine Verbindung. Bitte gleich nochmal.',true)});
+}
+function zeigen(d){
+  liste=d.liste||[];var gr=(d.drop&&d.drop.groessen)||['S','M','L','XL'],aktiv=liste.filter(function(v){return v.status!=='storniert'});
+  var z=$('zahlen');z.textContent='';
+  [['Gesamt',aktiv.length]].concat(gr.map(function(g){return [g,(d.groessen||{})[g]||0]})).forEach(function(p){var b=document.createElement('div'),n=document.createElement('b'),s=document.createElement('span');n.textContent=p[1];s.textContent=p[0];b.appendChild(n);b.appendChild(s);z.appendChild(b)});
+  var tb=$('zeilen');tb.textContent='';
+  liste.forEach(function(v){var tr=document.createElement('tr');tr.className=v.status;
+    zelle(tr,('00'+v.nr).slice(-3));zelle(tr,wann(v.created_at));zelle(tr,v.groesse);zelle(tr,v.name);zelle(tr,v.strasse+', '+v.plz+' '+v.ort);zelle(tr,v.handy);zelle(tr,v.email);
+    var td=document.createElement('td'),sel=document.createElement('select');sel.setAttribute('aria-label','Stand der Vorbestellung '+v.nr);
+    [['neu','Neu'],['bestaetigt','Bestätigt'],['storniert','Storniert']].forEach(function(o){var op=document.createElement('option');op.value=o[0];op.textContent=o[1];if(v.status===o[0])op.selected=true;sel.appendChild(op)});
+    sel.addEventListener('change',function(){sb.rpc('shop_bo_vorbestellung_status',{p_id:v.id,p_status:sel.value}).then(function(a){if(a.error)melde(a.error.message,true);laden()})});
+    td.style.textDecoration='none';td.appendChild(sel);tr.appendChild(td);tb.appendChild(tr)});
+  $('innen').hidden=false;
+  var fenster=d.drop?' · offen von '+wann(d.drop.start_at)+' bis '+wann(d.drop.ende_at):'';
+  melde(liste.length?liste.length+' Einträge'+fenster:'Noch keine Vorbestellungen'+fenster);
+}
+function csvFeld(t){t=String(t==null?'':t);if(/^[=+\-@\t]/.test(t))t="'"+t;return '"'+t.replace(/"/g,'""')+'"'}
+$('csv').addEventListener('click',function(){
+  var z=[['Nr','Wann','Größe','Name','Straße','PLZ','Ort','Handy','E-Mail','Stand']].concat(liste.map(function(v){return [v.nr,wann(v.created_at),v.groesse,v.name,v.strasse,v.plz,v.ort,v.handy,v.email,v.status]}));
+  var blob=new Blob(['﻿'+z.map(function(r){return r.map(csvFeld).join(';')}).join('\r\n')],{type:'text/csv;charset=utf-8'}),a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);a.download='vorbestellungen-drop-001.csv';document.body.appendChild(a);a.click();a.remove();
+});
+$('neu').addEventListener('click',laden);
+laden();
+})();
+</script>
+</body>
+</html>
