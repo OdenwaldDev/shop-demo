@@ -1,0 +1,531 @@
+<!doctype html>
+<html lang="de" class="zu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Drop 001 · Nur mit Passwort · SV Mörlenbach</title>
+<meta name="description" content="Drop 001 vom SV Mörlenbach. Start Sonntag, 12 Uhr. Sieben Tage, dann ist zu. Rein kommst du nur mit Passwort.">
+<meta name="theme-color" content="#08090B">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="1896 Shop · SV Mörlenbach">
+<meta property="og:title" content="DROP 001 · Nur mit Passwort">
+<meta property="og:description" content="Start Sonntag, 12 Uhr. Sieben Tage, dann ist zu.">
+<meta property="og:url" content="https://1896shop.de/001">
+<meta property="og:image" content="https://1896shop.de/drop/og-3.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:alt" content="Drop 001 vom SV Mörlenbach: grauer Sweater mit Mörlenbach-Schriftzug auf dem Rücken, nur mit Passwort">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="de_DE">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="img/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="img/icon-180.png">
+<link rel="preload" href="fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="drop/vorn-2.webp" as="image">
+<style>
+@font-face{font-family:'Archivo';src:url(fonts/archivo.woff2) format('woff2');font-weight:100 900;font-stretch:62% 125%;font-style:normal;font-display:swap}
+@font-face{font-family:'IBM Plex Mono';src:url(fonts/plexmono-400.woff2) format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'IBM Plex Mono';src:url(fonts/plexmono-500.woff2) format('woff2');font-weight:500;font-display:swap}
+:root{color-scheme:dark;--bg:#08090B;--bg2:#0F1114;--feld:#14171B;--text:#ECEBE7;--leise:#8D929B;--linie:rgba(236,235,231,.14);--blau:#2F66C8;--blau-hell:#7FA6EE;--warn:#F28C28;
+  --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;--sans:'Archivo',system-ui,-apple-system,'Segoe UI',sans-serif;--rand:clamp(18px,5vw,56px)}
+*{box-sizing:border-box}
+html{background:var(--bg);-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:400 16px/1.5 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,video{display:block;max-width:100%}
+[hidden]{display:none!important}
+a{color:inherit}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--blau-hell);outline-offset:3px}
+.mono{font:500 11px/1.4 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--leise)}
+.mono b{color:var(--text);font-weight:500}
+/* Filmkorn über allem, ganz leise */
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.07;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* Kopfzeile */
+.kopf{position:absolute;inset:0 0 auto 0;z-index:5;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:calc(env(safe-area-inset-top,0px) + 16px) var(--rand) 0}
+.kopf .marke{display:flex;align-items:center;gap:10px}
+.kopf svg{width:22px;height:25px;flex:none}
+.punkt{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--warn);margin-right:8px;vertical-align:1px;animation:puls 1.6s ease-in-out infinite}
+@keyframes puls{50%{opacity:.25}}
+
+/* Bühne */
+.buehne{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;isolation:isolate}
+.buehne .film{position:absolute;inset:0;z-index:-2;background:#050607}
+.buehne .film video,.buehne .film img{position:absolute;left:50%;top:44%;height:min(86svh,150vw);width:auto;max-width:none;transform:translate(-50%,-50%);object-fit:contain;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 9%,#000 91%,transparent 100%),linear-gradient(180deg,transparent 0,#000 7%,#000 90%,transparent 100%);-webkit-mask-composite:source-in;
+  mask-image:linear-gradient(90deg,transparent 0,#000 9%,#000 91%,transparent 100%),linear-gradient(180deg,transparent 0,#000 7%,#000 90%,transparent 100%);mask-composite:intersect;
+  filter:brightness(1) contrast(1);transition:filter 1.8s cubic-bezier(.2,.7,.2,1)}
+.zu .buehne .film video,.zu .buehne .film img{filter:brightness(.66) contrast(1.12) saturate(.8)}
+.an .buehne .film video,.an .buehne .film img{animation:licht-an 1.5s steps(1,end) both}
+@keyframes licht-an{0%{filter:brightness(.66) contrast(1.12)}8%{filter:brightness(1.15)}14%{filter:brightness(.4) contrast(1.2)}22%{filter:brightness(1.2)}28%{filter:brightness(.7)}36%,100%{filter:brightness(1)}}
+.buehne::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(8,9,11,.55) 0,rgba(8,9,11,0) 22%,rgba(8,9,11,0) 46%,rgba(8,9,11,.86) 72%,var(--bg) 100%)}
+.unten{padding:0 var(--rand) calc(env(safe-area-inset-bottom,0px) + 28px);display:grid;gap:14px;max-width:760px;width:100%;margin:0 auto}
+.zeit{display:flex;align-items:flex-end;gap:clamp(6px,2.2vw,16px);font-variant-numeric:tabular-nums}
+.zeit div{display:grid;gap:4px}
+.zeit strong{font:800 clamp(58px,19.5vw,150px)/.8 var(--sans);font-stretch:62%;letter-spacing:-.01em}
+.zeit i{font-style:normal;font:800 clamp(34px,10vw,80px)/.9 var(--sans);font-stretch:62%;color:var(--leise);padding-bottom:22px}
+.zeit span{font:500 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--leise)}
+.offen .buehne .zeit strong{font-size:clamp(34px,10vw,54px)}.offen .buehne .zeit i{font-size:clamp(22px,6vw,32px);padding-bottom:15px}.offen .buehne .zeit{gap:8px}
+.tor{display:grid;gap:10px;margin-top:6px}
+.tor .reihe{display:flex;border:1px solid var(--linie);background:rgba(15,17,20,.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.tor .reihe:focus-within{border-color:var(--blau-hell)}
+.tor input{flex:1;min-width:0;background:none;border:0;padding:17px 16px;font:500 16px/1 var(--mono);letter-spacing:.12em;outline:none}
+.tor input::placeholder{color:var(--leise);letter-spacing:.14em;text-transform:uppercase;font-size:12px}
+.tor button{border:0;background:var(--text);color:#08090B;padding:0 22px;font:700 14px/1 var(--sans);font-stretch:112%;letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
+.tor button:active{transform:translateY(1px)}
+.tor.falsch .reihe{border-color:var(--warn);animation:ruckeln .32s}
+@keyframes ruckeln{25%{transform:translateX(-6px)}50%{transform:translateX(5px)}75%{transform:translateX(-3px)}}
+.meldung{min-height:18px;font:400 13px/1.35 var(--sans);color:var(--leise)}
+.meldung.schlecht{color:var(--warn)}
+.titel{margin:0;font:800 clamp(64px,21vw,170px)/.8 var(--sans);font-stretch:62%;text-transform:uppercase;letter-spacing:-.012em;text-wrap:balance}
+.titel em{font-style:normal;color:transparent;-webkit-text-stroke:1.5px var(--text)}
+.kauf{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px}
+.preis{font:700 26px/1 var(--sans);font-stretch:112%;font-variant-numeric:tabular-nums}
+.gr{display:flex;gap:6px}
+.gr button{border:1px solid var(--linie);background:rgba(15,17,20,.55);padding:9px 12px;min-width:38px;font:500 12px/1 var(--mono);letter-spacing:.08em;cursor:pointer;transition:background .15s,color .15s,border-color .15s}
+.gr button.an{background:var(--blau);color:#fff;border-color:var(--blau)}
+@media (hover:hover){.gr button:hover:not(.an),.wahl label:hover input:not(:checked)+span{border-color:var(--blau-hell);color:var(--blau-hell);background:rgba(47,102,200,.18)}}
+.knopf{display:inline-flex;align-items:center;justify-content:center;gap:10px;border:0;background:var(--text);color:#08090B;padding:18px 26px;font:700 15px/1 var(--sans);font-stretch:112%;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:background .2s,transform .12s}
+.knopf:hover{background:#fff}.knopf:active{transform:translateY(1px)}
+.knopf[disabled]{background:var(--feld);color:var(--leise);cursor:not-allowed}
+.zu .nur-offen,.offen .nur-zu{display:none!important}
+
+/* Inhalt nach dem Tor */
+main{display:grid;gap:clamp(64px,13vw,150px);padding:clamp(48px,10vw,110px) 0 0}
+.block{padding:0 var(--rand);max-width:1280px;width:100%;margin:0 auto}
+.zeile{display:flex;justify-content:space-between;align-items:baseline;gap:16px;border-top:1px solid var(--linie);padding-top:12px;margin-bottom:clamp(18px,4vw,34px)}
+h2{margin:0 0 14px;font:800 clamp(40px,11vw,104px)/.86 var(--sans);font-stretch:62%;text-transform:uppercase;letter-spacing:-.008em;text-wrap:balance}
+.text{max-width:46ch;color:#C5C7CC;margin:0}
+/* Licht über der Naht */
+.licht{position:relative;overflow:hidden;background:#000;touch-action:pan-y;cursor:crosshair;--x:38%;--y:46%;--r:clamp(120px,34vw,300px)}
+.licht img{width:100%;height:100%;object-fit:cover}
+.licht .dunkel{filter:brightness(.27) contrast(1.15) saturate(.7)}
+.licht .hell{position:absolute;inset:0;filter:brightness(1.18) contrast(1.06);
+  -webkit-mask-image:radial-gradient(circle var(--r) at var(--x) var(--y),#000 0,rgba(0,0,0,.72) 34%,rgba(0,0,0,.2) 68%,transparent 100%);
+  mask-image:radial-gradient(circle var(--r) at var(--x) var(--y),#000 0,rgba(0,0,0,.72) 34%,rgba(0,0,0,.2) 68%,transparent 100%)}
+.licht.warm .hell{filter:brightness(1.22) sepia(.34) saturate(1.3) contrast(1.05)}
+.licht .marke{position:absolute;left:14px;bottom:12px;z-index:2;color:var(--text);text-shadow:0 1px 8px #000}
+.naht{display:grid;gap:22px}
+.naht .licht{aspect-ratio:4/5;max-height:86svh;width:100%}
+.raster{display:grid;gap:10px;grid-template-columns:1fr 1fr}
+.raster .licht{aspect-ratio:4/5}
+.raster figure{margin:0;display:grid;gap:8px}
+.raster figcaption{display:flex;justify-content:space-between;gap:10px}
+.paar{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.paar figure{margin:0;background:#050607;display:grid;gap:8px}
+.paar img{width:100%;aspect-ratio:3/4;object-fit:cover}
+.strasse{position:relative;isolation:isolate}
+.strasse img{width:100%;height:min(125vw,92svh);object-fit:cover;object-position:50% 22%}
+.strasse::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,var(--bg) 0,rgba(8,9,11,0) 16%,rgba(8,9,11,0) 58%,var(--bg) 100%)}
+.strasse h2{position:absolute;left:var(--rand);right:var(--rand);bottom:clamp(12px,4vw,40px);z-index:2;margin:0}
+.fakten{display:grid;gap:0;margin:0;padding:0;list-style:none;border-bottom:1px solid var(--linie)}
+.fakten li{display:flex;justify-content:space-between;gap:20px;padding:14px 0;border-top:1px solid var(--linie)}
+.fakten li span:last-child{text-align:right;font:500 15px/1.3 var(--sans)}
+
+/* Vorbestellung */
+.bestell{display:grid;gap:26px}
+form.vor{display:grid;gap:18px;max-width:640px}
+.feld{display:grid;gap:7px}
+.feld label,.wahl legend{font:500 11px/1.3 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--leise);padding:0}
+.feld input{width:100%;background:var(--feld);border:1px solid var(--linie);border-radius:0;padding:15px 14px;font:400 16px/1.2 var(--sans);outline:none;-webkit-appearance:none;appearance:none}
+.feld input:focus{border-color:var(--blau-hell);background:#171B21}
+.zwei{display:grid;grid-template-columns:minmax(96px,.42fr) 1fr;gap:10px}
+.wahl{border:0;margin:0;padding:0;display:grid;gap:9px;min-width:0}
+.wahl .knoepfe{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.wahl label{position:relative;display:block}
+.wahl input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer}
+.wahl span{display:grid;place-items:center;height:58px;border:1px solid var(--linie);background:var(--feld);font:800 22px/1 var(--sans);font-stretch:75%;transition:background .15s,color .15s,border-color .15s}
+.wahl input:checked+span{background:var(--blau);color:#fff;border-color:var(--blau)}
+.wahl input:focus-visible+span{outline:2px solid var(--blau-hell);outline-offset:3px}
+.haken{display:grid;grid-template-columns:22px 1fr;gap:12px;align-items:start;font-size:14px;line-height:1.45;color:#C5C7CC}
+.haken input{width:22px;height:22px;margin:1px 0 0;accent-color:var(--blau)}
+.klein{font-size:13px;line-height:1.5;color:var(--leise);margin:0;max-width:60ch}
+.drin{border:1px solid var(--linie);background:var(--bg2);padding:clamp(22px,6vw,44px);display:grid;gap:14px;max-width:640px}
+.drin .nr{font:800 clamp(72px,24vw,170px)/.8 var(--sans);font-stretch:62%;font-variant-numeric:tabular-nums}
+.linkknopf{background:none;border:0;padding:0;color:var(--text);text-decoration:underline;text-underline-offset:4px;cursor:pointer;justify-self:start;font-size:14px}
+footer{margin-top:clamp(64px,12vw,130px);border-top:1px solid var(--linie);padding:26px var(--rand) calc(env(safe-area-inset-bottom,0px) + 110px);display:grid;gap:12px}
+footer nav{display:flex;flex-wrap:wrap;gap:8px 20px}
+footer a{text-underline-offset:4px}
+
+/* Leiste unten am Handy */
+.leiste{position:fixed;left:0;right:0;bottom:0;z-index:40;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px var(--rand) calc(env(safe-area-inset-bottom,0px) + 10px);
+  background:rgba(8,9,11,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--linie);transform:translateY(110%);transition:transform .35s cubic-bezier(.2,.7,.2,1)}
+.leiste.da{transform:none}
+.leiste .knopf{padding:14px 18px;font-size:13px}
+.leiste .uhr{font:500 13px/1.2 var(--mono);font-variant-numeric:tabular-nums;color:var(--text)}
+.leiste .uhr small{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--leise)}
+
+/* Drop-Elemente: Laufband, große Nummer, Zugang frei, Zähler, Ticket */
+.gross{position:absolute;z-index:-1;left:calc(var(--rand) - .04em);top:calc(env(safe-area-inset-top,0px) + 50px);font:800 clamp(150px,52vw,420px)/.78 var(--sans);font-stretch:62%;color:transparent;-webkit-text-stroke:1px rgba(236,235,231,.14);pointer-events:none;user-select:none}
+.offen .gross{display:none}
+.chip.live .punkt{background:#E5392B}.chip.aus .punkt{background:var(--leise);animation:none}
+.zeit strong{display:block}
+.zeit strong.t{animation:zahl .32s cubic-bezier(.2,.7,.2,1)}
+@keyframes zahl{0%{transform:translateY(-9%);opacity:.3}100%{transform:none;opacity:1}}
+.balken{height:3px;background:var(--linie);position:relative;overflow:hidden;max-width:420px}
+.balken i{position:absolute;inset:0 auto 0 0;width:0;background:var(--text);transition:width 1s linear}
+.zahl{color:var(--text);margin:0}
+.zahl::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:#E5392B;margin-right:8px;vertical-align:1px;animation:puls 1.6s ease-in-out infinite}
+.band{overflow:hidden;border-block:1px solid var(--linie);padding:13px 0;white-space:nowrap;background:var(--bg)}
+.band div{display:inline-flex;animation:lauf 38s linear infinite;will-change:transform}
+.band span{font:800 17px/1 var(--sans);font-stretch:62%;letter-spacing:.07em;text-transform:uppercase;padding:0 20px}
+.band span:nth-child(even){color:transparent;-webkit-text-stroke:1px var(--leise)}
+@keyframes lauf{to{transform:translateX(-50%)}}
+.frei{position:fixed;inset:0;z-index:60;display:grid;place-content:center;justify-items:center;gap:12px;background:var(--text);color:#08090B;animation:frei 1.2s cubic-bezier(.7,0,.2,1) both}
+.frei strong{font:800 clamp(64px,22vw,230px)/.8 var(--sans);font-stretch:62%;text-transform:uppercase;text-align:center}
+.frei .mono{color:#08090B}
+@keyframes frei{0%{clip-path:inset(0 0 100% 0)}16%{clip-path:inset(0)}20%{filter:invert(1)}24%{filter:none}28%{filter:invert(1)}32%{filter:none}72%{clip-path:inset(0);transform:none}100%{clip-path:inset(0);transform:translateY(-101%)}}
+.galerie{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding:0 var(--rand);scroll-padding-left:var(--rand);scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.galerie::-webkit-scrollbar{display:none}
+.galerie figure{flex:0 0 78%;margin:0;scroll-snap-align:start;display:grid;gap:8px}
+.galerie img{width:100%;aspect-ratio:3/4;object-fit:cover;background:#050607}
+.galerie figcaption{display:flex;gap:12px}
+.ablauf{list-style:none;margin:24px 0 0;padding:0;display:grid;border-bottom:1px solid var(--linie);max-width:46ch}
+.ablauf li{display:grid;grid-template-columns:34px 1fr;gap:10px;align-items:baseline;padding:12px 0;border-top:1px solid var(--linie);font-size:15px;line-height:1.4}
+.ticket{padding:0;gap:0}
+.ticket>*{padding-inline:clamp(18px,5vw,34px)}
+.t-kopf{display:flex;justify-content:space-between;gap:12px;padding-block:16px;border-bottom:1px dashed var(--linie)}
+.ticket .nr{padding-block:22px 6px}
+.t-zeilen{margin:0;padding-block:10px 18px;display:grid;gap:0}
+.t-zeilen div{display:flex;justify-content:space-between;gap:16px;padding:9px 0;border-top:1px solid var(--linie)}
+.t-zeilen dd{margin:0;font:500 15px/1.3 var(--sans)}
+.t-strich{height:46px;margin-inline:clamp(18px,5vw,34px);padding:0;background:repeating-linear-gradient(90deg,var(--text) 0 2px,transparent 2px 5px,var(--text) 5px 6px,transparent 6px 11px,var(--text) 11px 14px,transparent 14px 16px,var(--text) 16px 17px,transparent 17px 21px);opacity:.9}
+.ticket .text{padding-block:18px 4px}
+.t-knoepfe{display:flex;flex-wrap:wrap;align-items:center;gap:14px 22px;padding-block:14px 22px}
+.t-knoepfe .knopf{padding:14px 20px;font-size:13px}
+
+.rein{opacity:0;transform:translateY(22px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.2,1)}
+.rein.sicht{opacity:1;transform:none}
+
+@media (min-width:860px){
+  .buehne{justify-content:center}
+  .buehne .film video,.buehne .film img{left:70%;top:50%;height:92svh}
+  .buehne::before{background:linear-gradient(90deg,var(--bg) 0,rgba(8,9,11,.82) 34%,rgba(8,9,11,0) 62%),linear-gradient(180deg,rgba(8,9,11,.5) 0,rgba(8,9,11,0) 20%,rgba(8,9,11,0) 80%,var(--bg) 100%)}
+  .unten{margin:0;max-width:min(54vw,780px);padding-top:90px}
+  .zu .zeit strong{font-size:clamp(90px,10.5vw,170px)}
+  .titel{font-size:clamp(110px,13vw,210px)}
+  .naht{grid-template-columns:1.25fr 1fr;align-items:end;gap:48px}
+  .heimat{grid-template-columns:1fr 1.25fr}.heimat .licht{order:2}
+  .naht .licht{aspect-ratio:5/4;max-height:78svh}
+  .raster .licht{aspect-ratio:5/4}
+  .galerie{display:grid;grid-template-columns:repeat(3,1fr);max-width:1280px;margin:0 auto;overflow:visible}
+  .gross{left:auto;right:3vw;top:auto;bottom:-3vw;font-size:30vw}
+  .strasse{display:grid;grid-template-columns:1fr 1fr;align-items:end;gap:48px;max-width:1280px;margin:0 auto;padding:0 var(--rand);width:100%}
+  .strasse img{order:2;height:auto;aspect-ratio:4/5;max-height:88svh}
+  .strasse::after{display:none}
+  .strasse h2{position:static;order:1;margin:0 0 6px}
+  .bestell{grid-template-columns:1fr 1.1fr;gap:64px;align-items:start}
+  .leiste{display:none}
+  footer{padding-bottom:40px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .band div,.zeit strong.t,.zahl::before{animation:none}
+  .punkt,.an .buehne .film video,.an .buehne .film img,.tor.falsch .reihe{animation:none}
+  .rein{opacity:1;transform:none;transition:none}
+  .buehne .film video,.buehne .film img{transition:none}
+}
+</style>
+</head>
+<body>
+
+<header class="kopf">
+  <div class="marke">
+    <svg viewBox="0 0 40 46" aria-hidden="true"><path d="M3 3h34v19.5c0 11.6-7.7 18.6-17 21.5C10.7 41.1 3 34.1 3 22.5z" fill="none" stroke="#ECEBE7" stroke-width="2.4" stroke-linejoin="round"/><g fill="#ECEBE7"><path d="M7.8 17.1c.3-4.4 1.6-7.4 5.2-7.4s4.9 3 5.2 7.4l2 2.6h-14.4z"/><path d="M21.8 17.1c.3-4.4 1.6-7.4 5.2-7.4s4.9 3 5.2 7.4l2 2.6h-14.4z"/><path d="M14.8 31.1c.3-4.4 1.6-7.4 5.2-7.4s4.9 3 5.2 7.4l2 2.6h-14.4z"/></g></svg>
+    <span class="mono"><b>1896 Shop</b></span>
+  </div>
+  <span class="mono chip" id="chip"><span class="punkt"></span><b data-chip>Drop 001</b></span>
+</header>
+
+<section class="buehne" aria-label="Drop 001">
+  <div class="film">
+    <video id="film" muted loop playsinline preload="none" poster="drop/vorn-2.webp" data-klein="drop/dreh-5.mp4" data-gross="drop/dreh-5g.mp4" aria-label="Der graue Sweater im dunklen Studio: aus mehreren Winkeln, Wappen, Nähte und Schriftzug aus der Nähe, zum Schluss getragen"></video>
+  </div>
+  <span class="gross" aria-hidden="true">001</span>
+  <div class="unten">
+    <p class="mono nur-zu" style="margin:0"><b>Private Drop</b> · Nur mit Passwort</p>
+    <h1 class="titel nur-offen">Sweater <em>Grau</em></h1>
+    <div class="kauf nur-offen">
+      <span class="preis">59,96 €</span>
+      <span class="gr" id="grOben" role="group" aria-label="Größe wählen"></span>
+      <span class="mono zahl" data-zahl hidden></span>
+    </div>
+    <p class="mono" style="margin:6px 0 0" data-zeit-text>Vorbestellung startet in</p>
+    <div class="zeit" id="zeit" role="timer" aria-live="off">
+      <div><strong data-t>00</strong><span>Tage</span></div><i>:</i>
+      <div><strong data-h>00</strong><span>Std</span></div><i>:</i>
+      <div><strong data-m>00</strong><span>Min</span></div><i>:</i>
+      <div><strong data-s>00</strong><span>Sek</span></div>
+    </div>
+    <div class="balken" id="balken" hidden><i></i></div>
+    <form class="tor nur-zu" id="tor" autocomplete="off" novalidate>
+      <div class="reihe">
+        <input id="pw" name="pw" type="text" inputmode="text" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="Passwort" aria-label="Passwort für den Drop" enterkeyhint="go">
+        <button type="submit">Rein</button>
+      </div>
+      <p class="meldung" id="torMeldung" role="status">Kein Passwort? Das gibt es im Verein.</p>
+    </form>
+    <div class="nur-offen" style="margin-top:8px"><a class="knopf" href="#vorbestellen">Vorbestellen <span aria-hidden="true">↓</span></a></div>
+  </div>
+</section>
+
+<div class="band" aria-hidden="true"><div><span>Drop 001</span><span>Sweater Grau</span><span>Nur sieben Tage</span><span>Nur mit Passwort</span><span>Mörlenbach</span><span>Seit 1896</span><span>Drop 001</span><span>Sweater Grau</span><span>Nur sieben Tage</span><span>Nur mit Passwort</span><span>Mörlenbach</span><span>Seit 1896</span><span>Drop 001</span><span>Sweater Grau</span><span>Nur sieben Tage</span><span>Nur mit Passwort</span><span>Mörlenbach</span><span>Seit 1896</span><span>Drop 001</span><span>Sweater Grau</span><span>Nur sieben Tage</span><span>Nur mit Passwort</span><span>Mörlenbach</span><span>Seit 1896</span></div></div>
+
+<main id="inhalt" hidden>
+  <section class="block bestell rein" id="vorbestellen">
+    <div>
+      <div class="zeile"><span class="mono"><b>Vorbestellen</b></span><span class="mono" data-zeit-kurz></span></div>
+      <h2>Sicher dir deinen.</h2>
+      <p class="text">Sieben Tage ist offen, dann ist zu. Du trägst dich ein, wir melden uns nach dem Drop bei dir mit allem zu Bezahlung und Übergabe.</p>
+      <ol class="ablauf">
+        <li><span class="mono">01</span><span>Größe wählen, eintragen, fertig.</span></li>
+        <li><span class="mono">02</span><span data-ende-satz>Nach sieben Tagen ist zu.</span></li>
+        <li><span class="mono">03</span><span>Wir melden uns bei dir: Bezahlung und Übergabe.</span></li>
+      </ol>
+    </div>
+    <div>
+      <form class="vor" id="vor" novalidate>
+        <fieldset class="wahl">
+          <legend>Größe</legend>
+          <div class="knoepfe" id="groessen"></div>
+        </fieldset>
+        <div class="feld"><label for="fName">Vor- und Nachname</label><input id="fName" name="name" autocomplete="name" required maxlength="80"></div>
+        <div class="feld"><label for="fStr">Straße und Hausnummer</label><input id="fStr" name="strasse" autocomplete="street-address" required maxlength="100"></div>
+        <div class="zwei">
+          <div class="feld"><label for="fPlz">PLZ</label><input id="fPlz" name="plz" autocomplete="postal-code" inputmode="numeric" pattern="[0-9]{5}" maxlength="5" required></div>
+          <div class="feld"><label for="fOrt">Ort</label><input id="fOrt" name="ort" autocomplete="address-level2" required maxlength="60"></div>
+        </div>
+        <div class="feld"><label for="fTel">Handynummer</label><input id="fTel" name="handy" type="tel" autocomplete="tel" inputmode="tel" required maxlength="24"></div>
+        <div class="feld"><label for="fMail">E-Mail</label><input id="fMail" name="email" type="email" autocomplete="email" inputmode="email" autocapitalize="none" required maxlength="120"></div>
+        <label class="haken"><input type="checkbox" id="fOk" name="ok"><span>Der SV Mörlenbach 1896 e.V. darf meine Angaben für diese Vorbestellung speichern und mich dazu anschreiben oder anrufen. Mehr dazu im <a href="info/datenschutz">Datenschutz</a>.</span></label>
+        <p class="mono zahl" data-zahl hidden></p>
+        <button class="knopf" type="submit" id="vorKnopf">Vorbestellen · 59,96 €</button>
+        <p class="meldung" id="vorMeldung" role="status" aria-live="polite"></p>
+        <p class="klein">Jetzt wird nichts bezahlt. Die Bilder zeigen den Entwurf, das fertige Teil kann leicht abweichen.</p>
+      </form>
+      <div class="drin ticket" id="drin" hidden tabindex="-1">
+        <div class="t-kopf"><span class="mono"><b>Du bist drin</b></span><span class="mono">Drop 001</span></div>
+        <span class="nr" id="drinNr">001</span>
+        <dl class="t-zeilen">
+          <div><dt class="mono">Teil</dt><dd>Sweater Grau</dd></div>
+          <div><dt class="mono">Größe</dt><dd id="drinGr">M</dd></div>
+          <div><dt class="mono">Preis</dt><dd>59,96 €</dd></div>
+        </dl>
+        <div class="t-strich" aria-hidden="true"></div>
+        <p class="text" id="drinText"></p>
+        <div class="t-knoepfe"><button class="knopf" type="button" id="teilen" hidden>Weitersagen</button><button class="linkknopf" type="button" id="nochEiner">Noch einen vorbestellen</button></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block naht rein">
+    <div class="licht" data-licht data-auto>
+      <img class="dunkel" src="drop/naht-1.webp" alt="" loading="lazy" decoding="async">
+      <img class="hell" src="drop/naht-1.webp" alt="Kragen und Schulternaht des grauen Sweaters aus der Nähe" loading="lazy" decoding="async">
+      <span class="mono marke"><b>Fahr mit dem Finger drüber</b></span>
+    </div>
+    <div>
+      <div class="zeile"><span class="mono"><b>Verarbeitung</b></span><span class="mono">Licht an</span></div>
+      <h2>Schau auf die Naht.</h2>
+      <p class="text">Kragen, Bund, Nähte: Fahr mit dem Licht drüber und schau dir an, wie das Teil gemacht ist.</p>
+    </div>
+  </section>
+
+  <section class="block naht heimat rein">
+    <div class="licht warm" data-licht data-auto="quer">
+      <img class="dunkel" src="drop/schrift-1.webp" alt="" loading="lazy" decoding="async">
+      <img class="hell" src="drop/schrift-1.webp" alt="Der Schriftzug Mörlenbach auf dem Rücken im warmen Licht" loading="lazy" decoding="async">
+    </div>
+    <div>
+      <div class="zeile"><span class="mono"><b>Rücken</b></span><span class="mono">Mörlenbach</span></div>
+      <h2>Trag, wo du herkommst.</h2>
+      <p class="text">Mörlenbach steht groß auf dem Rücken. Jeder sieht, wo du zu Hause bist.</p>
+    </div>
+  </section>
+
+  <section class="rein">
+    <div class="block"><div class="zeile"><span class="mono"><b>Lookbook</b></span><span class="mono">06 Bilder</span></div></div>
+    <div class="galerie" tabindex="0" aria-label="Der Sweater getragen und aus drei Ansichten">
+      <figure><img src="drop/modell-1.webp" alt="Der graue Sweater getragen, von vorn, im dunklen Studio" loading="lazy" decoding="async"><figcaption class="mono"><b>01</b><span>Getragen</span></figcaption></figure>
+      <figure><img src="drop/modell-2.webp" alt="Der graue Sweater getragen, von hinten, mit dem Schriftzug Mörlenbach" loading="lazy" decoding="async"><figcaption class="mono"><b>02</b><span>Rücken</span></figcaption></figure>
+      <figure><img src="drop/modell-4.webp" alt="Der graue Sweater getragen in einer Tiefgarage, von hinten" loading="lazy" decoding="async"><figcaption class="mono"><b>03</b><span>Draußen</span></figcaption></figure>
+      <figure><img src="drop/vorn-2.webp" alt="Der graue Sweater von vorn" loading="lazy" decoding="async"><figcaption class="mono"><b>04</b><span>Vorn</span></figcaption></figure>
+      <figure><img src="drop/winkel-2.webp" alt="Der graue Sweater schräg von der Seite" loading="lazy" decoding="async"><figcaption class="mono"><b>05</b><span>Von der Seite</span></figcaption></figure>
+      <figure><img src="drop/hinten-2.webp" alt="Der graue Sweater von hinten mit dem Schriftzug Mörlenbach" loading="lazy" decoding="async"><figcaption class="mono"><b>06</b><span>Hinten</span></figcaption></figure>
+    </div>
+  </section>
+
+  <section class="block rein">
+    <div class="zeile"><span class="mono"><b>Details</b></span><span class="mono">Nah dran</span></div>
+    <div class="raster">
+      <figure>
+        <div class="licht" data-licht><img class="dunkel" src="drop/wappen-1.webp" alt="" loading="lazy" decoding="async"><img class="hell" src="drop/wappen-1.webp" alt="Das Wappen mit den drei Glocken auf der Brust, aus der Nähe" loading="lazy" decoding="async"></div>
+        <figcaption class="mono"><b>Wappen</b><span>Brust links</span></figcaption>
+      </figure>
+      <figure>
+        <div class="licht" data-licht><img class="dunkel" src="drop/saum-1.webp" alt="" loading="lazy" decoding="async"><img class="hell" src="drop/saum-1.webp" alt="Bund und Seitennaht des grauen Sweaters aus der Nähe" loading="lazy" decoding="async"></div>
+        <figcaption class="mono"><b>Bund</b><span>Seitennaht</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="strasse rein">
+    <img src="drop/modell-3.webp" alt="Der graue Sweater getragen in einer Tiefgarage bei Nacht" loading="lazy" decoding="async">
+    <h2>Vom Platz<br>auf die Straße.</h2>
+  </section>
+
+</main>
+
+<footer>
+  <span class="mono"><b>SV Mörlenbach 1896 e.V.</b> · 1896 Shop</span>
+  <nav class="mono"><a href="info/impressum">Impressum</a><a href="info/datenschutz">Datenschutz</a></nav>
+</footer>
+
+<div class="frei" id="frei" aria-hidden="true" hidden><span class="mono">Drop 001</span><strong>Zugang frei</strong></div>
+
+<div class="leiste" id="leiste" aria-hidden="true">
+  <div class="uhr"><small data-zeit-text>Startet in</small><span data-zeit-kurz></span></div>
+  <a class="knopf" href="#vorbestellen" tabindex="-1">Vorbestellen</a>
+</div>
+
+<script>
+(function(){
+'use strict';
+var CFG={url:'https://lvaukuzgcwgqipxwzabo.supabase.co',anon:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx2YXVrdXpnY3dncWlweHd6YWJvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNTYwMTcsImV4cCI6MjEwNTczMjAxN30.jYZF8q8-SyCaWykM0wwcK58EzfTbO2VASKz1NIv1xbo',drop:'sweater-grau'};
+var D={start:Date.parse('2026-11-29T11:00:00Z'),ende:Date.parse('2026-12-06T11:00:00Z'),groessen:['S','M','L','XL'],versatz:0,zahl:0};
+var H=document.documentElement,$=function(s,r){return (r||document).querySelector(s)},$$=function(s,r){return [].slice.call((r||document).querySelectorAll(s))};
+var pw='',phase='';
+function merk(k,v){try{if(v===undefined)return localStorage.getItem(k);if(v===null)localStorage.removeItem(k);else localStorage.setItem(k,v)}catch(e){}return null}
+function rpc(fn,body){
+  return fetch(CFG.url+'/rest/v1/rpc/'+fn,{method:'POST',headers:{'Content-Type':'application/json',apikey:CFG.anon,Authorization:'Bearer '+CFG.anon},body:JSON.stringify(body)})
+    .then(function(r){return r.json().catch(function(){return null}).then(function(j){
+      if(!r.ok){var e=new Error(j&&j.message&&r.status<500&&!/^(JWT|permission|Could not)/i.test(j.message)?j.message:'Das hat gerade nicht geklappt. Bitte gleich nochmal.');e.server=true;throw e}
+      return j})},function(){throw new Error('Keine Verbindung. Bitte gleich nochmal.')});
+}
+function zwei(n){return (n<10?'0':'')+n}
+function jetzt(){return Date.now()+D.versatz}
+function tag(ms){return new Intl.DateTimeFormat('de-DE',{weekday:'long',day:'numeric',month:'numeric',timeZone:'Europe/Berlin'}).format(new Date(ms))}
+function uhr(ms){var h=new Intl.DateTimeFormat('de-DE',{hour:'numeric',minute:'2-digit',timeZone:'Europe/Berlin'}).format(new Date(ms));return h.replace(/:00$/,'')+' Uhr'}
+
+/* Countdown */
+function stell(q,v){var e=$(q);if(e.textContent===v)return;e.textContent=v;e.classList.remove('t');void e.offsetWidth;e.classList.add('t')}
+function zahlZeig(){$$('[data-zahl]').forEach(function(e){e.hidden=!(D.zahl>=5&&phase==='offen');e.textContent='Schon '+D.zahl+' gesichert'})}
+function tick(){
+  var n=jetzt(),p=n<D.start?'vor':n<D.ende?'offen':'vorbei',ziel=p==='vor'?D.start:D.ende,r=Math.max(0,Math.floor((ziel-n)/1000));
+  var t=Math.floor(r/86400),h=Math.floor(r%86400/3600),m=Math.floor(r%3600/60),s=r%60;
+  stell('[data-t]',zwei(t));stell('[data-h]',zwei(h));stell('[data-m]',zwei(m));stell('[data-s]',zwei(s));
+  if(p==='offen')$('#balken i').style.width=Math.min(100,(n-D.start)/(D.ende-D.start)*100).toFixed(2)+'%';
+  var kurz=p==='vorbei'?'Vorbei':(t?t+'T ':'')+zwei(h)+':'+zwei(m)+':'+zwei(s);
+  $$('[data-zeit-kurz]').forEach(function(e){e.textContent=kurz});
+  if(p!==phase){phase=p;
+    var lang=p==='vor'?'Vorbestellung startet in':p==='offen'?'Drop endet in':'Der Drop ist vorbei';
+    $$('[data-zeit-text]').forEach(function(e){e.textContent=e.closest('.leiste')?(p==='vor'?'Startet in':p==='offen'?'Endet in':'Drop'):lang});
+    var k=$('#vorKnopf');
+    if(p==='vor'){k.disabled=true;k.textContent='Öffnet '+tag(D.start)+', '+uhr(D.start)}
+    else if(p==='offen'){k.disabled=false;k.textContent='Vorbestellen · 59,96 €'}
+    else{k.disabled=true;k.textContent='Der Drop ist vorbei'}
+    $('[data-ende-satz]').textContent='Am '+tag(D.ende)+' um '+uhr(D.ende)+' ist zu.';
+    var c=$('#chip');c.classList.toggle('live',p==='offen');c.classList.toggle('aus',p==='vorbei');
+    $('[data-chip]').textContent=p==='vor'?'Startet '+new Intl.DateTimeFormat('de-DE',{weekday:'short',timeZone:'Europe/Berlin'}).format(new Date(D.start)).replace('.','')+', '+uhr(D.start):p==='offen'?'Live':'Geschlossen';
+    $('#balken').hidden=p!=='offen';zahlZeig();
+  }
+}
+tick();setInterval(tick,1000);
+function stand(){return rpc('shop_drop_stand',{p_slug:CFG.drop}).then(function(j){var a=j&&Date.parse(j.start),b=j&&Date.parse(j.ende),n=j&&Date.parse(j.jetzt);if(!(a&&b&&n))return;
+  var neu=a!==D.start||b!==D.ende;D.start=a;D.ende=b;D.versatz=n-Date.now();D.zahl=+j.zahl||0;
+  if(j.groessen&&j.groessen.length&&j.groessen.join()!==D.groessen.join()){D.groessen=j.groessen;groessenBauen()}
+  if(neu)phase='';tick();zahlZeig()}).catch(function(){})}
+stand();setInterval(function(){if(!document.hidden&&phase!=='vorbei')stand()},60000);
+
+/* Größen */
+function groessenBauen(){
+  var alt=($('#groessen input:checked')||{}).value;
+  $('#groessen').innerHTML=D.groessen.map(function(g){return '<label><input type="radio" name="groesse" value="'+g+'"'+(g===alt?' checked':'')+'><span>'+g+'</span></label>'}).join('');
+  $('#grOben').innerHTML=D.groessen.map(function(g){return '<button type="button" data-g="'+g+'"'+(g===alt?' class="an"':'')+' aria-pressed="'+(g===alt)+'">'+g+'</button>'}).join('');
+}
+function groesseSetz(g){
+  $$('#groessen input').forEach(function(i){i.checked=i.value===g});
+  $$('#grOben button').forEach(function(b){var an=b.getAttribute('data-g')===g;b.classList.toggle('an',an);b.setAttribute('aria-pressed',an)});
+}
+$('#groessen').addEventListener('change',function(e){if(e.target.name==='groesse')groesseSetz(e.target.value)});
+$('#grOben').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;groesseSetz(b.getAttribute('data-g'));$('#vorbestellen').scrollIntoView()});
+groessenBauen();
+
+/* Tor */
+(function(){var v=$('#film');if(!v)return;v.src=v.getAttribute(window.matchMedia('(min-width:860px)').matches?'data-gross':'data-klein');v.load();var q=v.play();if(q&&q.catch)q.catch(function(){})})();
+function auf(mitLicht){
+  H.classList.remove('zu');H.classList.add('offen');if(mitLicht)H.classList.add('an');
+  $('#inhalt').hidden=false;
+  var v=$('#film');if(v&&v.paused){var q=v.play();if(q&&q.catch)q.catch(function(){})}
+  beobachten();
+}
+$('#tor').addEventListener('submit',function(e){
+  e.preventDefault();var f=this,i=$('#pw'),m=$('#torMeldung'),w=i.value.trim();
+  if(!w){i.focus();return}
+  f.classList.remove('falsch');m.className='meldung';m.textContent='Moment …';
+  rpc('shop_drop_tor',{p_slug:CFG.drop,p_passwort:w}).then(function(j){
+    if(j&&j.ok){pw=w.toLowerCase();merk('drop001',pw);i.blur();
+      if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){auf(true);window.scrollTo({top:0});return}
+      var fr=$('#frei');fr.hidden=false;setTimeout(function(){auf(true);window.scrollTo({top:0})},300);setTimeout(function(){fr.hidden=true},1250)}
+    else{void f.offsetWidth;f.classList.add('falsch');m.className='meldung schlecht';m.textContent='Das Passwort stimmt nicht.';i.select()}
+  }).catch(function(x){m.className='meldung schlecht';m.textContent=x.message});
+});
+(function(){var alt=merk('drop001');if(!alt)return;pw=alt;auf(false);
+  rpc('shop_drop_tor',{p_slug:CFG.drop,p_passwort:alt}).then(function(j){if(j&&j.ok===false){merk('drop001',null);location.reload()}}).catch(function(){});
+})();
+
+/* Licht über der Naht */
+$$('[data-licht]').forEach(function(el){
+  var auto=el.hasAttribute('data-auto'),quer=el.getAttribute('data-auto')==='quer',zuletzt=0,still=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function setz(x,y){el.style.setProperty('--x',x+'%');el.style.setProperty('--y',y+'%')}
+  function zeig(e){var r=el.getBoundingClientRect();zuletzt=performance.now();
+    setz(Math.max(0,Math.min(100,(e.clientX-r.left)/r.width*100)),Math.max(0,Math.min(100,(e.clientY-r.top)/r.height*100)))}
+  el.addEventListener('pointermove',zeig,{passive:true});el.addEventListener('pointerdown',zeig,{passive:true});
+  if(auto&&!still){var sichtbar=false;
+    new IntersectionObserver(function(a){sichtbar=a[0].isIntersecting},{threshold:.15}).observe(el);
+    (function lauf(t){if(sichtbar&&t-zuletzt>2600){var k=t/1000;if(quer)setz(50+44*Math.sin(k*.42),50-13*Math.sin(k*.42));else setz(50+34*Math.sin(k*.55),46+26*Math.sin(k*.83+1.2))}requestAnimationFrame(lauf)})(0);
+  }
+});
+
+/* Einblenden und Leiste */
+var beobachtet=false;
+function beobachten(){if(beobachtet)return;beobachtet=true;
+  if(!('IntersectionObserver' in window)){$$('.rein').forEach(function(e){e.classList.add('sicht')});return}
+  var io=new IntersectionObserver(function(a){a.forEach(function(x){if(x.isIntersecting){x.target.classList.add('sicht');io.unobserve(x.target)}})},{rootMargin:'0px 0px -8% 0px',threshold:.05});
+  $$('.rein').forEach(function(e){io.observe(e)});
+  var oben=true,form=false,l=$('#leiste');function stell(){l.classList.toggle('da',!oben&&!form)}
+  new IntersectionObserver(function(a){oben=a[0].isIntersecting;stell()},{threshold:.25}).observe($('.buehne'));
+  new IntersectionObserver(function(a){form=a[0].isIntersecting;stell()},{threshold:.05}).observe($('#vorbestellen'));
+}
+
+/* Vorbestellung */
+$('#vor').addEventListener('submit',function(e){
+  e.preventDefault();var f=this,m=$('#vorMeldung'),k=$('#vorKnopf');
+  function fehl(t,el){m.className='meldung schlecht';m.textContent=t;if(el)el.focus()}
+  var g=$('#groessen input:checked');
+  if(!g)return fehl('Bitte eine Größe wählen.',$('#groessen input'));
+  var a={drop:CFG.drop,passwort:pw,groesse:g.value,name:f.name.value.trim(),strasse:f.strasse.value.trim(),plz:f.plz.value.trim(),ort:f.ort.value.trim(),handy:f.handy.value.trim(),email:f.email.value.trim(),ok:f.ok.checked};
+  if(a.name.length<3||!/\s/.test(a.name))return fehl('Bitte Vor- und Nachnamen eintragen.',f.name);
+  if(a.strasse.length<4||!/[0-9]/.test(a.strasse))return fehl('Bitte Straße und Hausnummer eintragen.',f.strasse);
+  if(!/^[0-9]{5}$/.test(a.plz))return fehl('Bitte eine Postleitzahl mit fünf Ziffern eintragen.',f.plz);
+  if(a.ort.length<2)return fehl('Bitte den Ort eintragen.',f.ort);
+  if(a.handy.replace(/[^0-9]/g,'').length<7)return fehl('Bitte eine Handynummer eintragen.',f.handy);
+  if(!/^[^@\s]+@[^@\s]+\.[a-z]{2,}$/i.test(a.email))return fehl('Bitte eine gültige E-Mail-Adresse eintragen.',f.email);
+  if(!a.ok)return fehl('Bitte setz noch den Haken, damit wir deine Angaben speichern dürfen.',f.ok);
+  var alt=k.textContent;k.disabled=true;k.textContent='Wird eingetragen …';m.className='meldung';m.textContent='';
+  rpc('shop_vorbestellen',{p:a}).then(function(j){
+    $('#drinNr').textContent=('00'+j.nr).slice(-3);
+    $('#drinGr').textContent=j.groesse;D.zahl++;zahlZeig();
+    $('#drinText').textContent='Eingetragen, '+a.name.split(/\s+/)[0]+'. Wir melden uns nach dem Drop bei dir mit allem zu Bezahlung und Übergabe.';
+    f.hidden=true;$('#drin').hidden=false;$('#drin').focus();$('#drin').scrollIntoView({block:'center'});
+    k.disabled=false;k.textContent=alt;
+  }).catch(function(x){k.disabled=false;k.textContent=alt;phase='';tick();fehl(x.message)});
+});
+if(navigator.share){$('#teilen').hidden=false;$('#teilen').addEventListener('click',function(){navigator.share({title:'Drop 001 · Sweater Grau',text:'Ich bin drin. Drop 001 vom SV Mörlenbach.',url:'https://1896shop.de/sweater'}).catch(function(){})})}
+$('#nochEiner').addEventListener('click',function(){var f=$('#vor');$('#drin').hidden=true;f.hidden=false;groesseSetz('');$('#groessen input').focus()});
+})();
+</script>
+</body>
+</html>
