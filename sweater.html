@@ -274,6 +274,52 @@ footer a{text-underline-offset:4px}
 <div class="band" aria-hidden="true"><div><span>Drop 001</span><span>Sweater Grau</span><span>Nur sieben Tage</span><span>Nur mit Passwort</span><span>Mörlenbach</span><span>Seit 1896</span><span>Drop 001</span><span>Sweater Grau</span><span>Nur sieben Tage</span><span>Nur mit Passwort</span><span>Mörlenbach</span><span>Seit 1896</span><span>Drop 001</span><span>Sweater Grau</span><span>Nur sieben Tage</span><span>Nur mit Passwort</span><span>Mörlenbach</span><span>Seit 1896</span><span>Drop 001</span><span>Sweater Grau</span><span>Nur sieben Tage</span><span>Nur mit Passwort</span><span>Mörlenbach</span><span>Seit 1896</span></div></div>
 
 <main id="inhalt" hidden>
+  <section class="block bestell rein" id="vorbestellen">
+    <div>
+      <div class="zeile"><span class="mono"><b>Vorbestellen</b></span><span class="mono" data-zeit-kurz></span></div>
+      <h2>Sicher dir deinen.</h2>
+      <p class="text">Sieben Tage ist offen, dann ist zu. Du trägst dich ein, wir melden uns nach dem Drop bei dir mit allem zu Bezahlung und Übergabe.</p>
+      <ol class="ablauf">
+        <li><span class="mono">01</span><span>Größe wählen, eintragen, fertig.</span></li>
+        <li><span class="mono">02</span><span data-ende-satz>Nach sieben Tagen ist zu.</span></li>
+        <li><span class="mono">03</span><span>Wir melden uns bei dir: Bezahlung und Übergabe.</span></li>
+      </ol>
+    </div>
+    <div>
+      <form class="vor" id="vor" novalidate>
+        <fieldset class="wahl">
+          <legend>Größe</legend>
+          <div class="knoepfe" id="groessen"></div>
+        </fieldset>
+        <div class="feld"><label for="fName">Vor- und Nachname</label><input id="fName" name="name" autocomplete="name" required maxlength="80"></div>
+        <div class="feld"><label for="fStr">Straße und Hausnummer</label><input id="fStr" name="strasse" autocomplete="street-address" required maxlength="100"></div>
+        <div class="zwei">
+          <div class="feld"><label for="fPlz">PLZ</label><input id="fPlz" name="plz" autocomplete="postal-code" inputmode="numeric" pattern="[0-9]{5}" maxlength="5" required></div>
+          <div class="feld"><label for="fOrt">Ort</label><input id="fOrt" name="ort" autocomplete="address-level2" required maxlength="60"></div>
+        </div>
+        <div class="feld"><label for="fTel">Handynummer</label><input id="fTel" name="handy" type="tel" autocomplete="tel" inputmode="tel" required maxlength="24"></div>
+        <div class="feld"><label for="fMail">E-Mail</label><input id="fMail" name="email" type="email" autocomplete="email" inputmode="email" autocapitalize="none" required maxlength="120"></div>
+        <label class="haken"><input type="checkbox" id="fOk" name="ok"><span>Der SV Mörlenbach 1896 e.V. darf meine Angaben für diese Vorbestellung speichern und mich dazu anschreiben oder anrufen. Mehr dazu im <a href="info/datenschutz">Datenschutz</a>.</span></label>
+        <p class="mono zahl" data-zahl hidden></p>
+        <button class="knopf" type="submit" id="vorKnopf">Vorbestellen · 59,96 €</button>
+        <p class="meldung" id="vorMeldung" role="status" aria-live="polite"></p>
+        <p class="klein">Jetzt wird nichts bezahlt. Die Bilder zeigen den Entwurf, das fertige Teil kann leicht abweichen.</p>
+      </form>
+      <div class="drin ticket" id="drin" hidden tabindex="-1">
+        <div class="t-kopf"><span class="mono"><b>Du bist drin</b></span><span class="mono">Drop 001</span></div>
+        <span class="nr" id="drinNr">001</span>
+        <dl class="t-zeilen">
+          <div><dt class="mono">Teil</dt><dd>Sweater Grau</dd></div>
+          <div><dt class="mono">Größe</dt><dd id="drinGr">M</dd></div>
+          <div><dt class="mono">Preis</dt><dd>59,96 €</dd></div>
+        </dl>
+        <div class="t-strich" aria-hidden="true"></div>
+        <p class="text" id="drinText"></p>
+        <div class="t-knoepfe"><button class="knopf" type="button" id="teilen" hidden>Weitersagen</button><button class="linkknopf" type="button" id="nochEiner">Noch einen vorbestellen</button></div>
+      </div>
+    </div>
+  </section>
+
   <section class="block naht rein">
     <div class="licht" data-licht data-auto>
       <img class="dunkel" src="drop/naht-1.webp" alt="" loading="lazy" decoding="async">
@@ -327,63 +373,6 @@ footer a{text-underline-offset:4px}
     <h2>Vom Platz<br>auf die Straße.</h2>
   </section>
 
-  <section class="block rein">
-    <div class="zeile"><span class="mono"><b>Auf einen Blick</b></span><span class="mono">Drop 001</span></div>
-    <ul class="fakten">
-      <li><span class="mono">Teil</span><span>Sweater, grau meliert</span></li>
-      <li><span class="mono">Vorn</span><span>Wappen mit den drei Glocken</span></li>
-      <li><span class="mono">Hinten</span><span>Mörlenbach · Sportverein Ballsportclub</span></li>
-      <li><span class="mono">Größen</span><span>S · M · L · XL</span></li>
-      <li><span class="mono">Preis</span><span>59,96 €</span></li>
-      <li><span class="mono">Fenster</span><span data-fenster>Sonntag, 12 Uhr, bis Sonntag, 12 Uhr</span></li>
-    </ul>
-  </section>
-
-  <section class="block bestell rein" id="vorbestellen">
-    <div>
-      <div class="zeile"><span class="mono"><b>Vorbestellen</b></span><span class="mono" data-zeit-kurz></span></div>
-      <h2>Sicher dir deinen.</h2>
-      <p class="text">Sieben Tage ist offen, dann ist zu. Du trägst dich ein, wir melden uns nach dem Drop bei dir mit allem zu Bezahlung und Übergabe.</p>
-      <ol class="ablauf">
-        <li><span class="mono">01</span><span>Größe wählen, eintragen, fertig.</span></li>
-        <li><span class="mono">02</span><span data-ende-satz>Nach sieben Tagen ist zu.</span></li>
-        <li><span class="mono">03</span><span>Wir melden uns bei dir: Bezahlung und Übergabe.</span></li>
-      </ol>
-    </div>
-    <div>
-      <form class="vor" id="vor" novalidate>
-        <fieldset class="wahl">
-          <legend>Größe</legend>
-          <div class="knoepfe" id="groessen"></div>
-        </fieldset>
-        <div class="feld"><label for="fName">Vor- und Nachname</label><input id="fName" name="name" autocomplete="name" required maxlength="80"></div>
-        <div class="feld"><label for="fStr">Straße und Hausnummer</label><input id="fStr" name="strasse" autocomplete="street-address" required maxlength="100"></div>
-        <div class="zwei">
-          <div class="feld"><label for="fPlz">PLZ</label><input id="fPlz" name="plz" autocomplete="postal-code" inputmode="numeric" pattern="[0-9]{5}" maxlength="5" required></div>
-          <div class="feld"><label for="fOrt">Ort</label><input id="fOrt" name="ort" autocomplete="address-level2" required maxlength="60"></div>
-        </div>
-        <div class="feld"><label for="fTel">Handynummer</label><input id="fTel" name="handy" type="tel" autocomplete="tel" inputmode="tel" required maxlength="24"></div>
-        <div class="feld"><label for="fMail">E-Mail</label><input id="fMail" name="email" type="email" autocomplete="email" inputmode="email" autocapitalize="none" required maxlength="120"></div>
-        <label class="haken"><input type="checkbox" id="fOk" name="ok"><span>Der SV Mörlenbach 1896 e.V. darf meine Angaben für diese Vorbestellung speichern und mich dazu anschreiben oder anrufen. Mehr dazu im <a href="info/datenschutz">Datenschutz</a>.</span></label>
-        <p class="mono zahl" data-zahl hidden></p>
-        <button class="knopf" type="submit" id="vorKnopf">Vorbestellen · 59,96 €</button>
-        <p class="meldung" id="vorMeldung" role="status" aria-live="polite"></p>
-        <p class="klein">Jetzt wird nichts bezahlt. Die Bilder zeigen den Entwurf, das fertige Teil kann leicht abweichen.</p>
-      </form>
-      <div class="drin ticket" id="drin" hidden tabindex="-1">
-        <div class="t-kopf"><span class="mono"><b>Du bist drin</b></span><span class="mono">Drop 001</span></div>
-        <span class="nr" id="drinNr">001</span>
-        <dl class="t-zeilen">
-          <div><dt class="mono">Teil</dt><dd>Sweater Grau</dd></div>
-          <div><dt class="mono">Größe</dt><dd id="drinGr">M</dd></div>
-          <div><dt class="mono">Preis</dt><dd>59,96 €</dd></div>
-        </dl>
-        <div class="t-strich" aria-hidden="true"></div>
-        <p class="text" id="drinText"></p>
-        <div class="t-knoepfe"><button class="knopf" type="button" id="teilen" hidden>Weitersagen</button><button class="linkknopf" type="button" id="nochEiner">Noch einen vorbestellen</button></div>
-      </div>
-    </div>
-  </section>
 </main>
 
 <footer>
@@ -434,7 +423,6 @@ function tick(){
     if(p==='vor'){k.disabled=true;k.textContent='Öffnet '+tag(D.start)+', '+uhr(D.start)}
     else if(p==='offen'){k.disabled=false;k.textContent='Vorbestellen · 59,96 €'}
     else{k.disabled=true;k.textContent='Der Drop ist vorbei'}
-    $('[data-fenster]').textContent=tag(D.start)+', '+uhr(D.start)+', bis '+tag(D.ende)+', '+uhr(D.ende);
     $('[data-ende-satz]').textContent='Am '+tag(D.ende)+' um '+uhr(D.ende)+' ist zu.';
     var c=$('#chip');c.classList.toggle('live',p==='offen');c.classList.toggle('aus',p==='vorbei');
     $('[data-chip]').textContent=p==='vor'?'Startet '+new Intl.DateTimeFormat('de-DE',{weekday:'short',timeZone:'Europe/Berlin'}).format(new Date(D.start)).replace('.','')+', '+uhr(D.start):p==='offen'?'Live':'Geschlossen';
