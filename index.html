@@ -522,7 +522,7 @@ $('#vor').addEventListener('submit',function(e){
     k.disabled=false;k.textContent=alt;
   }).catch(function(x){k.disabled=false;k.textContent=alt;phase='';tick();fehl(x.message)});
 });
-if(navigator.share){$('#teilen').hidden=false;$('#teilen').addEventListener('click',function(){navigator.share({title:'Drop 001 · Sweater Grau',text:'Ich bin drin. Drop 001 vom SV Mörlenbach.',url:'https://1896shop.de/'}).catch(function(){})})}
+if(navigator.share){$('#teilen').hidden=false;$('#teilen').addEventListener('click',function(){navigator.share({title:'Drop 001 · Sweater Grau',text:'Ich bin drin. Drop 001 vom SV Mörlenbach.',url:'https://1896shop.de/sweater'}).catch(function(){})})}
 $('#nochEiner').addEventListener('click',function(){var f=$('#vor');$('#drin').hidden=true;f.hidden=false;var g=$('#groessen input:checked');if(g)g.checked=false;$('#groessen input').focus()});
 })();
 </script>
