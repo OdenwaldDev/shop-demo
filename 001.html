@@ -93,7 +93,7 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opa
 .zu .nur-offen,.offen .nur-zu{display:none!important}
 
 /* Inhalt nach dem Tor */
-main{display:grid;gap:clamp(64px,13vw,150px);padding:clamp(48px,10vw,110px) 0 0}
+main{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(64px,13vw,150px);padding:clamp(48px,10vw,110px) 0 0}
 .block{padding:0 var(--rand);max-width:1280px;width:100%;margin:0 auto}
 .zeile{display:flex;justify-content:space-between;align-items:baseline;gap:16px;border-top:1px solid var(--linie);padding-top:12px;margin-bottom:clamp(18px,4vw,34px)}
 h2{margin:0 0 14px;font:800 clamp(40px,11vw,104px)/.86 var(--sans);font-stretch:62%;text-transform:uppercase;letter-spacing:-.008em;text-wrap:balance}
@@ -125,8 +125,9 @@ h2{margin:0 0 14px;font:800 clamp(40px,11vw,104px)/.86 var(--sans);font-stretch:
 .fakten li span:last-child{text-align:right;font:500 15px/1.3 var(--sans)}
 
 /* Vorbestellung */
-.bestell{display:grid;gap:26px}
-form.vor{display:grid;gap:18px;max-width:640px}
+.bestell{display:grid;grid-template-columns:minmax(0,1fr);gap:26px}
+.bestell>*{min-width:0}
+form.vor{display:grid;grid-template-columns:minmax(0,1fr);gap:18px;max-width:640px}
 .feld{display:grid;gap:7px}
 .feld label,.wahl legend{font:500 11px/1.3 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--leise);padding:0}
 .feld input{width:100%;background:var(--feld);border:1px solid var(--linie);border-radius:0;padding:15px 14px;font:400 16px/1.2 var(--sans);outline:none;-webkit-appearance:none;appearance:none}
@@ -139,6 +140,38 @@ form.vor{display:grid;gap:18px;max-width:640px}
 .wahl span{display:grid;place-items:center;height:58px;border:1px solid var(--linie);background:var(--feld);font:800 22px/1 var(--sans);font-stretch:75%;transition:background .15s,color .15s,border-color .15s}
 .wahl input:checked+span{background:var(--blau);color:#fff;border-color:var(--blau)}
 .wahl input:focus-visible+span{outline:2px solid var(--blau-hell);outline-offset:3px}
+.finder{border:1px solid var(--linie);background:var(--bg2);min-width:0;max-width:100%}
+.finder summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 14px;font:500 12px/1.3 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--blau-hell)}
+.finder summary::-webkit-details-marker{display:none}
+.finder summary i{width:9px;height:9px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg) translate(-2px,-2px);transition:transform .2s;flex:none}
+.finder[open] summary i{transform:rotate(-135deg) translate(-2px,-2px)}
+.finder summary:focus-visible{outline:2px solid var(--blau-hell);outline-offset:2px}
+.f-in{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;padding:4px 14px 18px}
+.f-in>*{min-width:0}
+.finder .meldung:empty{display:none}
+.f-zwei{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
+.f-wahl{border:0;margin:0;padding:0;display:grid;gap:8px;min-width:0}
+.f-wahl legend{font:500 11px/1.3 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--leise);padding:0}
+.f-chips{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.f-chips.zwei-chips{grid-template-columns:repeat(2,minmax(0,1fr))}
+.f-chips label{position:relative;display:block}
+.f-chips input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer}
+.f-chips span{display:grid;place-items:center;min-height:46px;padding:0 4px;border:1px solid var(--linie);background:var(--feld);font:600 13px/1.1 var(--sans);text-align:center;transition:background .15s,color .15s,border-color .15s}
+.f-chips input:checked+span{background:var(--blau);color:#fff;border-color:var(--blau)}
+.f-chips input:focus-visible+span{outline:2px solid var(--blau-hell);outline-offset:3px}
+@media (hover:hover){.f-chips label:hover input:not(:checked)+span{border-color:var(--blau-hell);color:var(--blau-hell);background:rgba(47,102,200,.18)}}
+.knopf.f-knopf{background:transparent;color:var(--text);border:1px solid var(--text);padding:15px 20px;font-size:13px}
+.f-erg{display:grid;gap:10px;justify-items:start;border-top:1px solid var(--linie);padding-top:16px}
+.f-gr{font:800 clamp(64px,20vw,96px)/.85 var(--sans);font-stretch:62%}
+.f-erg p{margin:0;font-size:15px;line-height:1.5;color:#C5C7CC;max-width:52ch}
+.f-erg .knopf{padding:15px 20px;font-size:13px}
+.f-tab{overflow-x:auto}
+.f-tab table{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
+.f-tab caption{text-align:left;padding:0 0 8px}
+.f-tab th,.f-tab td{text-align:left;padding:10px 6px 10px 0;border-top:1px solid var(--linie);white-space:nowrap}
+.f-tab thead th{font:500 11px/1.3 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--leise);border-top:0}
+.f-tab tbody th{font:800 17px/1 var(--sans);font-stretch:75%}
+.f-tab tr.an th,.f-tab tr.an td{color:var(--blau-hell)}
 .haken{display:grid;grid-template-columns:22px 1fr;gap:12px;align-items:start;font-size:14px;line-height:1.45;color:#C5C7CC}
 .haken input{width:22px;height:22px;margin:1px 0 0;accent-color:var(--blau)}
 .klein{font-size:13px;line-height:1.5;color:var(--leise);margin:0;max-width:60ch}
@@ -148,6 +181,9 @@ form.vor{display:grid;gap:18px;max-width:640px}
 footer{margin-top:clamp(64px,12vw,130px);border-top:1px solid var(--linie);padding:26px var(--rand) calc(env(safe-area-inset-bottom,0px) + 110px);display:grid;gap:12px}
 footer nav{display:flex;flex-wrap:wrap;gap:8px 20px}
 footer a{text-underline-offset:4px}
+.imp{display:grid;gap:10px;max-width:62ch;margin-top:14px;font-size:13px;line-height:1.55;color:var(--leise);scroll-margin-top:20px}
+.imp p,.imp h2{margin:0}
+.imp b{color:var(--text)}
 
 /* Leiste unten am Handy */
 .leiste{position:fixed;left:0;right:0;bottom:0;z-index:40;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px var(--rand) calc(env(safe-area-inset-bottom,0px) + 10px);
@@ -216,7 +252,7 @@ footer a{text-underline-offset:4px}
   .strasse img{order:2;height:auto;aspect-ratio:4/5;max-height:88svh}
   .strasse::after{display:none}
   .strasse h2{position:static;order:1;margin:0 0 6px}
-  .bestell{grid-template-columns:1fr 1.1fr;gap:64px;align-items:start}
+  .bestell{grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:64px;align-items:start}
   .leiste{display:none}
   footer{padding-bottom:40px}
 }
@@ -291,6 +327,51 @@ footer a{text-underline-offset:4px}
           <legend>Größe</legend>
           <div class="knoepfe" id="groessen"></div>
         </fieldset>
+        <details class="finder" id="finder">
+          <summary><span>Welche Größe passt mir?</span><i aria-hidden="true"></i></summary>
+          <div class="f-in">
+            <div class="f-zwei">
+              <div class="feld"><label for="gCm">Körpergröße in cm</label><input id="gCm" type="text" inputmode="numeric" maxlength="3" autocomplete="off" placeholder="z. B. 180"></div>
+              <div class="feld"><label for="gKg">Gewicht in kg</label><input id="gKg" type="text" inputmode="numeric" maxlength="3" autocomplete="off" placeholder="z. B. 78"></div>
+            </div>
+            <fieldset class="f-wahl"><legend>Statur</legend>
+              <div class="f-chips">
+                <label><input type="radio" name="gStatur" value="-2"><span>Schlank</span></label>
+                <label><input type="radio" name="gStatur" value="0" checked><span>Normal</span></label>
+                <label><input type="radio" name="gStatur" value="3"><span>Sportlich</span></label>
+                <label><input type="radio" name="gStatur" value="2"><span>Kräftig</span></label>
+              </div>
+            </fieldset>
+            <fieldset class="f-wahl"><legend>So soll er sitzen</legend>
+              <div class="f-chips zwei-chips">
+                <label><input type="radio" name="gSitz" value="0" checked><span>Normal</span></label>
+                <label><input type="radio" name="gSitz" value="1"><span>Locker</span></label>
+              </div>
+            </fieldset>
+            <button type="button" class="knopf f-knopf" id="gKnopf">Größe berechnen</button>
+            <p class="meldung" id="gMeldung" role="status" aria-live="polite"></p>
+            <div class="f-erg" id="gErg" hidden>
+              <span class="mono">Unsere Empfehlung</span>
+              <span class="f-gr" id="gGr"></span>
+              <p id="gText"></p>
+              <button type="button" class="knopf" id="gNimm"></button>
+            </div>
+            <p class="klein">Der Rechner schätzt deinen Brustumfang aus Körpergröße, Gewicht und Statur. Das ist eine Schätzung, am genauesten ist das Maßband. Deine Angaben bleiben auf deinem Gerät.</p>
+            <div class="f-tab">
+              <table>
+                <caption class="mono">Körpermaße in cm</caption>
+                <thead><tr><th scope="col">Größe</th><th scope="col">Brust</th><th scope="col">Taille</th><th scope="col">Hüfte</th></tr></thead>
+                <tbody>
+                  <tr data-g="S"><th scope="row">S</th><td>87 bis 92</td><td>75 bis 80</td><td>86 bis 91</td></tr>
+                  <tr data-g="M"><th scope="row">M</th><td>93 bis 100</td><td>81 bis 88</td><td>92 bis 99</td></tr>
+                  <tr data-g="L"><th scope="row">L</th><td>101 bis 108</td><td>89 bis 96</td><td>100 bis 107</td></tr>
+                  <tr data-g="XL"><th scope="row">XL</th><td>109 bis 118</td><td>97 bis 106</td><td>108 bis 116</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="klein">Der Sweater ist ein adidas Squadra 25 im geraden Schnitt (Regular Fit), 70 % Baumwolle, 30 % recyceltes Polyester. Es gilt die adidas Größentabelle für Männer-Oberteile. Miss den Brustumfang an der breitesten Stelle. Zur Orientierung: adidas zeigt ihn an einem Model mit 185 cm und 99 cm Brustumfang in Größe M.</p>
+          </div>
+        </details>
         <div class="feld"><label for="fName">Vor- und Nachname</label><input id="fName" name="name" autocomplete="name" required maxlength="80"></div>
         <div class="feld"><label for="fStr">Straße und Hausnummer</label><input id="fStr" name="strasse" autocomplete="street-address" required maxlength="100"></div>
         <div class="zwei">
@@ -380,7 +461,16 @@ footer a{text-underline-offset:4px}
 
 <footer>
   <span class="mono"><b>SV Mörlenbach 1896 e.V.</b> · 1896 Shop</span>
-  <nav class="mono"><a href="info/impressum">Impressum</a><a href="info/datenschutz">Datenschutz</a></nav>
+  <nav class="mono"><a href="#impressum">Impressum</a><a href="info/datenschutz">Datenschutz</a></nav>
+  <div class="imp" id="impressum">
+    <h2 class="mono">Impressum</h2>
+    <p><b>Sportverein Mörlenbach 1896 e.V.</b><br>Abteilung Fußball (SV/BSC Mörlenbach)<br>Schulstraße 2<br>69509 Mörlenbach</p>
+    <p>Vertreten durch den Vorstand: Gerhard Ohlig (1. Vorsitzender), Jürgen Möhler (stellv. Vorsitzender), Gerald Lohrer (Finanzen), Karl Helmling (Verwaltung)</p>
+    <p>Verantwortlich für diese Seite: Albert Klee, Abteilungsleitung Fußball</p>
+    <p>E-Mail: <a href="mailto:fussball@sv-moerlenbach.de">fussball@sv-moerlenbach.de</a><br>Telefon: <a href="tel:+4962095290">06209 5290</a></p>
+    <p>Vereinsregister: VR 40269, Amtsgericht Darmstadt<br>Umsatzsteuer-ID: DE112325955</p>
+    <p>Wir sind nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+  </div>
 </footer>
 
 <div class="frei" id="frei" aria-hidden="true" hidden><span class="mono">Drop 001</span><strong>Zugang frei</strong></div>
@@ -452,6 +542,44 @@ function groesseSetz(g){
 $('#groessen').addEventListener('change',function(e){if(e.target.name==='groesse')groesseSetz(e.target.value)});
 $('#grOben').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;groesseSetz(b.getAttribute('data-g'));$('#vorbestellen').scrollIntoView()});
 groessenBauen();
+
+/* Größenfinder: schätzt den Brustumfang, ordnet ihn in die adidas Tabelle (Männer-Oberteile) ein. Alles bleibt im Browser. */
+var GT=[{g:'S',a:87,b:92},{g:'M',a:93,b:100},{g:'L',a:101,b:108},{g:'XL',a:109,b:118}];
+function groesseRechnen(cm,kg,statur,locker){
+  var brust=Math.round(60+0.52*kg-0.12*(cm-178)+statur),i=0;
+  while(i<GT.length-1&&brust>GT[i].b+0.5)i++;
+  var t='Geschätzter Brustumfang: rund '+brust+' cm. ';
+  if(brust<GT[0].a-2)t+='Das liegt unter Größe S. S ist die kleinste Größe in diesem Drop und sitzt bei dir eher locker.';
+  else if(brust>GT[GT.length-1].b+1)t+='Das liegt über Größe XL (bis 118 cm). XL ist die größte Größe in diesem Drop und kann bei dir eng sitzen.';
+  else{
+    t+='Bei adidas ist das Größe '+GT[i].g+' ('+GT[i].a+' bis '+GT[i].b+' cm).';
+    if(!locker&&i<GT.length-1&&brust>=GT[i].b-1)t+=' Du liegst nah an '+GT[i+1].g+'. Wenn du unsicher bist, nimm die größere.';
+  }
+  if(locker){
+    if(i<GT.length-1){i++;t+=' Für den lockeren Sitz eine Nummer größer: '+GT[i].g+'.'}
+    else t+=' Größer als XL gibt es in diesem Drop nicht.';
+  }
+  if(cm>189)t+=' Für über 1,89 m führt adidas eigene Langgrößen. Die gibt es hier nicht, der Sweater kann bei dir etwas kurz sitzen.';
+  return {g:GT[i].g,text:t};
+}
+(function(){
+  var m=$('#gMeldung'),erg=$('#gErg');
+  function zahl(el,von,bis){var v=parseFloat(String(el.value).replace(',','.'));return v>=von&&v<=bis?v:null}
+  function rechne(){
+    var cm=zahl($('#gCm'),140,215),kg=zahl($('#gKg'),40,160);erg.hidden=true;$$('.f-tab tr').forEach(function(r){r.classList.remove('an')});
+    if(cm===null){m.className='meldung schlecht';m.textContent='Bitte die Körpergröße in cm eintragen, zwischen 140 und 215.';$('#gCm').focus();return}
+    if(kg===null){m.className='meldung schlecht';m.textContent='Bitte das Gewicht in kg eintragen, zwischen 40 und 160.';$('#gKg').focus();return}
+    m.className='meldung';m.textContent='';
+    var r=groesseRechnen(cm,kg,+$('input[name=gStatur]:checked').value,$('input[name=gSitz]:checked').value==='1');
+    $('#gGr').textContent=r.g;$('#gText').textContent=r.text;
+    var n=$('#gNimm');n.textContent='Größe '+r.g+' übernehmen';n.setAttribute('data-g',r.g);n.disabled=false;
+    var z=$('.f-tab tr[data-g="'+r.g+'"]');if(z)z.classList.add('an');
+    erg.hidden=false;
+  }
+  $('#gKnopf').addEventListener('click',rechne);
+  ['gCm','gKg'].forEach(function(id){$('#'+id).addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();rechne()}})});
+  $('#gNimm').addEventListener('click',function(){var g=this.getAttribute('data-g');groesseSetz(g);this.textContent='Größe '+g+' ist gewählt';this.disabled=true;$('#groessen').scrollIntoView({block:'center'})});
+})();
 
 /* Tor */
 (function(){var v=$('#film');if(!v)return;v.src=v.getAttribute(window.matchMedia('(min-width:860px)').matches?'data-gross':'data-klein');v.load();var q=v.play();if(q&&q.catch)q.catch(function(){})})();
