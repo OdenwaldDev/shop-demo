@@ -380,7 +380,7 @@ footer a{text-underline-offset:4px}
         </div>
         <div class="feld"><label for="fTel">Handynummer</label><input id="fTel" name="handy" type="tel" autocomplete="tel" inputmode="tel" required maxlength="24"></div>
         <div class="feld"><label for="fMail">E-Mail</label><input id="fMail" name="email" type="email" autocomplete="email" inputmode="email" autocapitalize="none" required maxlength="120"></div>
-        <label class="haken"><input type="checkbox" id="fOk" name="ok"><span>Der SV Mörlenbach 1896 e.V. darf meine Angaben für diese Vorbestellung speichern und mich dazu anschreiben oder anrufen. Mehr dazu im <a href="info/datenschutz">Datenschutz</a>.</span></label>
+        <label class="haken"><input type="checkbox" id="fOk" name="ok"><span>Der SV Mörlenbach 1896 e.V. darf meine Angaben für diese Vorbestellung speichern und mich dazu anschreiben oder anrufen. Mehr dazu im <a href="#datenschutz">Datenschutz</a>.</span></label>
         <p class="mono zahl" data-zahl hidden></p>
         <button class="knopf" type="submit" id="vorKnopf">Vorbestellen · 59,96 €</button>
         <p class="meldung" id="vorMeldung" role="status" aria-live="polite"></p>
@@ -461,7 +461,7 @@ footer a{text-underline-offset:4px}
 
 <footer>
   <span class="mono"><b>SV Mörlenbach 1896 e.V.</b> · 1896 Shop</span>
-  <nav class="mono"><a href="#impressum">Impressum</a><a href="info/datenschutz">Datenschutz</a></nav>
+  <nav class="mono"><a href="#impressum">Impressum</a><a href="#datenschutz">Datenschutz</a></nav>
   <div class="imp" id="impressum">
     <h2 class="mono">Impressum</h2>
     <p><b>Sportverein Mörlenbach 1896 e.V.</b><br>Abteilung Fußball (SV/BSC Mörlenbach)<br>Schulstraße 2<br>69509 Mörlenbach</p>
@@ -470,6 +470,14 @@ footer a{text-underline-offset:4px}
     <p>E-Mail: <a href="mailto:fussball@sv-moerlenbach.de">fussball@sv-moerlenbach.de</a><br>Telefon: <a href="tel:+4962095290">06209 5290</a></p>
     <p>Vereinsregister: VR 40269, Amtsgericht Darmstadt<br>Umsatzsteuer-ID: DE112325955</p>
     <p>Wir sind nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+  </div>
+  <div class="imp" id="datenschutz">
+    <h2 class="mono">Datenschutz</h2>
+    <p><b>Verantwortlich</b><br>Sportverein Mörlenbach 1896 e.V., Abteilung Fußball, Schulstraße 2, 69509 Mörlenbach. E-Mail: <a href="mailto:fussball@sv-moerlenbach.de">fussball@sv-moerlenbach.de</a></p>
+    <p><b>Vorbestellung</b><br>Für deine Vorbestellung speichern wir Name, Anschrift, Handynummer, E-Mail-Adresse, die gewählte Größe und den Zeitpunkt. Wir brauchen die Angaben, um die Vorbestellung zu bearbeiten und dich zu Bezahlung und Übergabe zu erreichen (Art. 6 Abs. 1 lit. b DSGVO). Zugriff haben nur die Verantwortlichen der Fußballabteilung, die den Drop abwickeln. Es gelten die gesetzlichen Aufbewahrungsfristen.</p>
+    <p><b>Passwort und Größenrechner</b><br>Das eingegebene Passwort merkt sich dein Browser, damit du es nicht noch einmal eintippen musst. Was du im Größenrechner einträgst, bleibt auf deinem Gerät und wird nicht gespeichert.</p>
+    <p><b>Hosting</b><br>Die Seite liegt bei GitHub Pages, die Vorbestellungen in einer Datenbank bei Supabase (Server in der EU). Schriften, Bilder und Video liefern wir selbst aus. Wir setzen keine Cookies und messen keine Besuche.</p>
+    <p><b>Deine Rechte</b><br>Du hast das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch sowie das Recht auf Beschwerde bei einer Aufsichtsbehörde. Deine Vorbestellung nehmen wir auf Wunsch zurück, eine Mail an die Adresse oben genügt.</p>
   </div>
 </footer>
 
