@@ -174,6 +174,14 @@ form.vor{display:grid;grid-template-columns:minmax(0,1fr);gap:18px;max-width:640
 .f-tab tr.an th,.f-tab tr.an td{color:var(--blau-hell)}
 .haken{display:grid;grid-template-columns:22px 1fr;gap:12px;align-items:start;font-size:14px;line-height:1.45;color:#C5C7CC}
 .haken input{width:22px;height:22px;margin:1px 0 0;accent-color:var(--blau)}
+.frei-w{font-style:normal;color:var(--leise)}
+.post{margin-top:clamp(64px,12vw,130px);display:grid;grid-template-columns:minmax(0,1fr);gap:18px;scroll-margin-top:20px}
+.post>*{min-width:0}
+.post h2{margin:0}
+.post-text{margin:0;font-size:17px;line-height:1.5;color:#C5C7CC;max-width:46ch}
+.post-ok{border:1px solid var(--linie);background:var(--bg2);padding:clamp(20px,5vw,32px);display:grid;gap:10px;max-width:640px;outline:none}
+.post-ok p{margin:0;font-size:16px;line-height:1.5;color:#C5C7CC}
+.weg{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 .klein{font-size:13px;line-height:1.5;color:var(--leise);margin:0;max-width:60ch}
 .drin{border:1px solid var(--linie);background:var(--bg2);padding:clamp(22px,6vw,44px);display:grid;gap:14px;max-width:640px}
 .drin .nr{font:800 clamp(72px,24vw,170px)/.8 var(--sans);font-stretch:62%;font-variant-numeric:tabular-nums}
@@ -381,6 +389,7 @@ footer a{text-underline-offset:4px}
         <div class="feld"><label for="fTel">Handynummer</label><input id="fTel" name="handy" type="tel" autocomplete="tel" inputmode="tel" required maxlength="24"></div>
         <div class="feld"><label for="fMail">E-Mail</label><input id="fMail" name="email" type="email" autocomplete="email" inputmode="email" autocapitalize="none" required maxlength="120"></div>
         <label class="haken"><input type="checkbox" id="fOk" name="ok"><span>Der SV Mörlenbach 1896 e.V. darf meine Angaben für diese Vorbestellung speichern und mich dazu anschreiben oder anrufen. Mehr dazu im <a href="#datenschutz">Datenschutz</a>.</span></label>
+        <label class="haken"><input type="checkbox" id="fNl" name="nl"><span>Ja, ich möchte Neuigkeiten, Drops und Angebote des SV Mörlenbach Store erhalten. Abmelden geht jederzeit mit einem Klick. <i class="frei-w">Freiwillig.</i></span></label>
         <p class="mono zahl" data-zahl hidden></p>
         <button class="knopf" type="submit" id="vorKnopf">Vorbestellen · 59,96 €</button>
         <p class="meldung" id="vorMeldung" role="status" aria-live="polite"></p>
@@ -459,9 +468,24 @@ footer a{text-underline-offset:4px}
 
 </main>
 
+<section class="block post" id="newsletter" aria-labelledby="nlTitel">
+  <div class="zeile"><span class="mono"><b>Newsletter</b></span><span class="mono">Per Mail</span></div>
+  <h2 id="nlTitel">Nichts<br>verpassen.</h2>
+  <p class="post-text">Neue Drops und Aktionen vom SV Mörlenbach, direkt per Mail.</p>
+  <form class="vor" id="nl" novalidate>
+    <div class="feld"><label for="nVor">Vorname (wenn du magst)</label><input id="nVor" name="vorname" autocomplete="given-name" maxlength="40"></div>
+    <div class="feld"><label for="nMail">E-Mail</label><input id="nMail" name="email" type="email" autocomplete="email" inputmode="email" autocapitalize="none" required maxlength="120"></div>
+    <div class="weg" aria-hidden="true"><label for="nWeb">Website</label><input id="nWeb" name="website" tabindex="-1" autocomplete="off"></div>
+    <label class="haken"><input type="checkbox" id="nOk" name="ok"><span>Ja, ich möchte Neuigkeiten, Drops und Angebote des SV Mörlenbach Store erhalten. Abmelden geht jederzeit mit einem Klick. Mehr dazu im <a href="#datenschutz">Datenschutz</a>.</span></label>
+    <button class="knopf" type="submit" id="nlKnopf">Eintragen</button>
+    <p class="meldung" id="nlMeldung" role="status" aria-live="polite"></p>
+  </form>
+  <div class="post-ok" id="nlOk" hidden tabindex="-1"><span class="mono"><b id="nlOkKopf">Fast geschafft</b></span><p id="nlOkText"></p></div>
+</section>
+
 <footer>
   <span class="mono"><b>SV Mörlenbach 1896 e.V.</b> · 1896 Shop</span>
-  <nav class="mono"><a href="#impressum">Impressum</a><a href="#datenschutz">Datenschutz</a></nav>
+  <nav class="mono"><a href="#newsletter">Newsletter</a><a href="#impressum">Impressum</a><a href="#datenschutz">Datenschutz</a></nav>
   <div class="imp" id="impressum">
     <h2 class="mono">Impressum</h2>
     <p><b>Sportverein Mörlenbach 1896 e.V.</b><br>Abteilung Fußball (SV/BSC Mörlenbach)<br>Schulstraße 2<br>69509 Mörlenbach</p>
@@ -475,6 +499,7 @@ footer a{text-underline-offset:4px}
     <h2 class="mono">Datenschutz</h2>
     <p><b>Verantwortlich</b><br>Sportverein Mörlenbach 1896 e.V., Abteilung Fußball, Schulstraße 2, 69509 Mörlenbach. E-Mail: <a href="mailto:fussball@sv-moerlenbach.de">fussball@sv-moerlenbach.de</a></p>
     <p><b>Vorbestellung</b><br>Für deine Vorbestellung speichern wir Name, Anschrift, Handynummer, E-Mail-Adresse, die gewählte Größe und den Zeitpunkt. Wir brauchen die Angaben, um die Vorbestellung zu bearbeiten und dich zu Bezahlung und Übergabe zu erreichen (Art. 6 Abs. 1 lit. b DSGVO). Zugriff haben nur die Verantwortlichen der Fußballabteilung, die den Drop abwickeln. Es gelten die gesetzlichen Aufbewahrungsfristen.</p>
+    <p><b>Newsletter</b><br>Wenn du dich für Neuigkeiten einträgst, speichern wir deine E-Mail-Adresse, deinen Vornamen (falls angegeben) sowie Zeitpunkt und Wortlaut deiner Einwilligung (Art. 6 Abs. 1 lit. a DSGVO). Du bekommst zuerst eine Mail mit einem Bestätigungslink, erst nach dem Klick schreiben wir dir. Den Versand übernimmt der Dienstleister Resend. Abmelden geht jederzeit über den Link in jeder Mail oder per Mail an die Adresse oben.</p>
     <p><b>Passwort und Größenrechner</b><br>Das eingegebene Passwort merkt sich dein Browser, damit du es nicht noch einmal eintippen musst. Was du im Größenrechner einträgst, bleibt auf deinem Gerät und wird nicht gespeichert.</p>
     <p><b>Hosting</b><br>Die Seite liegt bei GitHub Pages, die Vorbestellungen in einer Datenbank bei Supabase (Server in der EU). Schriften, Bilder und Video liefern wir selbst aus. Wir setzen keine Cookies und messen keine Besuche.</p>
     <p><b>Deine Rechte</b><br>Du hast das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch sowie das Recht auf Beschwerde bei einer Aufsichtsbehörde. Deine Vorbestellung nehmen wir auf Wunsch zurück, eine Mail an die Adresse oben genügt.</p>
@@ -637,12 +662,34 @@ function beobachten(){if(beobachtet)return;beobachtet=true;
 }
 
 /* Vorbestellung */
+/* Newsletter: Anmeldung läuft über die Store-Funktion, bestätigt wird per Link in der Mail */
+function kanal(d){
+  return fetch(CFG.url+'/functions/v1/shop-kanaele',{method:'POST',headers:{'Content-Type':'application/json',apikey:CFG.anon,Authorization:'Bearer '+CFG.anon},body:JSON.stringify(d)})
+    .then(function(r){return r.json().catch(function(){return {}}).then(function(j){if(!r.ok)throw new Error(j&&j.error||'Das hat gerade nicht geklappt. Bitte versuch es gleich nochmal.');return j})},function(){throw new Error('Keine Verbindung. Bitte versuch es gleich nochmal.')});
+}
+function nlAn(email,vorname,quelle,hp){return kanal({aktion:'anmelden',email:email,vorname:vorname||'',interessen:['drops'],einwilligung:true,quelle:quelle,hp:hp||''})}
+$('#nl').addEventListener('submit',function(e){
+  e.preventDefault();var f=this,m=$('#nlMeldung'),k=$('#nlKnopf');
+  function fehl(t,el){m.className='meldung schlecht';m.textContent=t;if(el)el.focus()}
+  var mail=f.email.value.trim();
+  if(!/^[^@\s]+@[^@\s]+\.[a-z]{2,}$/i.test(mail))return fehl('Bitte eine gültige E-Mail-Adresse eintragen.',f.email);
+  if(!f.ok.checked)return fehl('Bitte setz noch den Haken, sonst dürfen wir dir nicht schreiben.',f.ok);
+  var alt=k.textContent;k.disabled=true;k.textContent='Wird eingetragen …';m.className='meldung';m.textContent='';
+  nlAn(mail,f.vorname.value.trim(),'drop-001',f.website.value).then(function(j){
+    k.disabled=false;k.textContent=alt;
+    if(j.email==='mail_fehler')return fehl('Die Mail ging gerade nicht raus. Bitte versuch es gleich nochmal.');
+    var schon=j.email==='schon';
+    $('#nlOkKopf').textContent=schon?'Schon dabei':'Fast geschafft';
+    $('#nlOkText').textContent=schon?'Deine E-Mail-Adresse ist bereits angemeldet.':'Wir haben dir eine Mail geschickt. Bitte bestätige kurz über den Link darin, erst dann bist du dabei.';
+    f.hidden=true;$('#nlOk').hidden=false;$('#nlOk').focus();
+  }).catch(function(x){k.disabled=false;k.textContent=alt;fehl(x.message)});
+});
 $('#vor').addEventListener('submit',function(e){
   e.preventDefault();var f=this,m=$('#vorMeldung'),k=$('#vorKnopf');
   function fehl(t,el){m.className='meldung schlecht';m.textContent=t;if(el)el.focus()}
   var g=$('#groessen input:checked');
   if(!g)return fehl('Bitte eine Größe wählen.',$('#groessen input'));
-  var a={drop:CFG.drop,passwort:pw,groesse:g.value,name:f.name.value.trim(),strasse:f.strasse.value.trim(),plz:f.plz.value.trim(),ort:f.ort.value.trim(),handy:f.handy.value.trim(),email:f.email.value.trim(),ok:f.ok.checked};
+  var a={drop:CFG.drop,passwort:pw,groesse:g.value,name:f.name.value.trim(),strasse:f.strasse.value.trim(),plz:f.plz.value.trim(),ort:f.ort.value.trim(),handy:f.handy.value.trim(),email:f.email.value.trim(),ok:f.ok.checked},nl=f.nl.checked;
   if(a.name.length<3||!/\s/.test(a.name))return fehl('Bitte Vor- und Nachnamen eintragen.',f.name);
   if(a.strasse.length<4||!/[0-9]/.test(a.strasse))return fehl('Bitte Straße und Hausnummer eintragen.',f.strasse);
   if(!/^[0-9]{5}$/.test(a.plz))return fehl('Bitte eine Postleitzahl mit fünf Ziffern eintragen.',f.plz);
@@ -657,6 +704,7 @@ $('#vor').addEventListener('submit',function(e){
     $('#drinText').textContent='Eingetragen, '+a.name.split(/\s+/)[0]+'. Wir melden uns nach dem Drop bei dir mit allem zu Bezahlung und Übergabe.';
     f.hidden=true;$('#drin').hidden=false;$('#drin').focus();$('#drin').scrollIntoView({block:'center'});
     k.disabled=false;k.textContent=alt;
+    if(nl){f.nl.checked=false;nlAn(a.email,a.name.split(/\s+/)[0],'drop-001-vorbestellung').then(function(j){if(j.email==='mail_geschickt')$('#drinText').textContent+=' Für den Newsletter kommt gleich eine eigene Mail, bitte dort kurz bestätigen.'}).catch(function(){})}
   }).catch(function(x){k.disabled=false;k.textContent=alt;phase='';tick();fehl(x.message)});
 });
 if(navigator.share){$('#teilen').hidden=false;$('#teilen').addEventListener('click',function(){navigator.share({title:'Drop 001 · Sweater Grau',text:'Ich bin drin. Drop 001 vom SV Mörlenbach.',url:'https://1896shop.de/sweater'}).catch(function(){})})}

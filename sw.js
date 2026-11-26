@@ -1,5 +1,5 @@
 /* SV Mörlenbach Store · Service Worker: schnell starten, offline die letzte Ansicht, Push-Nachrichten */
-const V = 'ab1b736e-zu';   // Zusatz -zu: Store bis zum Go gesperrt (26.11.2026), damit gespeicherte Fassungen von app.js ersetzt werden
+const V = 'ab1b736e-zu2';  // Zusatz -zu: Store bis zum Go gesperrt (26.11.2026), damit gespeicherte Fassungen von app.js ersetzt werden
 const KERN = ['./', 'app.css?v=ab1b736e', 'app.js?v=ab1b736e', 'img/icon-192.png', 'img/favicon.svg', 'fonts/archivo.woff2'];
 self.addEventListener('install', e => { e.waitUntil(caches.open('kern-' + V).then(c => c.addAll(KERN)).then(() => self.skipWaiting())); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(k => Promise.all(k.filter(n => !n.endsWith(V) && !n.startsWith('bilder')).map(n => caches.delete(n)))).then(() => self.clients.claim())); });
