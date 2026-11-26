@@ -12,7 +12,7 @@
 <meta property="og:title" content="Drop 001 · Sweater Grau">
 <meta property="og:description" content="Sieben Tage. Nur mit Passwort.">
 <meta property="og:url" content="https://1896shop.de/sweater">
-<meta property="og:image" content="https://1896shop.de/drop/og-1.jpg">
+<meta property="og:image" content="https://1896shop.de/drop/og-2.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:locale" content="de_DE">
@@ -20,7 +20,7 @@
 <link rel="icon" href="img/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="img/icon-180.png">
 <link rel="preload" href="fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="drop/vorn-1.webp" as="image">
+<link rel="preload" href="drop/vorn-2.webp" as="image">
 <style>
 @font-face{font-family:'Archivo';src:url(fonts/archivo.woff2) format('woff2');font-weight:100 900;font-stretch:62% 125%;font-style:normal;font-display:swap}
 @font-face{font-family:'IBM Plex Mono';src:url(fonts/plexmono-400.woff2) format('woff2');font-weight:400;font-display:swap}
@@ -115,7 +115,7 @@ h2{margin:0 0 14px;font:800 clamp(40px,11vw,104px)/.86 var(--sans);font-stretch:
 .paar figure{margin:0;background:#050607;display:grid;gap:8px}
 .paar img{width:100%;aspect-ratio:3/4;object-fit:cover}
 .strasse{position:relative;isolation:isolate}
-.strasse img{width:100%;height:min(120vw,92svh);object-fit:cover;object-position:50% 42%}
+.strasse img{width:100%;height:min(125vw,92svh);object-fit:cover;object-position:50% 22%}
 .strasse::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,var(--bg) 0,rgba(8,9,11,0) 16%,rgba(8,9,11,0) 58%,var(--bg) 100%)}
 .strasse h2{position:absolute;left:var(--rand);right:var(--rand);bottom:clamp(12px,4vw,40px);z-index:2;margin:0}
 .fakten{display:grid;gap:0;margin:0;padding:0;list-style:none;border-bottom:1px solid var(--linie)}
@@ -239,9 +239,7 @@ footer a{text-underline-offset:4px}
 
 <section class="buehne" aria-label="Drop 001">
   <div class="film">
-    <video id="film" muted loop playsinline autoplay preload="metadata" poster="drop/vorn-1.webp" aria-label="Der graue Sweater im dunklen Studio: aus mehreren Winkeln, dazu Wappen, Nähte und Schriftzug aus der Nähe">
-      <source src="drop/dreh-3.mp4" type="video/mp4">
-    </video>
+    <video id="film" muted loop playsinline preload="none" poster="drop/vorn-2.webp" data-klein="drop/dreh-4.mp4" data-gross="drop/dreh-4g.mp4" aria-label="Der graue Sweater im dunklen Studio: aus mehreren Winkeln, Wappen, Nähte und Schriftzug aus der Nähe, zum Schluss getragen"></video>
   </div>
   <span class="gross" aria-hidden="true">001</span>
   <div class="unten">
@@ -346,11 +344,14 @@ footer a{text-underline-offset:4px}
   </section>
 
   <section class="rein">
-    <div class="block"><div class="zeile"><span class="mono"><b>Lookbook</b></span><span class="mono">03 Ansichten</span></div></div>
-    <div class="galerie" tabindex="0" aria-label="Der Sweater aus drei Ansichten">
-      <figure><img src="drop/vorn-1.webp" alt="Der graue Sweater von vorn" loading="lazy" decoding="async"><figcaption class="mono"><b>01</b><span>Vorn</span></figcaption></figure>
-      <figure><img src="drop/winkel-1.webp" alt="Der graue Sweater schräg von der Seite" loading="lazy" decoding="async"><figcaption class="mono"><b>02</b><span>Von der Seite</span></figcaption></figure>
-      <figure><img src="drop/hinten-1.webp" alt="Der graue Sweater von hinten mit dem Schriftzug Mörlenbach" loading="lazy" decoding="async"><figcaption class="mono"><b>03</b><span>Hinten</span></figcaption></figure>
+    <div class="block"><div class="zeile"><span class="mono"><b>Lookbook</b></span><span class="mono">06 Bilder</span></div></div>
+    <div class="galerie" tabindex="0" aria-label="Der Sweater getragen und aus drei Ansichten">
+      <figure><img src="drop/modell-1.webp" alt="Der graue Sweater getragen, von vorn, im dunklen Studio" loading="lazy" decoding="async"><figcaption class="mono"><b>01</b><span>Getragen</span></figcaption></figure>
+      <figure><img src="drop/modell-2.webp" alt="Der graue Sweater getragen, von hinten, mit dem Schriftzug Mörlenbach" loading="lazy" decoding="async"><figcaption class="mono"><b>02</b><span>Rücken</span></figcaption></figure>
+      <figure><img src="drop/modell-4.webp" alt="Der graue Sweater getragen in einer Tiefgarage, von hinten" loading="lazy" decoding="async"><figcaption class="mono"><b>03</b><span>Draußen</span></figcaption></figure>
+      <figure><img src="drop/vorn-2.webp" alt="Der graue Sweater von vorn" loading="lazy" decoding="async"><figcaption class="mono"><b>04</b><span>Vorn</span></figcaption></figure>
+      <figure><img src="drop/winkel-2.webp" alt="Der graue Sweater schräg von der Seite" loading="lazy" decoding="async"><figcaption class="mono"><b>05</b><span>Von der Seite</span></figcaption></figure>
+      <figure><img src="drop/hinten-2.webp" alt="Der graue Sweater von hinten mit dem Schriftzug Mörlenbach" loading="lazy" decoding="async"><figcaption class="mono"><b>06</b><span>Hinten</span></figcaption></figure>
     </div>
   </section>
 
@@ -369,7 +370,7 @@ footer a{text-underline-offset:4px}
   </section>
 
   <section class="strasse rein">
-    <img src="drop/strasse-1.webp" alt="Der graue Sweater hängt an einer Betonwand in einer Tiefgarage" loading="lazy" decoding="async">
+    <img src="drop/modell-3.webp" alt="Der graue Sweater getragen in einer Tiefgarage bei Nacht" loading="lazy" decoding="async">
     <h2>Vom Platz<br>auf die Straße.</h2>
   </section>
 
@@ -451,6 +452,7 @@ $('#grOben').addEventListener('click',function(e){var b=e.target.closest('button
 groessenBauen();
 
 /* Tor */
+(function(){var v=$('#film');if(!v)return;v.src=v.getAttribute(window.matchMedia('(min-width:860px)').matches?'data-gross':'data-klein');v.load();var q=v.play();if(q&&q.catch)q.catch(function(){})})();
 function auf(mitLicht){
   H.classList.remove('zu');H.classList.add('offen');if(mitLicht)H.classList.add('an');
   $('#inhalt').hidden=false;
