@@ -84,6 +84,9 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opa
 .kauf{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px}
 .preis{font:700 26px/1 var(--sans);font-stretch:112%;font-variant-numeric:tabular-nums}
 .gr{display:flex;gap:6px}
+.gr.mit{display:grid;gap:4px;width:100%;max-width:440px}
+.gr.mit button{min-width:0;padding:10px 0;letter-spacing:.04em}
+.gr.mit .wechsel{padding:10px 9px;letter-spacing:.1em}
 .gr button{border:1px solid var(--linie);background:rgba(15,17,20,.55);padding:9px 12px;min-width:38px;font:500 12px/1 var(--mono);letter-spacing:.08em;cursor:pointer;transition:background .15s,color .15s,border-color .15s}
 .gr button.an{background:var(--blau);color:#fff;border-color:var(--blau)}
 @media (hover:hover){.gr button:hover:not(.an),.wahl label:hover input:not(:checked)+span{border-color:var(--blau-hell);color:var(--blau-hell);background:rgba(47,102,200,.18)}}
@@ -134,12 +137,52 @@ form.vor{display:grid;grid-template-columns:minmax(0,1fr);gap:18px;max-width:640
 .feld input:focus{border-color:var(--blau-hell);background:#171B21}
 .zwei{display:grid;grid-template-columns:minmax(96px,.42fr) 1fr;gap:10px}
 .wahl{border:0;margin:0;padding:0;display:grid;gap:9px;min-width:0}
-.wahl .knoepfe{display:grid;grid-template-columns:repeat(auto-fit,minmax(52px,1fr));gap:8px}
+.wahl .knoepfe{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+@media (min-width:600px){.wahl .knoepfe.mit{grid-template-columns:repeat(8,minmax(0,1fr))}.wahl .knoepfe:not(.mit){grid-template-columns:repeat(auto-fit,minmax(52px,1fr))}}
 .wahl label{position:relative;display:block}
 .wahl input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer}
-.wahl span{display:grid;place-items:center;height:58px;border:1px solid var(--linie);background:var(--feld);font:800 22px/1 var(--sans);font-stretch:75%;transition:background .15s,color .15s,border-color .15s}
+.wahl label>span{display:grid;place-items:center;height:58px;border:1px solid var(--linie);background:var(--feld);font:800 22px/1 var(--sans);font-stretch:75%;transition:background .15s,color .15s,border-color .15s}
 .wahl input:checked+span{background:var(--blau);color:#fff;border-color:var(--blau)}
 .wahl input:focus-visible+span{outline:2px solid var(--blau-hell);outline-offset:3px}
+.wahl legend i{font-style:normal;color:var(--text)}
+.wahl.ruf label>span{border-color:var(--blau-hell)}
+/* Schalter Kinder/Senior: tauscht die Größen, Muster für kommende Drops */
+.wechsel{position:relative;display:block;overflow:hidden;border:1px solid var(--blau-hell);background:transparent;color:var(--blau-hell);padding:0;cursor:pointer;font:500 11px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;transition:background .25s,color .25s}
+.wahl .wechsel{height:58px}
+.wechsel span{display:grid;place-items:center;height:100%;transition:transform .36s cubic-bezier(.2,.8,.2,1),opacity .2s}
+.wechsel span+span{position:absolute;inset:0;transform:translateY(100%);opacity:0}
+.wechsel.kind{background:var(--blau-hell);color:#08090B}
+.wechsel.kind span:first-child{transform:translateY(-110%);opacity:0}
+.wechsel.kind span+span{transform:none;opacity:1}
+.wechsel:focus-visible{outline:2px solid var(--blau-hell);outline-offset:3px}
+@media (hover:hover){.wechsel:hover:not(.kind){background:rgba(47,102,200,.18)}}
+.knoepfe.raus label,.gr.raus button[data-g]{opacity:0;transform:translateX(-10px);transition:opacity .12s,transform .12s}
+.knoepfe label.neu,.gr button.neu{animation:grRein .46s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i)*38ms)}
+@keyframes grRein{from{opacity:0;transform:translateX(calc(-18px - var(--i)*8px)) scaleX(.82)}to{opacity:1;transform:none}}
+/* Auswahl: mehrere Teile in einer Vorbestellung */
+.korb{border:1px solid var(--linie);background:var(--bg2);display:grid;min-width:0;animation:korbRein .36s cubic-bezier(.2,.8,.2,1)}
+@keyframes korbRein{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+.k-kopf{display:flex;justify-content:space-between;gap:12px;padding:13px 14px;border-bottom:1px dashed var(--linie)}
+.korb ul{list-style:none;margin:0;padding:0}
+.korb li{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 48px;border-bottom:1px solid var(--linie)}
+.korb li.neu{animation:korbRein .32s cubic-bezier(.2,.8,.2,1)}
+.korb li::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--blau);transform:scaleY(0);transition:transform .25s cubic-bezier(.2,.8,.2,1)}
+.korb li.an::before{transform:none}
+.k-zeile{display:grid;grid-template-columns:24px minmax(0,1fr) auto minmax(62px,auto);align-items:center;gap:10px;background:none;border:0;padding:13px 4px 13px 14px;text-align:left;cursor:pointer;color:inherit;min-width:0}
+.k-zeile:focus-visible,.k-weg:focus-visible,.k-plus:focus-visible{outline:2px solid var(--blau-hell);outline-offset:-2px}
+.k-was{font:600 15px/1.25 var(--sans);min-width:0}
+.k-was small{display:block;font:400 12px/1.3 var(--sans);color:var(--leise)}
+.k-gr{font:800 24px/1 var(--sans);font-stretch:75%}
+.k-gr.leer{color:var(--blau-hell)}
+.k-preis{font:500 13px/1 var(--sans);font-variant-numeric:tabular-nums;color:#C5C7CC;text-align:right}
+.k-weg{background:none;border:0;border-left:1px solid var(--linie);color:var(--leise);font:400 22px/1 var(--sans);cursor:pointer;transition:color .15s,background .15s}
+@media (hover:hover){.k-weg:hover{color:var(--text);background:rgba(236,235,231,.06)}}
+.k-plus{background:none;border:0;padding:15px 14px;text-align:left;font:500 12px/1.3 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--blau-hell);cursor:pointer}
+.k-max{margin:0;padding:13px 14px}
+.f-teil{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
+.f-teil>*{min-width:0}
+.t-mehr{padding-block:0 4px;color:var(--leise)}
+@media (prefers-reduced-motion:reduce){.korb,.korb li.neu,.knoepfe label.neu,.gr button.neu{animation:none}.wechsel span,.korb li::before{transition:none}}
 .finder{border:1px solid var(--linie);background:var(--bg2);min-width:0;max-width:100%}
 .finder summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 14px;font:500 12px/1.3 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--blau-hell)}
 .finder summary::-webkit-details-marker{display:none}
@@ -323,6 +366,7 @@ footer a{text-underline-offset:4px}
       <div class="zeile"><span class="mono"><b>Vorbestellen</b></span><span class="mono" data-zeit-kurz></span></div>
       <h2>Sicher dir deinen.</h2>
       <p class="text">Sieben Tage ist offen, dann ist zu. Du trägst dich ein, wir melden uns nach dem Drop bei dir mit allem zu Bezahlung und Übergabe.</p>
+      <p class="text">Für Erwachsene von XS bis 3XL, für Kinder von 116 bis 176. Mehrere Teile gehen in eine Vorbestellung.</p>
       <ol class="ablauf">
         <li><span class="mono">01</span><span>Größe wählen, eintragen, fertig.</span></li>
         <li><span class="mono">02</span><span data-ende-satz>Nach sieben Tagen ist zu.</span></li>
@@ -332,12 +376,13 @@ footer a{text-underline-offset:4px}
     <div>
       <form class="vor" id="vor" novalidate>
         <fieldset class="wahl">
-          <legend>Größe</legend>
+          <legend>Größe <i id="grModus"></i></legend>
           <div class="knoepfe" id="groessen"></div>
         </fieldset>
         <details class="finder" id="finder">
-          <summary><span>Welche Größe passt mir?</span><i aria-hidden="true"></i></summary>
+          <summary><span id="fSum">Welche Größe passt mir?</span><i aria-hidden="true"></i></summary>
           <div class="f-in">
+            <div class="f-teil" data-nur="s">
             <div class="f-zwei">
               <div class="feld"><label for="gCm">Körpergröße in cm</label><input id="gCm" type="text" inputmode="numeric" maxlength="3" autocomplete="off" placeholder="z. B. 180"></div>
               <div class="feld"><label for="gKg">Gewicht in kg</label><input id="gKg" type="text" inputmode="numeric" maxlength="3" autocomplete="off" placeholder="z. B. 78"></div>
@@ -356,6 +401,16 @@ footer a{text-underline-offset:4px}
                 <label><input type="radio" name="gSitz" value="1"><span>Locker</span></label>
               </div>
             </fieldset>
+            </div>
+            <div class="f-teil" data-nur="k" hidden>
+              <div class="feld"><label for="gKcm">Körpergröße deines Kindes in cm</label><input id="gKcm" type="text" inputmode="numeric" maxlength="3" autocomplete="off" placeholder="z. B. 134"></div>
+              <fieldset class="f-wahl"><legend>So soll er sitzen</legend>
+                <div class="f-chips zwei-chips">
+                  <label><input type="radio" name="gWachs" value="0" checked><span>Passt jetzt</span></label>
+                  <label><input type="radio" name="gWachs" value="1"><span>Zum Reinwachsen</span></label>
+                </div>
+              </fieldset>
+            </div>
             <button type="button" class="knopf f-knopf" id="gKnopf">Größe berechnen</button>
             <p class="meldung" id="gMeldung" role="status" aria-live="polite"></p>
             <div class="f-erg" id="gErg" hidden>
@@ -364,23 +419,51 @@ footer a{text-underline-offset:4px}
               <p id="gText"></p>
               <button type="button" class="knopf" id="gNimm"></button>
             </div>
+            <div class="f-teil" data-nur="s">
             <p class="klein">Der Rechner schätzt deinen Brustumfang aus Körpergröße, Gewicht und Statur. Das ist eine Schätzung, am genauesten ist das Maßband. Deine Angaben bleiben auf deinem Gerät.</p>
             <div class="f-tab">
               <table>
                 <caption class="mono">Körpermaße in cm</caption>
                 <thead><tr><th scope="col">Größe</th><th scope="col">Brust</th><th scope="col">Taille</th><th scope="col">Hüfte</th></tr></thead>
                 <tbody>
+                  <tr data-g="XS"><th scope="row">XS</th><td>83 bis 86</td><td>71 bis 74</td><td>82 bis 85</td></tr>
                   <tr data-g="S"><th scope="row">S</th><td>87 bis 92</td><td>75 bis 80</td><td>86 bis 91</td></tr>
                   <tr data-g="M"><th scope="row">M</th><td>93 bis 100</td><td>81 bis 88</td><td>92 bis 99</td></tr>
                   <tr data-g="L"><th scope="row">L</th><td>101 bis 108</td><td>89 bis 96</td><td>100 bis 107</td></tr>
                   <tr data-g="XL"><th scope="row">XL</th><td>109 bis 118</td><td>97 bis 106</td><td>108 bis 116</td></tr>
                   <tr data-g="XXL"><th scope="row">XXL</th><td>119 bis 130</td><td>107 bis 119</td><td>117 bis 125</td></tr>
+                  <tr data-g="3XL"><th scope="row">3XL</th><td>131 bis 142</td><td>120 bis 132</td><td>126 bis 135</td></tr>
                 </tbody>
               </table>
             </div>
             <p class="klein">Der Sweater ist ein adidas Squadra 25 im geraden Schnitt (Regular Fit), 70 % Baumwolle, 30 % recyceltes Polyester. Es gilt die adidas Größentabelle für Männer-Oberteile. Miss den Brustumfang an der breitesten Stelle. Zur Orientierung: adidas zeigt ihn an einem Model mit 185 cm und 99 cm Brustumfang in Größe M.</p>
+            </div>
+            <div class="f-teil" data-nur="k" hidden>
+              <p class="klein">Kindergrößen richten sich bei adidas nach der Körpergröße. Miss dein Kind ohne Schuhe, am besten an der Wand. Liegt es zwischen zwei Größen, nimm die größere. Die Angaben bleiben auf deinem Gerät.</p>
+              <div class="f-tab">
+                <table>
+                  <caption class="mono">Kinder und Jugendliche, Maße in cm</caption>
+                  <thead><tr><th scope="col">Größe</th><th scope="col">Alter</th><th scope="col">Körpergröße</th><th scope="col">Brust</th></tr></thead>
+                  <tbody>
+                    <tr data-g="116"><th scope="row">116</th><td>5 bis 6</td><td>111 bis 116</td><td>60,5</td></tr>
+                    <tr data-g="128"><th scope="row">128</th><td>7 bis 8</td><td>123 bis 128</td><td>64</td></tr>
+                    <tr data-g="140"><th scope="row">140</th><td>9 bis 10</td><td>135 bis 140</td><td>71</td></tr>
+                    <tr data-g="152"><th scope="row">152</th><td>11 bis 12</td><td>147 bis 152</td><td>78</td></tr>
+                    <tr data-g="164"><th scope="row">164</th><td>13 bis 14</td><td>159 bis 164</td><td>86</td></tr>
+                    <tr data-g="176"><th scope="row">176</th><td>15 bis 16</td><td>171 bis 176</td><td>91,5</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="klein">Der Kinder-Sweater ist ein adidas Squadra 25 Kids im geraden Schnitt (Regular Fit). Es gilt die adidas Größentabelle für Kinder und Jugendliche, für Jungen und Mädchen gleich. Das Alter ist nur ein Richtwert, entscheidend ist die Körpergröße.</p>
+            </div>
           </div>
         </details>
+        <div class="korb" id="korb" hidden>
+          <div class="k-kopf"><span class="mono"><b>Deine Auswahl</b></span><span class="mono" id="korbSumme"></span></div>
+          <ul id="korbListe"></ul>
+          <button type="button" class="k-plus" id="korbPlus">+ Noch einen dazu</button>
+          <p class="mono k-max" id="korbMax" hidden>Sechs Teile je Vorbestellung</p>
+        </div>
         <div class="feld"><label for="fName">Vor- und Nachname</label><input id="fName" name="name" autocomplete="name" required maxlength="80"></div>
         <div class="feld"><label for="fStr">Straße und Hausnummer</label><input id="fStr" name="strasse" autocomplete="street-address" required maxlength="100"></div>
         <div class="zwei">
@@ -399,11 +482,8 @@ footer a{text-underline-offset:4px}
       <div class="drin ticket" id="drin" hidden tabindex="-1">
         <div class="t-kopf"><span class="mono"><b>Du bist drin</b></span><span class="mono">Drop 001</span></div>
         <span class="nr" id="drinNr">001</span>
-        <dl class="t-zeilen">
-          <div><dt class="mono">Teil</dt><dd>Sweater Grau</dd></div>
-          <div><dt class="mono">Größe</dt><dd id="drinGr">M</dd></div>
-          <div><dt class="mono">Preis</dt><dd>59,96 €</dd></div>
-        </dl>
+        <span class="mono t-mehr" id="drinMehr" hidden></span>
+        <dl class="t-zeilen" id="drinZeilen"></dl>
         <div class="t-strich" aria-hidden="true"></div>
         <p class="text" id="drinText"></p>
         <div class="t-knoepfe"><button class="knopf" type="button" id="teilen" hidden>Weitersagen</button><button class="linkknopf" type="button" id="nochEiner">Noch einen vorbestellen</button></div>
@@ -518,7 +598,8 @@ footer a{text-underline-offset:4px}
 (function(){
 'use strict';
 var CFG={url:'https://lvaukuzgcwgqipxwzabo.supabase.co',anon:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx2YXVrdXpnY3dncWlweHd6YWJvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNTYwMTcsImV4cCI6MjEwNTczMjAxN30.jYZF8q8-SyCaWykM0wwcK58EzfTbO2VASKz1NIv1xbo',drop:'sweater-grau'};
-var D={start:Date.parse('2026-11-29T11:00:00Z'),ende:Date.parse('2026-12-06T11:00:00Z'),groessen:['S','M','L','XL','XXL'],versatz:0,zahl:0};
+var D={start:Date.parse('2026-11-29T11:00:00Z'),ende:Date.parse('2026-12-06T11:00:00Z'),groessen:['116','128','140','152','164','176','XS','S','M','L','XL','XXL','3XL'],preis:5996,preisK:0,versatz:0,zahl:0};
+var KORB=[],AKT=-1,MODUS='s',MAX=6,STILL=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 var H=document.documentElement,$=function(s,r){return (r||document).querySelector(s)},$$=function(s,r){return [].slice.call((r||document).querySelectorAll(s))};
 var pw='',phase='';
 function merk(k,v){try{if(v===undefined)return localStorage.getItem(k);if(v===null)localStorage.removeItem(k);else localStorage.setItem(k,v)}catch(e){}return null}
@@ -548,7 +629,7 @@ function tick(){
     $$('[data-zeit-text]').forEach(function(e){e.textContent=e.closest('.leiste')?(p==='vor'?'Startet in':p==='offen'?'Endet in':'Drop'):lang});
     var k=$('#vorKnopf');
     if(p==='vor'){k.disabled=true;k.textContent='Öffnet '+tag(D.start)+', '+uhr(D.start)}
-    else if(p==='offen'){k.disabled=false;k.textContent='Vorbestellen · 59,96 €'}
+    else if(p==='offen'){k.disabled=false;knopfText()}
     else{k.disabled=true;k.textContent='Der Drop ist vorbei'}
     $('[data-ende-satz]').textContent='Am '+tag(D.ende)+' um '+uhr(D.ende)+' ist zu.';
     var c=$('#chip');c.classList.toggle('live',p==='offen');c.classList.toggle('aus',p==='vorbei');
@@ -559,61 +640,144 @@ function tick(){
 tick();setInterval(tick,1000);
 function stand(){return rpc('shop_drop_stand',{p_slug:CFG.drop}).then(function(j){var a=j&&Date.parse(j.start),b=j&&Date.parse(j.ende),n=j&&Date.parse(j.jetzt);if(!(a&&b&&n))return;
   var neu=a!==D.start||b!==D.ende;D.start=a;D.ende=b;D.versatz=n-Date.now();D.zahl=+j.zahl||0;
-  if(j.groessen&&j.groessen.length&&j.groessen.join()!==D.groessen.join()){D.groessen=j.groessen;groessenBauen()}
+  var pa=+j.preis_cent||D.preis,pk=+j.preis_kinder_cent||0,pn=pa!==D.preis||pk!==D.preisK;D.preis=pa;D.preisK=pk;
+  if(j.groessen&&j.groessen.length&&j.groessen.join()!==D.groessen.join()){D.groessen=j.groessen;if(!hatKinder())MODUS=D.groessen.every(istKind)?'k':'s';groessenBauen()}
+  if(pn)korbZeig();
   if(neu)phase='';tick();zahlZeig()}).catch(function(){})}
 stand();setInterval(function(){if(!document.hidden&&phase!=='vorbei')stand()},60000);
 
-/* Größen */
-function groessenBauen(){
-  var alt=($('#groessen input:checked')||{}).value;
-  $('#groessen').innerHTML=D.groessen.map(function(g){return '<label><input type="radio" name="groesse" value="'+g+'"'+(g===alt?' checked':'')+'><span>'+g+'</span></label>'}).join('');
-  $('#grOben').innerHTML=D.groessen.map(function(g){return '<button type="button" data-g="'+g+'"'+(g===alt?' class="an"':'')+' aria-pressed="'+(g===alt)+'">'+g+'</button>'}).join('');
+/* Größen, Schalter Kinder/Senior und Auswahl. Muster für kommende Drops: Größen aus Ziffern sind Kindergrößen. */
+function istKind(g){return /^[0-9]+$/.test(g)}
+function hatKinder(){return D.groessen.some(istKind)&&!D.groessen.every(istKind)}
+function grListe(){return D.groessen.filter(function(g){return !hatKinder()||istKind(g)===(MODUS==='k')})}
+function euro(c){return (c/100).toFixed(2).replace('.',',')+' €'}
+function preis(g){return istKind(g)&&D.preisK?D.preisK:D.preis}
+function aktG(){return AKT>=0&&KORB[AKT]?KORB[AKT].g:''}
+function gefuellt(){return KORB.filter(function(k){return k.g})}
+function summe(a){return a.reduce(function(x,k){return x+preis(k.g)},0)}
+function knopfText(){if(phase!=='offen')return;var f=gefuellt();$('#vorKnopf').textContent=f.length>1?f.length+' Sweater vorbestellen · '+euro(summe(f)):'Vorbestellen · '+euro(f.length?summe(f):D.preis)}
+function groessenBauen(neu){
+  var a=aktG(),l=grListe(),mit=hatKinder(),kind=MODUS==='k',c=neu&&!STILL?' neu':'';
+  [$('#groessen'),$('#grOben')].forEach(function(box){
+    var w=$('[data-wechsel]',box);
+    if(mit&&!w){box.insertAdjacentHTML('afterbegin','<button type="button" class="wechsel" data-wechsel><span>Kinder</span><span>Senior</span></button>');w=box.firstChild}
+    if(!mit&&w){w.remove();w=null}
+    if(w){w.classList.toggle('kind',kind);w.children[0].setAttribute('aria-hidden',kind);w.children[1].setAttribute('aria-hidden',!kind);w.title=kind?'Größen für Erwachsene zeigen':'Kindergrößen zeigen'}
+    $$('label,button[data-g]',box).forEach(function(e){e.remove()});box.classList.toggle('mit',mit);
+  });
+  $('#groessen').insertAdjacentHTML('beforeend',l.map(function(g,i){return '<label class="'+c+'" style="--i:'+i+'"><input type="radio" name="groesse" value="'+g+'"'+(g===a?' checked':'')+'><span>'+g+'</span></label>'}).join(''));
+  var o=$('#grOben');o.style.gridTemplateColumns=mit?'auto repeat('+l.length+',minmax(0,1fr))':'';
+  o.insertAdjacentHTML('beforeend',l.map(function(g,i){return '<button type="button" data-g="'+g+'" class="'+(g===a?'an':'')+c+'" style="--i:'+i+'" aria-pressed="'+(g===a)+'">'+g+'</button>'}).join(''));
+  $('#grModus').textContent=mit?(kind?'· Kinder':'· Erwachsene'):'';
+  finderModus();
 }
-function groesseSetz(g){
-  $$('#groessen input').forEach(function(i){i.checked=i.value===g});
-  $$('#grOben button').forEach(function(b){var an=b.getAttribute('data-g')===g;b.classList.toggle('an',an);b.setAttribute('aria-pressed',an)});
+function modusSetz(m){
+  if(m===MODUS||!hatKinder())return;MODUS=m;
+  var boxen=[$('#groessen'),$('#grOben')];
+  $$('[data-wechsel]').forEach(function(w){w.classList.toggle('kind',m==='k')});
+  if(STILL){groessenBauen(false);return}
+  boxen.forEach(function(b){b.classList.add('raus')});
+  setTimeout(function(){boxen.forEach(function(b){b.classList.remove('raus')});groessenBauen(true)},130);
 }
+function markiere(){var a=aktG();
+  $$('#groessen input').forEach(function(i){i.checked=i.value===a});
+  $$('#grOben button[data-g]').forEach(function(b){var an=b.getAttribute('data-g')===a;b.classList.toggle('an',an);b.setAttribute('aria-pressed',an)});
+}
+function groesseSetz(g){var neu;
+  if(g){if(AKT<0||!KORB[AKT]){KORB.push({g:g});AKT=KORB.length-1;neu=AKT}else KORB[AKT].g=g}
+  markiere();korbZeig(neu);
+}
+function korbZeig(neu){
+  var f=gefuellt();$('#korb').hidden=!KORB.length;
+  $('#korbListe').innerHTML=KORB.map(function(e,i){
+    return '<li class="'+(i===AKT?'an':'')+(i===neu&&!STILL?' neu':'')+'"><button type="button" class="k-zeile" data-i="'+i+'"'+(i===AKT?' aria-current="true"':'')+'><span class="mono">'+zwei(i+1)+'</span><span class="k-was">Sweater Grau<small>'+(e.g?(istKind(e.g)?'Kinder':'Erwachsene'):'Größe oben wählen')+'</small></span><span class="k-gr'+(e.g?'':' leer')+'">'+(e.g||'…')+'</span><span class="k-preis">'+(e.g?euro(preis(e.g)):'')+'</span></button><button type="button" class="k-weg" data-weg="'+i+'" aria-label="Sweater '+(i+1)+' entfernen">×</button></li>'}).join('');
+  $('#korbSumme').textContent=f.length>1?f.length+' Teile · '+euro(summe(f)):'';
+  $('#korbPlus').hidden=KORB.length>=MAX;$('#korbMax').hidden=KORB.length<MAX;
+  knopfText();
+}
+function korbLeer(){KORB=[];AKT=-1;markiere();korbZeig()}
 $('#groessen').addEventListener('change',function(e){if(e.target.name==='groesse')groesseSetz(e.target.value)});
-$('#grOben').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;groesseSetz(b.getAttribute('data-g'));$('#vorbestellen').scrollIntoView()});
-groessenBauen();
+$('#grOben').addEventListener('click',function(e){var b=e.target.closest('button[data-g]');if(!b)return;groesseSetz(b.getAttribute('data-g'));$('#vorbestellen').scrollIntoView()});
+document.addEventListener('click',function(e){if(e.target.closest('[data-wechsel]'))modusSetz(MODUS==='k'?'s':'k')});
+$('#korbListe').addEventListener('click',function(e){var w=e.target.closest('[data-weg]'),z=e.target.closest('[data-i]');
+  if(w){KORB.splice(+w.getAttribute('data-weg'),1);AKT=KORB.length-1}
+  else if(z)AKT=+z.getAttribute('data-i');
+  else return;
+  var g=aktG();if(g)modusSetz(istKind(g)?'k':'s');markiere();korbZeig();
+});
+$('#korbPlus').addEventListener('click',function(){var leer=-1;KORB.forEach(function(e,i){if(!e.g)leer=i});
+  var neu=leer<0;if(neu){if(KORB.length>=MAX)return;KORB.push({g:''});leer=KORB.length-1}
+  AKT=leer;markiere();korbZeig(neu?leer:undefined);
+  var w=$('#vor .wahl');w.classList.add('ruf');setTimeout(function(){w.classList.remove('ruf')},1100);
+  w.scrollIntoView({block:'center',behavior:STILL?'auto':'smooth'});
+});
 
 /* Größenfinder: schätzt den Brustumfang, ordnet ihn in die adidas Tabelle (Männer-Oberteile) ein. Alles bleibt im Browser. */
-var GT=[{g:'S',a:87,b:92},{g:'M',a:93,b:100},{g:'L',a:101,b:108},{g:'XL',a:109,b:118},{g:'XXL',a:119,b:130}];
+var GT=[{g:'XS',a:83,b:86},{g:'S',a:87,b:92},{g:'M',a:93,b:100},{g:'L',a:101,b:108},{g:'XL',a:109,b:118},{g:'XXL',a:119,b:130},{g:'3XL',a:131,b:142}];
+var KT=[{g:'116',h:116,j:'5 bis 6'},{g:'128',h:128,j:'7 bis 8'},{g:'140',h:140,j:'9 bis 10'},{g:'152',h:152,j:'11 bis 12'},{g:'164',h:164,j:'13 bis 14'},{g:'176',h:176,j:'15 bis 16'}];
 function groesseRechnen(cm,kg,statur,locker){
   var brust=Math.round(60+0.52*kg-0.12*(cm-178)+statur),i=0;
   while(i<GT.length-1&&brust>GT[i].b+0.5)i++;
   var t='Geschätzter Brustumfang: rund '+brust+' cm. ';
-  if(brust<GT[0].a-2)t+='Das liegt unter Größe S. S ist die kleinste Größe in diesem Drop und sitzt bei dir eher locker.';
-  else if(brust>GT[GT.length-1].b+1)t+='Das liegt über Größe XXL (bis 130 cm). XXL ist die größte Größe in diesem Drop und kann bei dir eng sitzen.';
+  if(brust<GT[0].a-2)t+='Das liegt unter Größe '+GT[0].g+'. '+GT[0].g+' ist die kleinste Größe für Erwachsene in diesem Drop und sitzt bei dir eher locker.';
+  else if(brust>GT[GT.length-1].b+1)t+='Das liegt über Größe '+GT[GT.length-1].g+' (bis '+GT[GT.length-1].b+' cm). '+GT[GT.length-1].g+' ist die größte Größe in diesem Drop und kann bei dir eng sitzen.';
   else{
     t+='Bei adidas ist das Größe '+GT[i].g+' ('+GT[i].a+' bis '+GT[i].b+' cm).';
     if(!locker&&i<GT.length-1&&brust>=GT[i].b-1)t+=' Du liegst nah an '+GT[i+1].g+'. Wenn du unsicher bist, nimm die größere.';
   }
   if(locker){
     if(i<GT.length-1){i++;t+=' Für den lockeren Sitz eine Nummer größer: '+GT[i].g+'.'}
-    else t+=' Größer als XXL gibt es in diesem Drop nicht.';
+    else t+=' Größer als '+GT[i].g+' gibt es in diesem Drop nicht.';
   }
   if(cm>189)t+=' Für über 1,89 m führt adidas eigene Langgrößen. Die gibt es hier nicht, der Sweater kann bei dir etwas kurz sitzen.';
   return {g:GT[i].g,text:t};
 }
+/* Kinder: adidas ordnet nach Körpergröße. Bestellt wird von den Eltern, deshalb eigene Texte. */
+function kindRechnen(cm,wachsen){
+  var i=0,l=KT.length-1;while(i<l&&cm>KT[i].h)i++;
+  if(cm>KT[l].h)return {g:'',text:'Ab '+(KT[l].h+1)+' cm passen die Größen für Erwachsene besser. Schalte oben bei den Größen auf Senior und rechne dort mit Körpergröße und Gewicht.'};
+  var t='Bei '+cm+' cm ist das bei adidas Größe '+KT[i].g+' (bis '+KT[i].h+' cm, ungefähr '+KT[i].j+' Jahre).';
+  if(cm<105)t='Das liegt deutlich unter der kleinsten Größe 116 (ab etwa 111 cm). Der Sweater wäre deinem Kind noch viel zu groß.';
+  else if(cm<111)t='116 ist die kleinste Größe in diesem Drop (für 111 bis 116 cm). Der Sweater sitzt bei deinem Kind noch locker und passt dann länger.';
+  else if(!wachsen&&i<l&&KT[i].h-cm<=2)t+=' Dein Kind ist fast an der oberen Grenze. Soll der Sweater länger passen, nimm '+KT[i+1].g+'.';
+  if(wachsen&&cm>=111){
+    if(i<l){i++;t+=' Zum Reinwachsen eine Nummer größer: '+KT[i].g+'.'}
+    else t+=' Größer als 176 gibt es bei den Kindergrößen nicht. Danach geht es bei den Erwachsenen weiter.';
+  }
+  return {g:KT[i].g,text:t};
+}
+function finderModus(){var k=MODUS==='k'&&hatKinder()||D.groessen.every(istKind);
+  $$('#finder [data-nur]').forEach(function(e){e.hidden=(e.getAttribute('data-nur')==='k')!==k});
+  $('#fSum').textContent=k?'Welche Größe passt meinem Kind?':'Welche Größe passt mir?';
+  $('#gErg').hidden=true;$('#gMeldung').textContent='';$$('.f-tab tr').forEach(function(r){r.classList.remove('an')});
+}
 (function(){
   var m=$('#gMeldung'),erg=$('#gErg');
   function zahl(el,von,bis){var v=parseFloat(String(el.value).replace(',','.'));return v>=von&&v<=bis?v:null}
+  function zeig(r){
+    $('#gGr').textContent=r.g;$('#gGr').hidden=!r.g;$('#gText').textContent=r.text;
+    var n=$('#gNimm');n.hidden=!r.g;n.textContent='Größe '+r.g+' übernehmen';n.setAttribute('data-g',r.g);n.disabled=false;
+    var z=r.g&&$('.f-tab tr[data-g="'+r.g+'"]');if(z)z.classList.add('an');
+    erg.hidden=false;
+  }
   function rechne(){
+    if(!$('#finder [data-nur="k"]').hidden){
+      var h=zahl($('#gKcm'),90,200);erg.hidden=true;$$('.f-tab tr').forEach(function(r){r.classList.remove('an')});
+      if(h===null){m.className='meldung schlecht';m.textContent='Bitte die Körpergröße deines Kindes in cm eintragen, zwischen 90 und 200.';$('#gKcm').focus();return}
+      m.className='meldung';m.textContent='';zeig(kindRechnen(Math.round(h),$('input[name=gWachs]:checked').value==='1'));return;
+    }
     var cm=zahl($('#gCm'),140,215),kg=zahl($('#gKg'),40,160);erg.hidden=true;$$('.f-tab tr').forEach(function(r){r.classList.remove('an')});
     if(cm===null){m.className='meldung schlecht';m.textContent='Bitte die Körpergröße in cm eintragen, zwischen 140 und 215.';$('#gCm').focus();return}
     if(kg===null){m.className='meldung schlecht';m.textContent='Bitte das Gewicht in kg eintragen, zwischen 40 und 160.';$('#gKg').focus();return}
     m.className='meldung';m.textContent='';
     var r=groesseRechnen(cm,kg,+$('input[name=gStatur]:checked').value,$('input[name=gSitz]:checked').value==='1');
-    $('#gGr').textContent=r.g;$('#gText').textContent=r.text;
-    var n=$('#gNimm');n.textContent='Größe '+r.g+' übernehmen';n.setAttribute('data-g',r.g);n.disabled=false;
-    var z=$('.f-tab tr[data-g="'+r.g+'"]');if(z)z.classList.add('an');
-    erg.hidden=false;
+    zeig(r);
   }
   $('#gKnopf').addEventListener('click',rechne);
-  ['gCm','gKg'].forEach(function(id){$('#'+id).addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();rechne()}})});
+  ['gCm','gKg','gKcm'].forEach(function(id){$('#'+id).addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();rechne()}})});
   $('#gNimm').addEventListener('click',function(){var g=this.getAttribute('data-g');groesseSetz(g);this.textContent='Größe '+g+' ist gewählt';this.disabled=true;$('#groessen').scrollIntoView({block:'center'})});
 })();
+groessenBauen();
 
 /* Tor */
 (function(){var v=$('#film');if(!v)return;v.src=v.getAttribute(window.matchMedia('(min-width:860px)').matches?'data-gross':'data-klein');v.load();var q=v.play();if(q&&q.catch)q.catch(function(){})})();
@@ -688,9 +852,9 @@ $('#nl').addEventListener('submit',function(e){
 $('#vor').addEventListener('submit',function(e){
   e.preventDefault();var f=this,m=$('#vorMeldung'),k=$('#vorKnopf');
   function fehl(t,el){m.className='meldung schlecht';m.textContent=t;if(el)el.focus()}
-  var g=$('#groessen input:checked');
-  if(!g)return fehl('Bitte eine Größe wählen.',$('#groessen input'));
-  var a={drop:CFG.drop,passwort:pw,groesse:g.value,name:f.name.value.trim(),strasse:f.strasse.value.trim(),plz:f.plz.value.trim(),ort:f.ort.value.trim(),handy:f.handy.value.trim(),email:f.email.value.trim(),ok:f.ok.checked},nl=f.nl.checked;
+  var gs=gefuellt().map(function(k){return k.g});
+  if(!gs.length)return fehl('Bitte eine Größe wählen.',$('#groessen input'));
+  var a={drop:CFG.drop,passwort:pw,groessen:gs,name:f.name.value.trim(),strasse:f.strasse.value.trim(),plz:f.plz.value.trim(),ort:f.ort.value.trim(),handy:f.handy.value.trim(),email:f.email.value.trim(),ok:f.ok.checked},nl=f.nl.checked;
   if(a.name.length<3||!/\s/.test(a.name))return fehl('Bitte Vor- und Nachnamen eintragen.',f.name);
   if(a.strasse.length<4||!/[0-9]/.test(a.strasse))return fehl('Bitte Straße und Hausnummer eintragen.',f.strasse);
   if(!/^[0-9]{5}$/.test(a.plz))return fehl('Bitte eine Postleitzahl mit fünf Ziffern eintragen.',f.plz);
@@ -700,16 +864,22 @@ $('#vor').addEventListener('submit',function(e){
   if(!a.ok)return fehl('Bitte setz noch den Haken, damit wir deine Angaben speichern dürfen.',f.ok);
   var alt=k.textContent;k.disabled=true;k.textContent='Wird eingetragen …';m.className='meldung';m.textContent='';
   rpc('shop_vorbestellen',{p:a}).then(function(j){
-    $('#drinNr').textContent=('00'+j.nr).slice(-3);
-    $('#drinGr').textContent=j.groesse;D.zahl++;zahlZeig();
+    var teile=j.teile&&j.teile.length?j.teile:[{nr:j.nr,groesse:j.groesse}],n=teile.length,nr3=function(x){return ('00'+x).slice(-3)},
+      was=function(g){return 'Sweater Grau'+(istKind(g)?' · Kinder':'')},sum=teile.reduce(function(x,t){return x+preis(t.groesse)},0);
+    $('#drinNr').textContent=nr3(teile[0].nr);
+    var mehr=$('#drinMehr');mehr.hidden=n<2;mehr.textContent=n<2?'':'und '+(n-1)+(n===2?' weitere Nummer':' weitere Nummern');
+    var dl=$('#drinZeilen');dl.textContent='';
+    (n<2?[['Teil',was(teile[0].groesse)],['Größe',teile[0].groesse],['Preis',euro(sum)]]:teile.map(function(t){return ['Nr. '+nr3(t.nr),was(t.groesse)+' · '+t.groesse]}).concat([['Summe',euro(sum)]])).forEach(function(z){
+      var d=document.createElement('div'),dt=document.createElement('dt'),dd=document.createElement('dd');dt.className='mono';dt.textContent=z[0];dd.textContent=z[1];d.appendChild(dt);d.appendChild(dd);dl.appendChild(d)});
+    D.zahl+=n;zahlZeig();
     $('#drinText').textContent='Eingetragen, '+a.name.split(/\s+/)[0]+'. Wir melden uns nach dem Drop bei dir mit allem zu Bezahlung und Übergabe.';
     f.hidden=true;$('#drin').hidden=false;$('#drin').focus();$('#drin').scrollIntoView({block:'center'});
-    k.disabled=false;k.textContent=alt;
+    k.disabled=false;korbLeer();
     if(nl){f.nl.checked=false;nlAn(a.email,a.name.split(/\s+/)[0],'drop-001-vorbestellung').then(function(j){if(j.email==='mail_geschickt')$('#drinText').textContent+=' Für den Newsletter kommt gleich eine eigene Mail, bitte dort kurz bestätigen.'}).catch(function(){})}
-  }).catch(function(x){k.disabled=false;k.textContent=alt;phase='';tick();fehl(x.message)});
+  }).catch(function(x){k.disabled=false;k.textContent=alt;phase='';tick();knopfText();fehl(x.message)});
 });
 if(navigator.share){$('#teilen').hidden=false;$('#teilen').addEventListener('click',function(){navigator.share({title:'Drop 001 · Sweater Grau',text:'Ich bin drin. Drop 001 vom SV Mörlenbach.',url:'https://1896shop.de/sweater'}).catch(function(){})})}
-$('#nochEiner').addEventListener('click',function(){var f=$('#vor');$('#drin').hidden=true;f.hidden=false;groesseSetz('');$('#groessen input').focus()});
+$('#nochEiner').addEventListener('click',function(){var f=$('#vor');$('#drin').hidden=true;f.hidden=false;korbLeer();var i=$('#groessen input');if(i)i.focus()});
 })();
 </script>
 </body>
