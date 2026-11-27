@@ -82,13 +82,12 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opa
 .titel{margin:0;font:800 clamp(64px,21vw,170px)/.8 var(--sans);font-stretch:62%;text-transform:uppercase;letter-spacing:-.012em;text-wrap:balance}
 .titel em{font-style:normal;color:transparent;-webkit-text-stroke:1.5px var(--text)}
 .titel.t3{font-size:clamp(50px,15.2vw,150px);line-height:.84}
-.preis-k{color:var(--leise)}
-.kauf.kind .preis{color:var(--blau-hell);font-size:34px;animation:zahl .35s ease-out}
-.kauf.kind .preis-k{color:var(--text);border:1px solid var(--blau-hell);padding:5px 8px;letter-spacing:.1em;text-transform:uppercase}
+.preis-k{color:var(--text);border:1px solid var(--blau-hell);padding:5px 8px;letter-spacing:.1em;text-transform:uppercase}
+.kauf.kind .preis{animation:zahl .35s ease-out}
 @media (prefers-reduced-motion:reduce){.kauf.kind .preis{animation:none}}
 .bestell .text+.text{margin-top:14px}
 .kauf{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px}
-.preis{font:700 26px/1 var(--sans);font-stretch:112%;font-variant-numeric:tabular-nums}
+.preis{font:700 34px/1 var(--sans);font-stretch:112%;font-variant-numeric:tabular-nums;color:var(--blau-hell)}
 .gr{display:flex;gap:6px}
 .gr.mit{display:grid;gap:4px;width:100%;max-width:440px}
 .gr.mit button{min-width:0;padding:10px 0;letter-spacing:.04em}
@@ -581,7 +580,7 @@ function zwei(n){return (n<10?'0':'')+n}
 /* Endet der Drop um Mitternacht, heißt das für alle: am Tag davor um 24 Uhr */
 function endeSatz(){var m=new Intl.DateTimeFormat('de-DE',{hour:'2-digit',minute:'2-digit',hour12:false,timeZone:'Europe/Berlin'}).format(new Date(D.ende));
   return /^(00|24):00/.test(m)?'Am '+tag(D.ende-3600000)+' um 24 Uhr ist zu.':'Am '+tag(D.ende)+' um '+uhr(D.ende)+' ist zu.'}
-function preisZeig(){var o=$('#preisOben'),k=$('#preisKind');if(!o)return;var zeig=hatKinder()&&D.preisK>0&&D.preisK!==D.preis,kd=zeig&&MODUS==='k',box=o.parentNode,war=box.classList.contains('kind');o.textContent=euro(kd?D.preisK:D.preis);k.hidden=!zeig;k.textContent=kd?'Kinderpreis':'Kinder '+euro(D.preisK);box.classList.toggle('kind',kd);if(kd&&!war){o.style.animation='none';void o.offsetWidth;o.style.animation=''}}
+function preisZeig(){var o=$('#preisOben'),k=$('#preisKind');if(!o)return;var zeig=hatKinder()&&D.preisK>0&&D.preisK!==D.preis,kd=zeig&&MODUS==='k',box=o.parentNode,war=box.classList.contains('kind');o.textContent=euro(kd?D.preisK:D.preis);k.hidden=!zeig;k.textContent=kd?'Kinder':'Erwachsene';box.classList.toggle('kind',kd);if(kd&&!war){o.style.animation='none';void o.offsetWidth;o.style.animation=''}}
 function jetzt(){return Date.now()+D.versatz}
 function tag(ms){return new Intl.DateTimeFormat('de-DE',{weekday:'long',day:'numeric',month:'numeric',timeZone:'Europe/Berlin'}).format(new Date(ms))}
 function uhr(ms){var h=new Intl.DateTimeFormat('de-DE',{hour:'numeric',minute:'2-digit',timeZone:'Europe/Berlin'}).format(new Date(ms));return h.replace(/:00$/,'')+' Uhr'}
