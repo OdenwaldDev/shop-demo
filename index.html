@@ -45,8 +45,8 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opa
 
 /* Kopfzeile */
 .kopf{position:absolute;inset:0 0 auto 0;z-index:5;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:calc(env(safe-area-inset-top,0px) + 16px) var(--rand) 0}
-.kopf .marke{display:flex;align-items:center;gap:10px}
-.kopf svg{width:22px;height:25px;flex:none}
+.kopf .marke{display:flex;align-items:center;gap:12px}
+.kopf .marke img{width:29px;height:30px;flex:none;display:block;filter:drop-shadow(0 1px 6px rgba(0,0,0,.55))}
 .punkt{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--warn);margin-right:8px;vertical-align:1px;animation:puls 1.6s ease-in-out infinite}
 @keyframes puls{50%{opacity:.25}}
 
@@ -326,7 +326,7 @@ footer a{text-underline-offset:4px}
 
 <header class="kopf">
   <div class="marke">
-    <svg viewBox="0 0 40 46" aria-hidden="true"><path d="M3 3h34v19.5c0 11.6-7.7 18.6-17 21.5C10.7 41.1 3 34.1 3 22.5z" fill="none" stroke="#ECEBE7" stroke-width="2.4" stroke-linejoin="round"/><g fill="#ECEBE7"><path d="M7.8 17.1c.3-4.4 1.6-7.4 5.2-7.4s4.9 3 5.2 7.4l2 2.6h-14.4z"/><path d="M21.8 17.1c.3-4.4 1.6-7.4 5.2-7.4s4.9 3 5.2 7.4l2 2.6h-14.4z"/><path d="M14.8 31.1c.3-4.4 1.6-7.4 5.2-7.4s4.9 3 5.2 7.4l2 2.6h-14.4z"/></g></svg>
+    <img src="drop/wappen-kopf.webp" width="29" height="30" alt="" decoding="async">
     <span class="mono"><b>1896 Shop</b></span>
   </div>
   <span class="mono chip" id="chip"><span class="punkt"></span><b data-chip>Drop 01</b></span>
