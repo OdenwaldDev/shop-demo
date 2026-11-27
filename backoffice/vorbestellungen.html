@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
-<title>Vorbestellungen · Drop 001</title>
+<title>Vorbestellungen · Drop 01</title>
 <link rel="icon" href="/img/favicon.png" type="image/png">
 <style>
 @font-face{font-family:'Archivo';src:url(/fonts/archivo.woff2) format('woff2');font-weight:100 900;font-stretch:62% 125%;font-display:swap}
@@ -28,16 +28,17 @@ th{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--leis
 tr.storniert td{color:var(--leise);text-decoration:line-through}
 select{background:var(--feld);color:var(--text);border:1px solid var(--linie);padding:6px;font:inherit}
 .fehler{color:var(--warn)}
+tr.ga td:first-child{box-shadow:inset 3px 0 0 #2F66C8}tr.gb td:first-child{box-shadow:inset 3px 0 0 #F28C28}
 </style>
 </head>
 <body>
 <h1>Vorbestellungen</h1>
-<p id="unter">Drop 001 · Sweater Grau</p>
+<p id="unter" id="unter">Drop 01 · Sweater Drei Glocken 01</p>
 <p id="stand">Lade …</p>
 <div id="innen" hidden>
   <div class="zahlen" id="zahlen"></div>
   <div class="knoepfe"><button id="neu" class="still">Neu laden</button><button id="csv">Als Tabelle laden (CSV)</button></div>
-  <div class="rahmen"><table><thead><tr><th>Nr.</th><th>Wann</th><th>Größe</th><th>Name</th><th>Anschrift</th><th>Handy</th><th>E-Mail</th><th>Stand</th></tr></thead><tbody id="zeilen"></tbody></table></div>
+  <div class="rahmen"><table><thead><tr><th>Nr.</th><th>Wann</th><th>Größe</th><th>Preis</th><th>Bestellung</th><th>Name</th><th>Anschrift</th><th>Handy</th><th>E-Mail</th><th>Stand</th></tr></thead><tbody id="zeilen"></tbody></table></div>
 </div>
 <script src="/vendor/supabase.js"></script>
 <script>
@@ -61,9 +62,16 @@ function zeigen(d){
   liste=d.liste||[];var gr=(d.drop&&d.drop.groessen)||['116','128','140','152','164','176','XS','S','M','L','XL','XXL','3XL'],aktiv=liste.filter(function(v){return v.status!=='storniert'});
   var z=$('zahlen');z.textContent='';
   [['Gesamt',aktiv.length]].concat(gr.map(function(g){return [g,(d.groessen||{})[g]||0]})).forEach(function(p){var b=document.createElement('div'),n=document.createElement('b'),s=document.createElement('span');n.textContent=p[1];s.textContent=p[0];b.appendChild(n);b.appendChild(s);z.appendChild(b)});
+  // Was zusammen eingetragen wurde, trägt dieselbe Kennung (auftrag). Die Zeilen bekommen „Teil 1 von 3“ und abwechselnd einen Strich am Rand.
+  liste.sort(function(a,b){return a.created_at<b.created_at?1:a.created_at>b.created_at?-1:a.nr-b.nr});
+  var pa=(d.drop&&+d.drop.preis_cent)||0,pk=(d.drop&&+d.drop.preis_kinder_cent)||pa,gruppen={},folge=[];
+  liste.forEach(function(v){var k=v.auftrag||('x'+v.id);if(!gruppen[k]){gruppen[k]=[];folge.push(k)}gruppen[k].push(v)});
+  folge.forEach(function(k,i){var g=gruppen[k].slice().sort(function(a,b){return a.nr-b.nr});g.forEach(function(v,j){v._teil=j+1;v._von=g.length;v._erste=g[0].nr;v._gr=g.length>1?(i%2?'gb':'ga'):'';v._preis=/^[0-9]+$/.test(v.groesse)?pk:pa})});
+  var eur=function(c){return c?(c/100).toFixed(2).replace('.',',')+' €':''};
+  var summe=aktiv.reduce(function(a,v){return a+(v._preis||0)},0),sb2=document.createElement('div'),sn=document.createElement('b'),ss=document.createElement('span');sn.textContent=eur(summe)||'0,00 €';sb2.style.gridColumn='span 2';sn.style.whiteSpace='nowrap';if(d.drop&&d.drop.titel&&$('unter'))$('unter').textContent='Drop 01 · '+d.drop.titel;ss.textContent='Summe';sb2.appendChild(sn);sb2.appendChild(ss);z.appendChild(sb2);
   var tb=$('zeilen');tb.textContent='';
-  liste.forEach(function(v){var tr=document.createElement('tr');tr.className=v.status;
-    zelle(tr,('00'+v.nr).slice(-3));zelle(tr,wann(v.created_at));zelle(tr,v.groesse);zelle(tr,v.name);zelle(tr,v.strasse+', '+v.plz+' '+v.ort);zelle(tr,v.handy);zelle(tr,v.email);
+  liste.forEach(function(v){var tr=document.createElement('tr');tr.className=v.status+(v._gr?' '+v._gr:'');
+    zelle(tr,('00'+v.nr).slice(-3));zelle(tr,wann(v.created_at));zelle(tr,v.groesse);zelle(tr,eur(v._preis));zelle(tr,v._von>1?'Teil '+v._teil+' von '+v._von:'');zelle(tr,v.name);zelle(tr,v.strasse+', '+v.plz+' '+v.ort);zelle(tr,v.handy);zelle(tr,v.email);
     var td=document.createElement('td'),sel=document.createElement('select');sel.setAttribute('aria-label','Stand der Vorbestellung '+v.nr);
     [['neu','Neu'],['bestaetigt','Bestätigt'],['storniert','Storniert']].forEach(function(o){var op=document.createElement('option');op.value=o[0];op.textContent=o[1];if(v.status===o[0])op.selected=true;sel.appendChild(op)});
     sel.addEventListener('change',function(){sb.rpc('shop_bo_vorbestellung_status',{p_id:v.id,p_status:sel.value}).then(function(a){if(a.error)melde(a.error.message,true);laden()})});
@@ -74,9 +82,9 @@ function zeigen(d){
 }
 function csvFeld(t){t=String(t==null?'':t);if(/^[=+\-@\t]/.test(t))t="'"+t;return '"'+t.replace(/"/g,'""')+'"'}
 $('csv').addEventListener('click',function(){
-  var z=[['Nr','Wann','Größe','Name','Straße','PLZ','Ort','Handy','E-Mail','Stand']].concat(liste.map(function(v){return [v.nr,wann(v.created_at),v.groesse,v.name,v.strasse,v.plz,v.ort,v.handy,v.email,v.status]}));
+  var z=[['Nr','Wann','Größe','Preis','Bestellung (erste Nr)','Teile','Name','Straße','PLZ','Ort','Handy','E-Mail','Stand']].concat(liste.map(function(v){return [v.nr,wann(v.created_at),v.groesse,v._preis?(v._preis/100).toFixed(2).replace('.',','):'',v._erste||v.nr,v._von||1,v.name,v.strasse,v.plz,v.ort,v.handy,v.email,v.status]}));
   var blob=new Blob(['﻿'+z.map(function(r){return r.map(csvFeld).join(';')}).join('\r\n')],{type:'text/csv;charset=utf-8'}),a=document.createElement('a');
-  a.href=URL.createObjectURL(blob);a.download='vorbestellungen-drop-001.csv';document.body.appendChild(a);a.click();a.remove();
+  a.href=URL.createObjectURL(blob);a.download='vorbestellungen-drop-01.csv';document.body.appendChild(a);a.click();a.remove();
 });
 $('neu').addEventListener('click',laden);
 laden();
