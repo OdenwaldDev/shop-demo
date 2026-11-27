@@ -45,8 +45,8 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opa
 
 /* Kopfzeile */
 .kopf{position:absolute;inset:0 0 auto 0;z-index:5;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:calc(env(safe-area-inset-top,0px) + 16px) var(--rand) 0}
-.kopf .marke{display:flex;align-items:center;gap:12px}
-.kopf .marke img{width:29px;height:30px;flex:none;display:block;filter:drop-shadow(0 1px 6px rgba(0,0,0,.55))}
+.kopf .marke{display:flex;align-items:center;gap:9px}
+.kopf .marke img{width:18px;height:19px;flex:none;display:block;filter:drop-shadow(0 1px 6px rgba(0,0,0,.55))}
 .punkt{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--warn);margin-right:8px;vertical-align:1px;animation:puls 1.6s ease-in-out infinite}
 @keyframes puls{50%{opacity:.25}}
 
@@ -326,7 +326,7 @@ footer a{text-underline-offset:4px}
 
 <header class="kopf">
   <div class="marke">
-    <img src="drop/wappen-kopf.webp" width="29" height="30" alt="" decoding="async">
+    <img src="drop/wappen-kopf.webp" width="18" height="19" alt="" decoding="async">
     <span class="mono"><b>1896 Shop</b></span>
   </div>
   <span class="mono chip" id="chip"><span class="punkt"></span><b data-chip>Drop 01</b></span>
