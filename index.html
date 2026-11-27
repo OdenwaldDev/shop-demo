@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
 <title>Drop 01 · Nur mit Passwort · SV Mörlenbach</title>
-<meta name="description" content="Drop 01 vom SV Mörlenbach: der Sweater Drei Glocken 01. Start Samstag, 12 Uhr. Drei Tage, dann ist zu. Rein kommst du nur mit Passwort.">
+<meta name="description" content="Drop 01 vom SV Mörlenbach: der Sweater Drei Glocken 01. Start Samstag, 12 Uhr. Bis Montag, 24 Uhr, dann ist zu. Rein kommst du nur mit Passwort.">
 <meta name="theme-color" content="#08090B">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="1896 Shop · SV Mörlenbach">
 <meta property="og:title" content="DROP 01 · Nur mit Passwort">
-<meta property="og:description" content="Start Samstag, 12 Uhr. Drei Tage, dann ist zu.">
+<meta property="og:description" content="Start Samstag, 12 Uhr. Bis Montag, 24 Uhr, dann ist zu.">
 <meta property="og:url" content="https://1896shop.de/">
 <meta property="og:image" content="https://1896shop.de/drop/og-5.jpg">
 <meta property="og:image:type" content="image/jpeg">
@@ -83,6 +83,9 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opa
 .titel em{font-style:normal;color:transparent;-webkit-text-stroke:1.5px var(--text)}
 .titel.t3{font-size:clamp(50px,15.2vw,150px);line-height:.84}
 .preis-k{color:var(--leise)}
+.kauf.kind .preis{color:var(--blau-hell);font-size:34px;animation:zahl .35s ease-out}
+.kauf.kind .preis-k{color:var(--text);border:1px solid var(--blau-hell);padding:5px 8px;letter-spacing:.1em;text-transform:uppercase}
+@media (prefers-reduced-motion:reduce){.kauf.kind .preis{animation:none}}
 .bestell .text+.text{margin-top:14px}
 .kauf{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px}
 .preis{font:700 26px/1 var(--sans);font-stretch:112%;font-variant-numeric:tabular-nums}
@@ -375,7 +378,7 @@ footer a{text-underline-offset:4px}
       <p class="text">Für den Sportplatz. Für den Alltag. Für Frauen, Männer und Kinder. Für alle, die sich Mörlenbach verbunden fühlen.</p>
       <ol class="ablauf">
         <li><span class="mono">01</span><span>Größen wählen, eintragen, fertig. Erwachsene XS bis 3XL, Kinder 116 bis 176.</span></li>
-        <li><span class="mono">02</span><span data-ende-satz>Nach drei Tagen ist zu.</span></li>
+        <li><span class="mono">02</span><span data-ende-satz>Am Montag, 30.11. um 24 Uhr ist zu.</span></li>
         <li><span class="mono">03</span><span>Wir melden uns bei dir: Bezahlung und Übergabe.</span></li>
       </ol>
     </div>
@@ -578,7 +581,7 @@ function zwei(n){return (n<10?'0':'')+n}
 /* Endet der Drop um Mitternacht, heißt das für alle: am Tag davor um 24 Uhr */
 function endeSatz(){var m=new Intl.DateTimeFormat('de-DE',{hour:'2-digit',minute:'2-digit',hour12:false,timeZone:'Europe/Berlin'}).format(new Date(D.ende));
   return /^(00|24):00/.test(m)?'Am '+tag(D.ende-3600000)+' um 24 Uhr ist zu.':'Am '+tag(D.ende)+' um '+uhr(D.ende)+' ist zu.'}
-function preisZeig(){var o=$('#preisOben'),k=$('#preisKind');if(!o)return;o.textContent=euro(D.preis);var zeig=hatKinder()&&D.preisK>0&&D.preisK!==D.preis;k.hidden=!zeig;k.textContent='Kinder '+euro(D.preisK)}
+function preisZeig(){var o=$('#preisOben'),k=$('#preisKind');if(!o)return;var zeig=hatKinder()&&D.preisK>0&&D.preisK!==D.preis,kd=zeig&&MODUS==='k',box=o.parentNode,war=box.classList.contains('kind');o.textContent=euro(kd?D.preisK:D.preis);k.hidden=!zeig;k.textContent=kd?'Kinderpreis':'Kinder '+euro(D.preisK);box.classList.toggle('kind',kd);if(kd&&!war){o.style.animation='none';void o.offsetWidth;o.style.animation=''}}
 function jetzt(){return Date.now()+D.versatz}
 function tag(ms){return new Intl.DateTimeFormat('de-DE',{weekday:'long',day:'numeric',month:'numeric',timeZone:'Europe/Berlin'}).format(new Date(ms))}
 function uhr(ms){var h=new Intl.DateTimeFormat('de-DE',{hour:'numeric',minute:'2-digit',timeZone:'Europe/Berlin'}).format(new Date(ms));return h.replace(/:00$/,'')+' Uhr'}
@@ -641,7 +644,7 @@ function groessenBauen(neu){
   finderModus();preisZeig();
 }
 function modusSetz(m){
-  if(m===MODUS||!hatKinder())return;MODUS=m;
+  if(m===MODUS||!hatKinder())return;MODUS=m;preisZeig();
   var boxen=[$('#groessen'),$('#grOben')];
   $$('[data-wechsel]').forEach(function(w){w.classList.toggle('kind',m==='k')});
   if(STILL){groessenBauen(false);return}
