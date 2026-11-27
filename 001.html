@@ -134,7 +134,7 @@ form.vor{display:grid;grid-template-columns:minmax(0,1fr);gap:18px;max-width:640
 .feld input:focus{border-color:var(--blau-hell);background:#171B21}
 .zwei{display:grid;grid-template-columns:minmax(96px,.42fr) 1fr;gap:10px}
 .wahl{border:0;margin:0;padding:0;display:grid;gap:9px;min-width:0}
-.wahl .knoepfe{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.wahl .knoepfe{display:grid;grid-template-columns:repeat(auto-fit,minmax(52px,1fr));gap:8px}
 .wahl label{position:relative;display:block}
 .wahl input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer}
 .wahl span{display:grid;place-items:center;height:58px;border:1px solid var(--linie);background:var(--feld);font:800 22px/1 var(--sans);font-stretch:75%;transition:background .15s,color .15s,border-color .15s}
@@ -374,6 +374,7 @@ footer a{text-underline-offset:4px}
                   <tr data-g="M"><th scope="row">M</th><td>93 bis 100</td><td>81 bis 88</td><td>92 bis 99</td></tr>
                   <tr data-g="L"><th scope="row">L</th><td>101 bis 108</td><td>89 bis 96</td><td>100 bis 107</td></tr>
                   <tr data-g="XL"><th scope="row">XL</th><td>109 bis 118</td><td>97 bis 106</td><td>108 bis 116</td></tr>
+                  <tr data-g="XXL"><th scope="row">XXL</th><td>119 bis 130</td><td>107 bis 119</td><td>117 bis 125</td></tr>
                 </tbody>
               </table>
             </div>
@@ -517,7 +518,7 @@ footer a{text-underline-offset:4px}
 (function(){
 'use strict';
 var CFG={url:'https://lvaukuzgcwgqipxwzabo.supabase.co',anon:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx2YXVrdXpnY3dncWlweHd6YWJvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNTYwMTcsImV4cCI6MjEwNTczMjAxN30.jYZF8q8-SyCaWykM0wwcK58EzfTbO2VASKz1NIv1xbo',drop:'sweater-grau'};
-var D={start:Date.parse('2026-11-29T11:00:00Z'),ende:Date.parse('2026-12-06T11:00:00Z'),groessen:['S','M','L','XL'],versatz:0,zahl:0};
+var D={start:Date.parse('2026-11-29T11:00:00Z'),ende:Date.parse('2026-12-06T11:00:00Z'),groessen:['S','M','L','XL','XXL'],versatz:0,zahl:0};
 var H=document.documentElement,$=function(s,r){return (r||document).querySelector(s)},$$=function(s,r){return [].slice.call((r||document).querySelectorAll(s))};
 var pw='',phase='';
 function merk(k,v){try{if(v===undefined)return localStorage.getItem(k);if(v===null)localStorage.removeItem(k);else localStorage.setItem(k,v)}catch(e){}return null}
@@ -577,20 +578,20 @@ $('#grOben').addEventListener('click',function(e){var b=e.target.closest('button
 groessenBauen();
 
 /* Größenfinder: schätzt den Brustumfang, ordnet ihn in die adidas Tabelle (Männer-Oberteile) ein. Alles bleibt im Browser. */
-var GT=[{g:'S',a:87,b:92},{g:'M',a:93,b:100},{g:'L',a:101,b:108},{g:'XL',a:109,b:118}];
+var GT=[{g:'S',a:87,b:92},{g:'M',a:93,b:100},{g:'L',a:101,b:108},{g:'XL',a:109,b:118},{g:'XXL',a:119,b:130}];
 function groesseRechnen(cm,kg,statur,locker){
   var brust=Math.round(60+0.52*kg-0.12*(cm-178)+statur),i=0;
   while(i<GT.length-1&&brust>GT[i].b+0.5)i++;
   var t='Geschätzter Brustumfang: rund '+brust+' cm. ';
   if(brust<GT[0].a-2)t+='Das liegt unter Größe S. S ist die kleinste Größe in diesem Drop und sitzt bei dir eher locker.';
-  else if(brust>GT[GT.length-1].b+1)t+='Das liegt über Größe XL (bis 118 cm). XL ist die größte Größe in diesem Drop und kann bei dir eng sitzen.';
+  else if(brust>GT[GT.length-1].b+1)t+='Das liegt über Größe XXL (bis 130 cm). XXL ist die größte Größe in diesem Drop und kann bei dir eng sitzen.';
   else{
     t+='Bei adidas ist das Größe '+GT[i].g+' ('+GT[i].a+' bis '+GT[i].b+' cm).';
     if(!locker&&i<GT.length-1&&brust>=GT[i].b-1)t+=' Du liegst nah an '+GT[i+1].g+'. Wenn du unsicher bist, nimm die größere.';
   }
   if(locker){
     if(i<GT.length-1){i++;t+=' Für den lockeren Sitz eine Nummer größer: '+GT[i].g+'.'}
-    else t+=' Größer als XL gibt es in diesem Drop nicht.';
+    else t+=' Größer als XXL gibt es in diesem Drop nicht.';
   }
   if(cm>189)t+=' Für über 1,89 m führt adidas eigene Langgrößen. Die gibt es hier nicht, der Sweater kann bei dir etwas kurz sitzen.';
   return {g:GT[i].g,text:t};
