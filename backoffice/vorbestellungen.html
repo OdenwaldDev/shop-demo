@@ -58,7 +58,7 @@ function laden(){
   }).catch(function(){melde('Keine Verbindung. Bitte gleich nochmal.',true)});
 }
 function zeigen(d){
-  liste=d.liste||[];var gr=(d.drop&&d.drop.groessen)||['S','M','L','XL','XXL'],aktiv=liste.filter(function(v){return v.status!=='storniert'});
+  liste=d.liste||[];var gr=(d.drop&&d.drop.groessen)||['116','128','140','152','164','176','XS','S','M','L','XL','XXL','3XL'],aktiv=liste.filter(function(v){return v.status!=='storniert'});
   var z=$('zahlen');z.textContent='';
   [['Gesamt',aktiv.length]].concat(gr.map(function(g){return [g,(d.groessen||{})[g]||0]})).forEach(function(p){var b=document.createElement('div'),n=document.createElement('b'),s=document.createElement('span');n.textContent=p[1];s.textContent=p[0];b.appendChild(n);b.appendChild(s);z.appendChild(b)});
   var tb=$('zeilen');tb.textContent='';
