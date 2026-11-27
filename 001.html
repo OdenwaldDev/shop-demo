@@ -4,17 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
-<title>Drop 001 · Nur mit Passwort · SV Mörlenbach</title>
-<meta name="description" content="Drop 001 vom SV Mörlenbach. Start Sonntag, 12 Uhr. Sieben Tage, dann ist zu. Rein kommst du nur mit Passwort.">
+<title>Drop 01 · Nur mit Passwort · SV Mörlenbach</title>
+<meta name="description" content="Drop 01 vom SV Mörlenbach: der Sweater Drei Glocken 01. Start Samstag, 12 Uhr. Drei Tage, dann ist zu. Rein kommst du nur mit Passwort.">
 <meta name="theme-color" content="#08090B">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="1896 Shop · SV Mörlenbach">
-<meta property="og:title" content="DROP 001 · Nur mit Passwort">
-<meta property="og:description" content="Start Sonntag, 12 Uhr. Sieben Tage, dann ist zu.">
+<meta property="og:title" content="DROP 01 · Nur mit Passwort">
+<meta property="og:description" content="Start Samstag, 12 Uhr. Drei Tage, dann ist zu.">
 <meta property="og:url" content="https://1896shop.de/001">
-<meta property="og:image" content="https://1896shop.de/drop/og-4.jpg">
+<meta property="og:image" content="https://1896shop.de/drop/og-5.jpg">
 <meta property="og:image:type" content="image/jpeg">
-<meta property="og:image:alt" content="Drop 001 vom SV Mörlenbach: hellgrauer Sweater mit Mörlenbach-Schriftzug auf dem Rücken, nur mit Passwort">
+<meta property="og:image:alt" content="Drop 01 vom SV Mörlenbach: hellgrauer Sweater mit Mörlenbach-Schriftzug auf dem Rücken, nur mit Passwort">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:locale" content="de_DE">
@@ -81,6 +81,9 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opa
 .meldung.schlecht{color:var(--warn)}
 .titel{margin:0;font:800 clamp(64px,21vw,170px)/.8 var(--sans);font-stretch:62%;text-transform:uppercase;letter-spacing:-.012em;text-wrap:balance}
 .titel em{font-style:normal;color:transparent;-webkit-text-stroke:1.5px var(--text)}
+.titel.t3{font-size:clamp(50px,15.2vw,150px);line-height:.84}
+.preis-k{color:var(--leise)}
+.bestell .text+.text{margin-top:14px}
 .kauf{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px}
 .preis{font:700 26px/1 var(--sans);font-stretch:112%;font-variant-numeric:tabular-nums}
 .gr{display:flex;gap:6px}
@@ -293,6 +296,7 @@ footer a{text-underline-offset:4px}
   .unten{margin:0;max-width:min(54vw,780px);padding-top:90px}
   .zu .zeit strong{font-size:clamp(90px,10.5vw,170px)}
   .titel{font-size:clamp(110px,13vw,210px)}
+  .titel.t3{font-size:clamp(96px,10.5vw,176px)}
   .naht{grid-template-columns:1.25fr 1fr;align-items:end;gap:48px}
   .heimat{grid-template-columns:1fr 1.25fr}.heimat .licht{order:2}
   .naht .licht{aspect-ratio:5/4;max-height:78svh}
@@ -323,19 +327,21 @@ footer a{text-underline-offset:4px}
     <svg viewBox="0 0 40 46" aria-hidden="true"><path d="M3 3h34v19.5c0 11.6-7.7 18.6-17 21.5C10.7 41.1 3 34.1 3 22.5z" fill="none" stroke="#ECEBE7" stroke-width="2.4" stroke-linejoin="round"/><g fill="#ECEBE7"><path d="M7.8 17.1c.3-4.4 1.6-7.4 5.2-7.4s4.9 3 5.2 7.4l2 2.6h-14.4z"/><path d="M21.8 17.1c.3-4.4 1.6-7.4 5.2-7.4s4.9 3 5.2 7.4l2 2.6h-14.4z"/><path d="M14.8 31.1c.3-4.4 1.6-7.4 5.2-7.4s4.9 3 5.2 7.4l2 2.6h-14.4z"/></g></svg>
     <span class="mono"><b>1896 Shop</b></span>
   </div>
-  <span class="mono chip" id="chip"><span class="punkt"></span><b data-chip>Drop 001</b></span>
+  <span class="mono chip" id="chip"><span class="punkt"></span><b data-chip>Drop 01</b></span>
 </header>
 
-<section class="buehne" aria-label="Drop 001">
+<section class="buehne" aria-label="Drop 01">
   <div class="film">
     <video id="film" muted loop playsinline preload="none" poster="drop/vorn-3.webp" data-klein="drop/dreh-6.mp4" data-gross="drop/dreh-6g.mp4" aria-label="Der hellgraue Sweater im dunklen Studio: aus mehreren Winkeln, Wappen, Nähte und Schriftzug aus der Nähe, zum Schluss getragen"></video>
   </div>
-  <span class="gross" aria-hidden="true">001</span>
+  <span class="gross" aria-hidden="true">01</span>
   <div class="unten">
     <p class="mono nur-zu" style="margin:0"><b>Private Drop</b> · Nur mit Passwort</p>
-    <h1 class="titel nur-offen">Sweater <em>Grau</em></h1>
+    <p class="mono nur-offen" style="margin:0"><b>Sweater</b> · Drop 01</p>
+    <h1 class="titel t3 nur-offen">Drei<br>Glocken <em>01</em></h1>
     <div class="kauf nur-offen">
-      <span class="preis">59,96 €</span>
+      <span class="preis" id="preisOben">64,96 €</span>
+      <span class="mono preis-k" id="preisKind">Kinder 54,96 €</span>
       <span class="gr" id="grOben" role="group" aria-label="Größe wählen"></span>
       <span class="mono zahl" data-zahl hidden></span>
     </div>
@@ -358,18 +364,18 @@ footer a{text-underline-offset:4px}
   </div>
 </section>
 
-<div class="band" aria-hidden="true"><div><span>Drop 001</span><span>Sweater Grau</span><span>Nur sieben Tage</span><span>Nur mit Passwort</span><span>Mörlenbach</span><span>Seit 1896</span><span>Drop 001</span><span>Sweater Grau</span><span>Nur sieben Tage</span><span>Nur mit Passwort</span><span>Mörlenbach</span><span>Seit 1896</span><span>Drop 001</span><span>Sweater Grau</span><span>Nur sieben Tage</span><span>Nur mit Passwort</span><span>Mörlenbach</span><span>Seit 1896</span><span>Drop 001</span><span>Sweater Grau</span><span>Nur sieben Tage</span><span>Nur mit Passwort</span><span>Mörlenbach</span><span>Seit 1896</span></div></div>
+<div class="band" aria-hidden="true"><div><span>Drop 01</span><span>Drei Glocken 01</span><span>Nur drei Tage</span><span>Nur mit Passwort</span><span>Mörlenbach</span><span>Seit 1896</span><span>Drop 01</span><span>Drei Glocken 01</span><span>Nur drei Tage</span><span>Nur mit Passwort</span><span>Mörlenbach</span><span>Seit 1896</span><span>Drop 01</span><span>Drei Glocken 01</span><span>Nur drei Tage</span><span>Nur mit Passwort</span><span>Mörlenbach</span><span>Seit 1896</span><span>Drop 01</span><span>Drei Glocken 01</span><span>Nur drei Tage</span><span>Nur mit Passwort</span><span>Mörlenbach</span><span>Seit 1896</span></div></div>
 
 <main id="inhalt" hidden>
   <section class="block bestell rein" id="vorbestellen">
     <div>
-      <div class="zeile"><span class="mono"><b>Vorbestellen</b></span><span class="mono" data-zeit-kurz></span></div>
-      <h2>Sicher dir deinen.</h2>
-      <p class="text">Sieben Tage ist offen, dann ist zu. Du trägst dich ein, wir melden uns nach dem Drop bei dir mit allem zu Bezahlung und Übergabe.</p>
-      <p class="text">Für Erwachsene von XS bis 3XL, für Kinder von 116 bis 176. Mehrere Teile gehen in eine Vorbestellung.</p>
+      <div class="zeile"><span class="mono"><b>Drop 01 · Vorbestellung</b></span><span class="mono" data-zeit-kurz></span></div>
+      <h2>Ein Stück Mörlenbach.</h2>
+      <p class="text">Das Wappen unserer Gemeinde. Der Name unseres Vereins. Ein Design, das beides verbindet.</p>
+      <p class="text">Für den Sportplatz. Für den Alltag. Für Frauen, Männer und Kinder. Für alle, die sich Mörlenbach verbunden fühlen.</p>
       <ol class="ablauf">
-        <li><span class="mono">01</span><span>Größe wählen, eintragen, fertig.</span></li>
-        <li><span class="mono">02</span><span data-ende-satz>Nach sieben Tagen ist zu.</span></li>
+        <li><span class="mono">01</span><span>Größen wählen, eintragen, fertig. Erwachsene XS bis 3XL, Kinder 116 bis 176.</span></li>
+        <li><span class="mono">02</span><span data-ende-satz>Nach drei Tagen ist zu.</span></li>
         <li><span class="mono">03</span><span>Wir melden uns bei dir: Bezahlung und Übergabe.</span></li>
       </ol>
     </div>
@@ -475,12 +481,12 @@ footer a{text-underline-offset:4px}
         <label class="haken"><input type="checkbox" id="fOk" name="ok"><span>Der SV Mörlenbach 1896 e.V. darf meine Angaben für diese Vorbestellung speichern und mich dazu anschreiben oder anrufen. Mehr dazu im <a href="#datenschutz">Datenschutz</a>.</span></label>
         <label class="haken"><input type="checkbox" id="fNl" name="nl"><span>Ja, ich möchte Neuigkeiten, Drops und Angebote des SV Mörlenbach Store erhalten. Abmelden geht jederzeit mit einem Klick. <i class="frei-w">Freiwillig.</i></span></label>
         <p class="mono zahl" data-zahl hidden></p>
-        <button class="knopf" type="submit" id="vorKnopf">Vorbestellen · 59,96 €</button>
+        <button class="knopf" type="submit" id="vorKnopf">Vorbestellen · 64,96 €</button>
         <p class="meldung" id="vorMeldung" role="status" aria-live="polite"></p>
         <p class="klein">Jetzt wird nichts bezahlt. Die Bilder zeigen den Entwurf, das fertige Teil kann leicht abweichen.</p>
       </form>
       <div class="drin ticket" id="drin" hidden tabindex="-1">
-        <div class="t-kopf"><span class="mono"><b>Du bist drin</b></span><span class="mono">Drop 001</span></div>
+        <div class="t-kopf"><span class="mono"><b>Du bist drin</b></span><span class="mono">Drop 01</span></div>
         <span class="nr" id="drinNr">001</span>
         <span class="mono t-mehr" id="drinMehr" hidden></span>
         <dl class="t-zeilen" id="drinZeilen"></dl>
@@ -491,60 +497,19 @@ footer a{text-underline-offset:4px}
     </div>
   </section>
 
-  <section class="block naht rein">
-    <div class="licht" data-licht data-auto>
-      <img class="dunkel" src="drop/naht-2.webp" alt="" loading="lazy" decoding="async">
-      <img class="hell" src="drop/naht-2.webp" alt="Kragen und Schulternaht des hellgrauen Sweaters aus der Nähe" loading="lazy" decoding="async">
-      <span class="mono marke"><b>Fahr mit dem Finger drüber</b></span>
-    </div>
-    <div>
-      <div class="zeile"><span class="mono"><b>Verarbeitung</b></span><span class="mono">Licht an</span></div>
-      <h2>Schau auf die Naht.</h2>
-      <p class="text">Kragen, Bund, Nähte: Fahr mit dem Licht drüber und schau dir an, wie das Teil gemacht ist.</p>
-    </div>
-  </section>
-
-  <section class="block naht heimat rein">
-    <div class="licht warm" data-licht data-auto="quer">
-      <img class="dunkel" src="drop/schrift-2.webp" alt="" loading="lazy" decoding="async">
-      <img class="hell" src="drop/schrift-2.webp" alt="Der Schriftzug Mörlenbach auf dem Rücken im warmen Licht" loading="lazy" decoding="async">
-    </div>
-    <div>
-      <div class="zeile"><span class="mono"><b>Rücken</b></span><span class="mono">Mörlenbach</span></div>
-      <h2>Trag, wo du herkommst.</h2>
-      <p class="text">Mörlenbach steht groß auf dem Rücken. Jeder sieht, wo du zu Hause bist.</p>
-    </div>
-  </section>
-
   <section class="rein">
-    <div class="block"><div class="zeile"><span class="mono"><b>Lookbook</b></span><span class="mono">06 Bilder</span></div></div>
-    <div class="galerie" tabindex="0" aria-label="Der Sweater getragen und aus drei Ansichten">
+    <div class="block"><div class="zeile"><span class="mono"><b>Lookbook</b></span><span class="mono">09 Bilder</span></div></div>
+    <div class="galerie" tabindex="0" aria-label="Der Sweater getragen, aus drei Ansichten und in drei Nahaufnahmen">
       <figure><img src="drop/modell-5.webp" alt="Der hellgraue Sweater getragen, von vorn, im dunklen Studio" loading="lazy" decoding="async"><figcaption class="mono"><b>01</b><span>Getragen</span></figcaption></figure>
       <figure><img src="drop/modell-6.webp" alt="Der hellgraue Sweater getragen, von hinten, mit dem Schriftzug Mörlenbach" loading="lazy" decoding="async"><figcaption class="mono"><b>02</b><span>Rücken</span></figcaption></figure>
-      <figure><img src="drop/modell-8.webp" alt="Der hellgraue Sweater getragen in einer Tiefgarage, von hinten" loading="lazy" decoding="async"><figcaption class="mono"><b>03</b><span>Draußen</span></figcaption></figure>
-      <figure><img src="drop/vorn-3.webp" alt="Der hellgraue Sweater von vorn" loading="lazy" decoding="async"><figcaption class="mono"><b>04</b><span>Vorn</span></figcaption></figure>
-      <figure><img src="drop/winkel-3.webp" alt="Der hellgraue Sweater schräg von der Seite" loading="lazy" decoding="async"><figcaption class="mono"><b>05</b><span>Von der Seite</span></figcaption></figure>
-      <figure><img src="drop/hinten-3.webp" alt="Der hellgraue Sweater von hinten mit dem Schriftzug Mörlenbach" loading="lazy" decoding="async"><figcaption class="mono"><b>06</b><span>Hinten</span></figcaption></figure>
+      <figure><img src="drop/wappen-2.webp" alt="Das Wappen mit den drei Glocken auf der Brust, aus der Nähe" loading="lazy" decoding="async"><figcaption class="mono"><b>03</b><span>Wappen</span></figcaption></figure>
+      <figure><img src="drop/schrift-2.webp" alt="Der Schriftzug Mörlenbach auf dem Rücken, aus der Nähe" loading="lazy" decoding="async"><figcaption class="mono"><b>04</b><span>Rückenprint</span></figcaption></figure>
+      <figure><img src="drop/naht-2.webp" alt="Kragen und Schulternaht des hellgrauen Sweaters aus der Nähe" loading="lazy" decoding="async"><figcaption class="mono"><b>05</b><span>Naht</span></figcaption></figure>
+      <figure><img src="drop/modell-8.webp" alt="Der hellgraue Sweater getragen in einer Tiefgarage, von hinten" loading="lazy" decoding="async"><figcaption class="mono"><b>06</b><span>Draußen</span></figcaption></figure>
+      <figure><img src="drop/vorn-3.webp" alt="Der hellgraue Sweater von vorn" loading="lazy" decoding="async"><figcaption class="mono"><b>07</b><span>Vorn</span></figcaption></figure>
+      <figure><img src="drop/winkel-3.webp" alt="Der hellgraue Sweater schräg von der Seite" loading="lazy" decoding="async"><figcaption class="mono"><b>08</b><span>Von der Seite</span></figcaption></figure>
+      <figure><img src="drop/hinten-3.webp" alt="Der hellgraue Sweater von hinten mit dem Schriftzug Mörlenbach" loading="lazy" decoding="async"><figcaption class="mono"><b>09</b><span>Hinten</span></figcaption></figure>
     </div>
-  </section>
-
-  <section class="block rein">
-    <div class="zeile"><span class="mono"><b>Details</b></span><span class="mono">Nah dran</span></div>
-    <div class="raster">
-      <figure>
-        <div class="licht" data-licht><img class="dunkel" src="drop/wappen-2.webp" alt="" loading="lazy" decoding="async"><img class="hell" src="drop/wappen-2.webp" alt="Das Wappen mit den drei Glocken auf der Brust, aus der Nähe" loading="lazy" decoding="async"></div>
-        <figcaption class="mono"><b>Wappen</b><span>Brust links</span></figcaption>
-      </figure>
-      <figure>
-        <div class="licht" data-licht><img class="dunkel" src="drop/saum-2.webp" alt="" loading="lazy" decoding="async"><img class="hell" src="drop/saum-2.webp" alt="Bund und Seitennaht des hellgrauen Sweaters aus der Nähe" loading="lazy" decoding="async"></div>
-        <figcaption class="mono"><b>Bund</b><span>Seitennaht</span></figcaption>
-      </figure>
-    </div>
-  </section>
-
-  <section class="strasse rein">
-    <img src="drop/modell-7.webp" alt="Der hellgraue Sweater getragen in einer Tiefgarage bei Nacht" loading="lazy" decoding="async">
-    <h2>Vom Platz<br>auf die Straße.</h2>
   </section>
 
 </main>
@@ -587,7 +552,7 @@ footer a{text-underline-offset:4px}
   </div>
 </footer>
 
-<div class="frei" id="frei" aria-hidden="true" hidden><span class="mono">Drop 001</span><strong>Zugang frei</strong></div>
+<div class="frei" id="frei" aria-hidden="true" hidden><span class="mono">Drop 01</span><strong>Zugang frei</strong></div>
 
 <div class="leiste" id="leiste" aria-hidden="true">
   <div class="uhr"><small data-zeit-text>Startet in</small><span data-zeit-kurz></span></div>
@@ -598,7 +563,7 @@ footer a{text-underline-offset:4px}
 (function(){
 'use strict';
 var CFG={url:'https://lvaukuzgcwgqipxwzabo.supabase.co',anon:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx2YXVrdXpnY3dncWlweHd6YWJvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNTYwMTcsImV4cCI6MjEwNTczMjAxN30.jYZF8q8-SyCaWykM0wwcK58EzfTbO2VASKz1NIv1xbo',drop:'sweater-grau'};
-var D={start:Date.parse('2026-11-29T11:00:00Z'),ende:Date.parse('2026-12-06T11:00:00Z'),groessen:['116','128','140','152','164','176','XS','S','M','L','XL','XXL','3XL'],preis:5996,preisK:0,versatz:0,zahl:0};
+var D={start:Date.parse('2026-11-28T11:00:00Z'),ende:Date.parse('2026-11-30T23:00:00Z'),groessen:['116','128','140','152','164','176','XS','S','M','L','XL','XXL','3XL'],preis:6496,preisK:5496,versatz:0,zahl:0};
 var KORB=[],AKT=-1,MODUS='s',MAX=6,STILL=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 var H=document.documentElement,$=function(s,r){return (r||document).querySelector(s)},$$=function(s,r){return [].slice.call((r||document).querySelectorAll(s))};
 var pw='',phase='';
@@ -610,6 +575,10 @@ function rpc(fn,body){
       return j})},function(){throw new Error('Keine Verbindung. Bitte gleich nochmal.')});
 }
 function zwei(n){return (n<10?'0':'')+n}
+/* Endet der Drop um Mitternacht, heißt das für alle: am Tag davor um 24 Uhr */
+function endeSatz(){var m=new Intl.DateTimeFormat('de-DE',{hour:'2-digit',minute:'2-digit',hour12:false,timeZone:'Europe/Berlin'}).format(new Date(D.ende));
+  return /^(00|24):00/.test(m)?'Am '+tag(D.ende-3600000)+' um 24 Uhr ist zu.':'Am '+tag(D.ende)+' um '+uhr(D.ende)+' ist zu.'}
+function preisZeig(){var o=$('#preisOben'),k=$('#preisKind');if(!o)return;o.textContent=euro(D.preis);var zeig=hatKinder()&&D.preisK>0&&D.preisK!==D.preis;k.hidden=!zeig;k.textContent='Kinder '+euro(D.preisK)}
 function jetzt(){return Date.now()+D.versatz}
 function tag(ms){return new Intl.DateTimeFormat('de-DE',{weekday:'long',day:'numeric',month:'numeric',timeZone:'Europe/Berlin'}).format(new Date(ms))}
 function uhr(ms){var h=new Intl.DateTimeFormat('de-DE',{hour:'numeric',minute:'2-digit',timeZone:'Europe/Berlin'}).format(new Date(ms));return h.replace(/:00$/,'')+' Uhr'}
@@ -631,7 +600,7 @@ function tick(){
     if(p==='vor'){k.disabled=true;k.textContent='Öffnet '+tag(D.start)+', '+uhr(D.start)}
     else if(p==='offen'){k.disabled=false;knopfText()}
     else{k.disabled=true;k.textContent='Der Drop ist vorbei'}
-    $('[data-ende-satz]').textContent='Am '+tag(D.ende)+' um '+uhr(D.ende)+' ist zu.';
+    $('[data-ende-satz]').textContent=endeSatz();
     var c=$('#chip');c.classList.toggle('live',p==='offen');c.classList.toggle('aus',p==='vorbei');
     $('[data-chip]').textContent=p==='vor'?'Startet '+new Intl.DateTimeFormat('de-DE',{weekday:'short',timeZone:'Europe/Berlin'}).format(new Date(D.start)).replace('.','')+', '+uhr(D.start):p==='offen'?'Live':'Geschlossen';
     $('#balken').hidden=p!=='offen';zahlZeig();
@@ -642,7 +611,7 @@ function stand(){return rpc('shop_drop_stand',{p_slug:CFG.drop}).then(function(j
   var neu=a!==D.start||b!==D.ende;D.start=a;D.ende=b;D.versatz=n-Date.now();D.zahl=+j.zahl||0;
   var pa=+j.preis_cent||D.preis,pk=+j.preis_kinder_cent||0,pn=pa!==D.preis||pk!==D.preisK;D.preis=pa;D.preisK=pk;
   if(j.groessen&&j.groessen.length&&j.groessen.join()!==D.groessen.join()){D.groessen=j.groessen;if(!hatKinder())MODUS=D.groessen.every(istKind)?'k':'s';groessenBauen()}
-  if(pn)korbZeig();
+  if(pn){korbZeig();preisZeig()}
   if(neu)phase='';tick();zahlZeig()}).catch(function(){})}
 stand();setInterval(function(){if(!document.hidden&&phase!=='vorbei')stand()},60000);
 
@@ -669,7 +638,7 @@ function groessenBauen(neu){
   var o=$('#grOben');o.style.gridTemplateColumns=mit?'auto repeat('+l.length+',minmax(0,1fr))':'';
   o.insertAdjacentHTML('beforeend',l.map(function(g,i){return '<button type="button" data-g="'+g+'" class="'+(g===a?'an':'')+c+'" style="--i:'+i+'" aria-pressed="'+(g===a)+'">'+g+'</button>'}).join(''));
   $('#grModus').textContent=mit?(kind?'· Kinder':'· Erwachsene'):'';
-  finderModus();
+  finderModus();preisZeig();
 }
 function modusSetz(m){
   if(m===MODUS||!hatKinder())return;MODUS=m;
@@ -690,7 +659,7 @@ function groesseSetz(g){var neu;
 function korbZeig(neu){
   var f=gefuellt();$('#korb').hidden=!KORB.length;
   $('#korbListe').innerHTML=KORB.map(function(e,i){
-    return '<li class="'+(i===AKT?'an':'')+(i===neu&&!STILL?' neu':'')+'"><button type="button" class="k-zeile" data-i="'+i+'"'+(i===AKT?' aria-current="true"':'')+'><span class="mono">'+zwei(i+1)+'</span><span class="k-was">Sweater Grau<small>'+(e.g?(istKind(e.g)?'Kinder':'Erwachsene'):'Größe oben wählen')+'</small></span><span class="k-gr'+(e.g?'':' leer')+'">'+(e.g||'…')+'</span><span class="k-preis">'+(e.g?euro(preis(e.g)):'')+'</span></button><button type="button" class="k-weg" data-weg="'+i+'" aria-label="Sweater '+(i+1)+' entfernen">×</button></li>'}).join('');
+    return '<li class="'+(i===AKT?'an':'')+(i===neu&&!STILL?' neu':'')+'"><button type="button" class="k-zeile" data-i="'+i+'"'+(i===AKT?' aria-current="true"':'')+'><span class="mono">'+zwei(i+1)+'</span><span class="k-was">Drei Glocken 01<small>'+(e.g?(istKind(e.g)?'Kinder':'Erwachsene'):'Größe oben wählen')+'</small></span><span class="k-gr'+(e.g?'':' leer')+'">'+(e.g||'…')+'</span><span class="k-preis">'+(e.g?euro(preis(e.g)):'')+'</span></button><button type="button" class="k-weg" data-weg="'+i+'" aria-label="Sweater '+(i+1)+' entfernen">×</button></li>'}).join('');
   $('#korbSumme').textContent=f.length>1?f.length+' Teile · '+euro(summe(f)):'';
   $('#korbPlus').hidden=KORB.length>=MAX;$('#korbMax').hidden=KORB.length<MAX;
   knopfText();
@@ -865,7 +834,7 @@ $('#vor').addEventListener('submit',function(e){
   var alt=k.textContent;k.disabled=true;k.textContent='Wird eingetragen …';m.className='meldung';m.textContent='';
   rpc('shop_vorbestellen',{p:a}).then(function(j){
     var teile=j.teile&&j.teile.length?j.teile:[{nr:j.nr,groesse:j.groesse}],n=teile.length,nr3=function(x){return ('00'+x).slice(-3)},
-      was=function(g){return 'Sweater Grau'+(istKind(g)?' · Kinder':'')},sum=teile.reduce(function(x,t){return x+preis(t.groesse)},0);
+      was=function(g){return 'Drei Glocken 01'+(istKind(g)?' · Kinder':'')},sum=teile.reduce(function(x,t){return x+preis(t.groesse)},0);
     $('#drinNr').textContent=nr3(teile[0].nr);
     var mehr=$('#drinMehr');mehr.hidden=n<2;mehr.textContent=n<2?'':'und '+(n-1)+(n===2?' weitere Nummer':' weitere Nummern');
     var dl=$('#drinZeilen');dl.textContent='';
@@ -878,7 +847,7 @@ $('#vor').addEventListener('submit',function(e){
     if(nl){f.nl.checked=false;nlAn(a.email,a.name.split(/\s+/)[0],'drop-001-vorbestellung').then(function(j){if(j.email==='mail_geschickt')$('#drinText').textContent+=' Für den Newsletter kommt gleich eine eigene Mail, bitte dort kurz bestätigen.'}).catch(function(){})}
   }).catch(function(x){k.disabled=false;k.textContent=alt;phase='';tick();knopfText();fehl(x.message)});
 });
-if(navigator.share){$('#teilen').hidden=false;$('#teilen').addEventListener('click',function(){navigator.share({title:'Drop 001 · Sweater Grau',text:'Ich bin drin. Drop 001 vom SV Mörlenbach.',url:'https://1896shop.de/sweater'}).catch(function(){})})}
+if(navigator.share){$('#teilen').hidden=false;$('#teilen').addEventListener('click',function(){navigator.share({title:'Drop 01 · Drei Glocken 01',text:'Ich bin drin. Drop 01 vom SV Mörlenbach.',url:'https://1896shop.de/sweater'}).catch(function(){})})}
 $('#nochEiner').addEventListener('click',function(){var f=$('#vor');$('#drin').hidden=true;f.hidden=false;korbLeer();var i=$('#groessen input');if(i)i.focus()});
 })();
 </script>
