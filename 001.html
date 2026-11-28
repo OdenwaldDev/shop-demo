@@ -53,13 +53,14 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opa
 /* Bühne */
 .buehne{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;isolation:isolate}
 .buehne .film{position:absolute;inset:0;z-index:-2;background:#050607}
-.buehne .film video,.buehne .film img{position:absolute;left:50%;top:44%;height:min(86svh,150vw);width:auto;max-width:none;transform:translate(-50%,-50%);object-fit:contain;
-  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 9%,#000 91%,transparent 100%),linear-gradient(180deg,transparent 0,#000 7%,#000 90%,transparent 100%);-webkit-mask-composite:source-in;
-  mask-image:linear-gradient(90deg,transparent 0,#000 9%,#000 91%,transparent 100%),linear-gradient(180deg,transparent 0,#000 7%,#000 90%,transparent 100%);mask-composite:intersect;
-  filter:brightness(1) contrast(1);transition:filter 1.8s cubic-bezier(.2,.7,.2,1)}
-.zu .buehne .film video,.zu .buehne .film img{filter:brightness(.66) contrast(1.12) saturate(.8)}
-.an .buehne .film video,.an .buehne .film img{animation:licht-an 1.5s steps(1,end) both}
-@keyframes licht-an{0%{filter:brightness(.66) contrast(1.12)}8%{filter:brightness(1.15)}14%{filter:brightness(.4) contrast(1.2)}22%{filter:brightness(1.2)}28%{filter:brightness(.7)}36%,100%{filter:brightness(1)}}
+.buehne .film video,.buehne .film img{position:absolute;left:50%;top:44%;height:min(86svh,150vw);width:auto;max-width:none;transform:translate(-50%,-50%);object-fit:contain}
+/* iPhone: Filter und Maske direkt am Video lassen Safari das Bild einfrieren. Rand und Licht liegen darum als eigene Flächen über dem Video. */
+.buehne .film .rand{position:absolute;left:50%;top:44%;height:min(86svh,150vw);aspect-ratio:720/964;transform:translate(-50%,-50%);pointer-events:none;
+  background:linear-gradient(90deg,#050607 0,rgba(5,6,7,0) 9%,rgba(5,6,7,0) 91%,#050607 100%),linear-gradient(180deg,#050607 0,rgba(5,6,7,0) 7%,rgba(5,6,7,0) 90%,#050607 100%)}
+.buehne .film .licht{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none;transition:opacity 1.8s cubic-bezier(.2,.7,.2,1)}
+.zu .buehne .film .licht{opacity:.36}
+.an .buehne .film .licht{animation:licht-an 1.5s steps(1,end) both}
+@keyframes licht-an{0%{opacity:.36}8%{opacity:0}14%{opacity:.6}22%{opacity:0}28%{opacity:.3}36%,100%{opacity:0}}
 .buehne::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(8,9,11,.55) 0,rgba(8,9,11,0) 22%,rgba(8,9,11,0) 46%,rgba(8,9,11,.86) 72%,var(--bg) 100%)}
 .unten{padding:0 var(--rand) calc(env(safe-area-inset-bottom,0px) + 28px);display:grid;gap:14px;max-width:760px;width:100%;margin:0 auto}
 .zeit{display:flex;align-items:flex-end;gap:clamp(6px,2.2vw,16px);font-variant-numeric:tabular-nums}
@@ -293,7 +294,7 @@ footer a{text-underline-offset:4px}
 
 @media (min-width:860px){
   .buehne{justify-content:center}
-  .buehne .film video,.buehne .film img{left:70%;top:50%;height:92svh}
+  .buehne .film video,.buehne .film img,.buehne .film .rand{left:70%;top:50%;height:92svh}
   .buehne::before{background:linear-gradient(90deg,var(--bg) 0,rgba(8,9,11,.82) 34%,rgba(8,9,11,0) 62%),linear-gradient(180deg,rgba(8,9,11,.5) 0,rgba(8,9,11,0) 20%,rgba(8,9,11,0) 80%,var(--bg) 100%)}
   .unten{margin:0;max-width:min(54vw,780px);padding-top:90px}
   .zu .zeit strong{font-size:clamp(90px,10.5vw,170px)}
@@ -316,9 +317,9 @@ footer a{text-underline-offset:4px}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   .band div,.zeit strong.t,.zahl::before{animation:none}
-  .punkt,.an .buehne .film video,.an .buehne .film img,.tor.falsch .reihe{animation:none}
+  .punkt,.an .buehne .film .licht,.tor.falsch .reihe{animation:none}
   .rein{opacity:1;transform:none;transition:none}
-  .buehne .film video,.buehne .film img{transition:none}
+  .buehne .film .licht{transition:none}
 }
 </style>
 </head>
@@ -334,7 +335,7 @@ footer a{text-underline-offset:4px}
 
 <section class="buehne" aria-label="Drop 01">
   <div class="film">
-    <video id="film" muted loop playsinline preload="none" poster="drop/vorn-3.webp" data-klein="drop/dreh-7.mp4" data-gross="drop/dreh-7g.mp4" aria-label="Der hellgraue Sweater im dunklen Studio: aus mehreren Winkeln, Wappen, Nähte und Schriftzug aus der Nähe, zum Schluss getragen"></video>
+    <video id="film" muted loop playsinline preload="none" poster="drop/vorn-3.webp" data-klein="drop/dreh-7.mp4" data-gross="drop/dreh-7g.mp4" aria-label="Der hellgraue Sweater im dunklen Studio: aus mehreren Winkeln, Wappen, Nähte und Schriftzug aus der Nähe, zum Schluss getragen"></video><div class="rand" aria-hidden="true"></div><div class="licht" aria-hidden="true"></div>
   </div>
   <span class="gross" aria-hidden="true">01</span>
   <div class="unten">
@@ -751,15 +752,26 @@ function finderModus(){var k=MODUS==='k'&&hatKinder()||D.groessen.every(istKind)
 groessenBauen();
 
 /* Tor */
-(function(){var v=$('#film');if(!v)return;v.src=v.getAttribute(window.matchMedia('(min-width:860px)').matches?'data-gross':'data-klein');v.load();var q=v.play();if(q&&q.catch)q.catch(function(){})})();
+function filmLos(){var v=$('#film');if(!v)return;v.muted=true;if(v.paused||v.ended){var q=v.play();if(q&&q.catch)q.catch(function(){})}}
+(function(){var v=$('#film');if(!v)return;v.muted=true;v.defaultMuted=true;v.setAttribute('autoplay','');
+  v.src=v.getAttribute(window.matchMedia('(min-width:860px)').matches?'data-gross':'data-klein');v.load();filmLos();
+  /* iPhone im Stromsparmodus spielt erst nach einem Tipp: beim ersten Tipp irgendwo starten */
+  ['touchstart','touchend','click','keydown'].forEach(function(t){document.addEventListener(t,filmLos,{passive:true})});
+  document.addEventListener('visibilitychange',function(){if(!document.hidden)filmLos()});
+  /* Wächter: steht das Bild still, obwohl der Film laufen soll, neu anstoßen und notfalls neu laden */
+  var zeit=-1,still=0;setInterval(function(){if(document.hidden)return;
+    if(v.paused){filmLos();return}
+    if(v.currentTime===zeit&&v.readyState>=3){still++;if(still===2){filmLos()}else if(still>=4){still=0;var t=v.currentTime;v.load();try{v.currentTime=t}catch(e){}filmLos()}}else still=0;
+    zeit=v.currentTime},1000);
+})();
 function auf(mitLicht){
   H.classList.remove('zu');H.classList.add('offen');if(mitLicht)H.classList.add('an');
   $('#inhalt').hidden=false;
-  var v=$('#film');if(v&&v.paused){var q=v.play();if(q&&q.catch)q.catch(function(){})}
+  filmLos();
   beobachten();
 }
 $('#tor').addEventListener('submit',function(e){
-  e.preventDefault();var f=this,i=$('#pw'),m=$('#torMeldung'),w=i.value.trim();
+  e.preventDefault();filmLos();var f=this,i=$('#pw'),m=$('#torMeldung'),w=i.value.trim();
   if(!w){i.focus();return}
   f.classList.remove('falsch');m.className='meldung';m.textContent='Moment …';
   rpc('shop_drop_tor',{p_slug:CFG.drop,p_passwort:w}).then(function(j){
